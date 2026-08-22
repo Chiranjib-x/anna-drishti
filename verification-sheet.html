@@ -1,0 +1,672 @@
+<title>Anna-Drishti Verification Sheet</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 14mm; }
+  *{box-sizing:border-box}
+  html,body{background:#fff; color:#000}
+  body{
+    margin:0;
+    font:10.5pt/1.42 "Georgia","Times New Roman",serif;
+  }
+  .sheet{max-width:180mm; margin:0 auto; padding:8mm 0}
+
+  h1{font:700 20pt/1.15 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 2mm; letter-spacing:-.01em}
+  .sub{font:10pt/1.4 "Segoe UI",Helvetica,Arial,sans-serif; color:#333; margin:0 0 1mm}
+  .rule{border:0; border-top:1.5pt solid #000; margin:4mm 0 6mm}
+
+  h2{font:700 13pt/1.2 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 1mm;
+     letter-spacing:.01em}
+  .role{font:9.5pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; color:#444; margin:0 0 4mm}
+  .person{page-break-before:always; break-before:page}
+  .person:first-of-type{page-break-before:auto; break-before:auto}
+  .phead{border-bottom:1pt solid #000; padding-bottom:2mm; margin-bottom:5mm}
+
+  h3{font:700 9.5pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif;
+     text-transform:uppercase; letter-spacing:.09em; color:#000;
+     margin:6mm 0 3mm; padding-bottom:1mm; border-bottom:.5pt solid #999}
+
+  .item{margin:0 0 4.2mm; page-break-inside:avoid; break-inside:avoid}
+  .q{display:flex; gap:2.5mm; align-items:baseline}
+  .n{font:700 9.5pt "Segoe UI",Helvetica,Arial,sans-serif; min-width:7mm; flex:none}
+  .claim{flex:1}
+  .val{font:600 10pt "Consolas","Courier New",monospace; background:#f0f0f0;
+       padding:.2mm 1.2mm; border:.5pt solid #bbb; white-space:nowrap}
+  .ask{font-style:italic; color:#333}
+
+  .ans{margin:1.6mm 0 0 9.5mm; display:flex; gap:5mm; align-items:baseline;
+       font:9pt "Segoe UI",Helvetica,Arial,sans-serif}
+  .box{display:inline-block; width:3.4mm; height:3.4mm; border:.9pt solid #000;
+       margin-right:1.4mm; vertical-align:-.4mm}
+  .fill{flex:1; border-bottom:.5pt dotted #666; min-height:4.6mm}
+  .src{margin:1.4mm 0 0 9.5mm; font:8.5pt "Segoe UI",Helvetica,Arial,sans-serif; color:#555;
+       display:flex; gap:1.5mm; align-items:baseline}
+  .src .fill{border-bottom:.5pt dotted #999}
+
+  table{border-collapse:collapse; width:100%; margin:2mm 0 4mm; font-size:9.5pt}
+  th,td{border:.5pt solid #999; padding:1.4mm 2mm; text-align:left}
+  th{background:#eee; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+     text-transform:uppercase; letter-spacing:.06em}
+  td.n2{font-family:"Consolas","Courier New",monospace; white-space:nowrap; text-align:right}
+
+  .note{background:#f6f6f6; border-left:2.5pt solid #000; padding:2.5mm 3.5mm;
+        margin:4mm 0; font-size:9.5pt}
+  .note b{font-family:"Segoe UI",Helvetica,Arial,sans-serif; font-size:8.5pt;
+          text-transform:uppercase; letter-spacing:.08em}
+  .flag{border:1pt solid #000; padding:2.5mm 3.5mm; margin:4mm 0; font-size:9.5pt}
+  .flag b{font-family:"Segoe UI",Helvetica,Arial,sans-serif; font-size:8.5pt;
+          text-transform:uppercase; letter-spacing:.08em}
+  .sign{margin-top:7mm; padding-top:3mm; border-top:.5pt solid #999;
+        font:9pt "Segoe UI",Helvetica,Arial,sans-serif; display:flex; gap:8mm}
+  .sign div{flex:1}
+  .sign .fill{margin-top:5mm}
+  ul.plain{margin:1.5mm 0 0 5mm; padding:0; font-size:9.5pt}
+  ul.plain li{margin-bottom:1mm}
+</style>
+
+<div class="sheet">
+
+<h1>Anna-Drishti — Verification Sheet</h1>
+<p class="sub">Every number the simulation uses, in plain language. No code.</p>
+<p class="sub">Smart India Hackathon 2026 · Internal Final · VIT — prepared for review, 22 August</p>
+<hr class="rule">
+
+<div class="note">
+  <b>How to use this</b><br>
+  Each item states a value the simulation currently uses and what it is claimed to mean.
+  Tick <b>Correct</b> if you are willing to defend that number to a judge. Tick
+  <b>Change to</b> and write the right value if it is wrong. Add the source you are
+  working from — on Monday you will be asked where each number came from, and
+  &ldquo;it was in the code&rdquo; is not an answer.
+  <br><br>
+  If you are unsure about an item, say so rather than ticking Correct. An unverified
+  number we know about is manageable; one we think is verified is not.
+  <br><br>
+  Hand the pages back to Chiranjib and he will update the model.
+</div>
+
+<div class="flag">
+  <b>Deadline</b><br>
+  Return your pages by <b>Sunday 12:00</b>. The build freezes at 14:00 Sunday and no
+  number changes after that — anything unverified by then gets removed from what we
+  claim on stage.
+</div>
+
+<!-- ============================== KRITTIKA ============================== -->
+<div class="person">
+  <div class="phead">
+    <h2>Krittika Parida — Biology &amp; realism</h2>
+    <p class="role">You own every biological number in the model. Fourteen items.</p>
+  </div>
+
+  <h3>1 · Fungal growth thresholds (Aspergillus flavus)</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">1.1</span><span class="claim">
+      Minimum water activity for growth. Below this the model allows no fungal growth at all.
+      <span class="val">a<sub>w</sub> = 0.82</span>
+      <span class="ask">Is 0.82 the right floor, or should it be 0.85?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">1.2</span><span class="claim">
+      Cardinal temperatures for growth — below the minimum or above the maximum, no growth.
+      <span class="val">min 12 °C · optimum 33 °C · max 43 °C</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">1.3</span><span class="claim">
+      Fastest possible growth, at perfect conditions, gives visible mould in
+      <span class="val">5 days</span>
+      <span class="ask">Too fast, too slow, or right for grain (not agar)?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>2 · What the growth model predicts — the numbers we say out loud</h3>
+  <p style="font-size:9.5pt;margin:0 0 1mm">These come straight out of items 1.1–1.3. If the
+    table below looks wrong, the cardinal values above are wrong. <b>This table is the single
+    most important thing on your pages</b> — a judge will ask where &ldquo;mould in N days&rdquo; came from.</p>
+
+  <table>
+    <thead><tr><th>Water activity</th><th>Temperature</th><th>Model says mould onset in</th><th>Correct?</th></tr></thead>
+    <tbody>
+      <tr><td class="n2">0.99</td><td class="n2">33 °C</td><td class="n2">5.0 days</td><td></td></tr>
+      <tr><td class="n2">0.95</td><td class="n2">30 °C</td><td class="n2">6.7 days</td><td></td></tr>
+      <tr><td class="n2">0.92</td><td class="n2">30 °C</td><td class="n2">8.7 days</td><td></td></tr>
+      <tr><td class="n2">0.90</td><td class="n2">30 °C</td><td class="n2">10.8 days</td><td></td></tr>
+      <tr><td class="n2">0.87</td><td class="n2">30 °C</td><td class="n2">17.4 days</td><td></td></tr>
+      <tr><td class="n2">0.85</td><td class="n2">30 °C</td><td class="n2">28.9 days</td><td></td></tr>
+      <tr><td class="n2">0.83</td><td class="n2">30 °C</td><td class="n2">86.8 days</td><td></td></tr>
+      <tr><td class="n2">0.87</td><td class="n2">20 °C</td><td class="n2">27.6 days</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="ans"><span><span class="box"></span>Whole table is defensible</span>
+    <span><span class="box"></span>Corrections noted above</span></div>
+  <div class="src">Source for safe-storage times:<span class="fill"></span></div>
+
+  <h3>3 · Aflatoxin production</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">3.1</span><span class="claim">
+      Toxin production needs a higher water activity than growth alone.
+      <span class="val">a<sub>w</sub> ≥ 0.85</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">3.2</span><span class="claim">
+      Temperature band in which toxin production is possible.
+      <span class="val">25 °C to 35 °C</span>
+      <span class="ask">I widened this from 30 to 35. The proposal cites 25–30 °C, but that is the
+      reported <i>optimum</i>, not the limit — with 30 as a hard ceiling, a 30 °C godown that
+      warmed even slightly fell out of the band and the model never predicted toxin risk at all.
+      Is 35 °C a fair upper limit for production?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>4 · Moisture, water activity and the sorption isotherm</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">4.1</span><span class="claim">
+      We convert grain moisture to water activity with the <b>modified Chung–Pfost</b> equation,
+      using published shelled-corn coefficients (ASAE D245).
+      <span class="ask">Right model and right commodity for what we claim?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">4.2</span><span class="claim">
+      What that equation produces. Check these against your sorption tables:
+    </span></div>
+    <table>
+      <thead><tr><th>Grain moisture (wet basis)</th><th>Temperature</th><th>Model gives a<sub>w</sub></th><th>Correct?</th></tr></thead>
+      <tbody>
+        <tr><td class="n2">12 %</td><td class="n2">30 °C</td><td class="n2">0.657</td><td></td></tr>
+        <tr><td class="n2">14 %</td><td class="n2">25 °C</td><td class="n2">0.774</td><td></td></tr>
+        <tr><td class="n2">16 %</td><td class="n2">30 °C</td><td class="n2">0.875</td><td></td></tr>
+        <tr><td class="n2">18 %</td><td class="n2">25 °C</td><td class="n2">0.926</td><td></td></tr>
+        <tr><td class="n2">20 %</td><td class="n2">30 °C</td><td class="n2">0.963</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="ans"><span><span class="box"></span>All defensible</span>
+      <span><span class="box"></span>Corrections noted</span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">4.3</span><span class="claim">
+      Starting moisture of the sound grain in the stack.
+      <span class="val">12.0 % wet basis</span>
+      <span class="ask"><b>I changed this from 13.5 % and it needs your sign-off.</b>
+      At 13.5 % the healthy grain respires hard enough to mask the spoilage pocket entirely —
+      and because the model is linear in respiration, no amount of adjusting the respiration
+      rate fixes it. Only drier bulk grain does. 12 % is FCI wheat acceptance moisture and
+      gives a<sub>w</sub> 0.66, well below the growth floor. Is calling this
+      &ldquo;safely stored grain&rdquo; defensible?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>5 · Respiration</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">5.1</span><span class="claim">
+      Baseline respiration of sound grain at 14 % moisture, 25 °C.
+      <span class="val">0.5 mg CO₂ / kg dry matter / day</span>
+      <span class="ask">Published range is roughly 0.1–1. Is 0.5 sensible?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">5.2</span><span class="claim">
+      Temperature sensitivity of respiration.
+      <span class="val">Q₁₀ = 2.5</span>
+      <span class="ask">Rate multiplies by 2.5 for every 10 °C rise.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">5.3</span><span class="claim">
+      Moisture sensitivity — respiration roughly <b>doubles per 1 % moisture</b> gained.
+      Resulting rates, all at 30 °C:
+    </span></div>
+    <table>
+      <thead><tr><th>Grain moisture</th><th>Respiration (mg CO₂ / kg / day)</th><th>Correct?</th></tr></thead>
+      <tbody>
+        <tr><td class="n2">12 %</td><td class="n2">0.2</td><td></td></tr>
+        <tr><td class="n2">16 %</td><td class="n2">3.2</td><td></td></tr>
+        <tr><td class="n2">18 %</td><td class="n2">13</td><td></td></tr>
+        <tr><td class="n2">20 %</td><td class="n2">53</td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="ans"><span><span class="box"></span>All defensible</span>
+      <span><span class="box"></span>Corrections noted</span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>6 · Dry matter loss</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">6.1</span><span class="claim">
+      Loss thresholds we report against.
+      <span class="val">0.5 % general · 1 % food grade · 0.04 % premium</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">6.2</span><span class="claim">
+      Conversion from CO₂ produced to dry matter lost.
+      <span class="val">1 % loss = 14.67 g CO₂ per kg</span>
+      <span class="ask">This is fixed respiration stoichiometry, not a tuning choice — 180 g
+      glucose yields 264 g CO₂. Confirm the chemistry only.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="sign">
+    <div>Signed<div class="fill"></div></div>
+    <div>Date<div class="fill"></div></div>
+    <div>Items I could <b>not</b> verify<div class="fill"></div></div>
+  </div>
+</div>
+
+<!-- ============================== NETRA ============================== -->
+<div class="person">
+  <div class="phead">
+    <h2>Netra R — Inspection baseline &amp; evidence</h2>
+    <p class="role">You own the comparison arm. This is the most likely thing a judge attacks,
+      and it lands on you. Eight items.</p>
+  </div>
+
+  <div class="flag">
+    <b>Why this matters more than the other sheets</b><br>
+    Our headline claim is &ldquo;conventional inspection found it on day 42, we flagged it on
+    day 4.&rdquo; That claim is only as strong as the model of conventional practice underneath
+    it. If it is pessimistic, the whole comparison collapses under one question — and a rigged
+    comparison does more damage than no comparison at all. Push back hard on anything below
+    that flatters us.
+  </div>
+
+  <h3>1 · How often, and how deep</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">1.1</span><span class="claim">
+      Inspection interval for a bagged stack.
+      <span class="val">every 14 days</span>
+      <span class="ask">Is fortnightly right for an Indian godown? What does FCI actually
+      specify, and what happens in practice?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">1.2</span><span class="claim">
+      How far into a stack a spear sampler reaches.
+      <span class="val">0.4 m from any face</span>
+      <span class="ask">This single number decides the whole comparison. Our demo pocket sits
+      1.6 m in, so it is physically unreachable. Is 0.4 m the honest reach of a bag spear?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">1.3</span><span class="claim">
+      If a pocket <i>is</i> within reach, the chance an inspection actually finds it.
+      <span class="val">60 % per inspection</span>
+      <span class="ask">Accounts for insects and spoilage being non-uniformly distributed.
+      Too harsh, too generous?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>2 · What counts as detection</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">2.1</span><span class="claim">
+      Mould visible on an outer face is <b>always</b> caught at the next inspection.
+      <span class="ask">Is a certainty fair, or should this have a miss rate too?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">2.2</span><span class="claim">
+      Second detection route, which <b>I added and which needs your judgement.</b>
+      Once a colony is well established, the stack smells musty and bags feel warm, so it is
+      noticed at the next routine inspection even if no spear can reach it.
+      <span class="ask">Without this route, a deep pocket read &ldquo;never detected in 60 days.&rdquo;
+      That is arguably true to FAO — but it looks rigged. With it, conventional detection lands
+      at day 42. Is that route real, and is the timing fair?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Fair as is</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>3 · The written justification — not yet started</h3>
+  <p style="font-size:9.5pt;margin:0 0 2mm">The model is coded. The written defence of it does
+    not exist and only you can write it. It needs to answer, in prose, with citations:</p>
+  <ul class="plain">
+    <li>How often inspection happens and on whose authority</li>
+    <li>Which part of a stack a spear can physically reach, and which it cannot</li>
+    <li>Why absence of live adults in a sample does not mean absence of infestation</li>
+    <li>Why insects concentrate in pockets rather than distributing evenly</li>
+  </ul>
+  <div class="ans" style="margin-left:0"><span><span class="box"></span>Drafted</span>
+    <span><span class="box"></span>Sent to Chiranjib</span></div>
+
+  <h3>4 · Entomology figures carried from the proposal</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">4.1</span><span class="claim">
+      One insect per 100 kg can develop into a damaging population in roughly four months
+      under humid tropical conditions.
+      <span class="ask">Still stands? We quote it on stage.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">4.2</span><span class="claim">
+      The question you will be asked on Monday, almost certainly in these words:
+      <b>&ldquo;Isn't your baseline unfairly pessimistic?&rdquo;</b>
+      <span class="ask">Write your answer here. It should cite a real inspection interval and a
+      real detection threshold, not an opinion.</span>
+    </span></div>
+    <div class="src" style="margin-left:9.5mm"><span class="fill"></span></div>
+    <div class="src" style="margin-left:9.5mm"><span class="fill"></span></div>
+    <div class="src" style="margin-left:9.5mm"><span class="fill"></span></div>
+  </div>
+
+  <div class="sign">
+    <div>Signed<div class="fill"></div></div>
+    <div>Date<div class="fill"></div></div>
+    <div>Items I could <b>not</b> verify<div class="fill"></div></div>
+  </div>
+</div>
+
+<!-- ============================== DEVAVRATH ============================== -->
+<div class="person">
+  <div class="phead">
+    <h2>Devavrath Ramesh — Scale, transport &amp; deployment</h2>
+    <p class="role">You own the physical numbers: how big the stack is, how fast things move
+      through it, and where the probes go. Twelve items.</p>
+  </div>
+
+  <h3>1 · Scale calibration</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">1.1</span><span class="claim">
+      Stack dimensions the simulation represents.
+      <span class="val">4.0 m wide × 2.5 m tall</span>
+      <span class="ask">Does that match a real godown bag stack?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">1.2</span><span class="claim">
+      Resolution of the model grid.
+      <span class="val">1 cell = 10 cm · 1 step = 0.25 hours</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <h3>2 · Transport coefficients — the core of our argument</h3>
+  <p style="font-size:9.5pt;margin:0 0 2mm">Our entire thesis is that CO₂ outruns heat, which
+    outruns moisture. <b>The ratios matter far more than the absolute values.</b></p>
+
+  <table>
+    <thead><tr><th>Quantity</th><th>Value (m²/s)</th><th>Time to cross 0.4 m</th><th>Correct?</th></tr></thead>
+    <tbody>
+      <tr><td>CO₂ in interstitial air</td><td class="n2">2.0 × 10⁻⁶</td><td class="n2">0.9 days</td><td></td></tr>
+      <tr><td>Heat through bulk grain</td><td class="n2">1.2 × 10⁻⁷</td><td class="n2">15.4 days</td><td></td></tr>
+      <tr><td>Moisture migration</td><td class="n2">1.5 × 10⁻⁸</td><td class="n2">123.5 days</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="ans"><span><span class="box"></span>All three defensible</span>
+    <span><span class="box"></span>Corrections noted</span></div>
+  <div class="src">Sources:<span class="fill"></span></div>
+
+  <div class="flag">
+    <b>Question you will be asked</b><br>
+    &ldquo;Is your moisture figure a molecular diffusivity?&rdquo; — No. It is an
+    <b>effective</b> coefficient lumping convective moisture migration together with diffusion,
+    because in a real bag stack convection dominates. Molecular diffusion alone would be far
+    slower. Make sure you can say this in your own words.
+    <div class="ans" style="margin-left:0;margin-top:2mm">
+      <span><span class="box"></span>I can defend this</span></div>
+  </div>
+
+  <h3>3 · Bulk grain properties</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">3.1</span><span class="claim">
+      Bulk density of bagged grain.<span class="val">800 kg/m³</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">3.2</span><span class="claim">
+      Porosity — the fraction of the bed that is air, and therefore where CO₂ accumulates.
+      <span class="val">0.40</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">3.3</span><span class="claim">
+      Specific heat capacity, which sets how much a hotspot warms.
+      <span class="val">1800 J / kg·K</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <h3>4 · Environment</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">4.1</span><span class="claim">
+      Ambient godown temperature.<span class="val">30 °C</span>
+      <span class="ask">Note: the model holds this steady, with no day/night cycle.
+      Is that acceptable?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">4.2</span><span class="claim">
+      Ambient CO₂ outside the stack.<span class="val">400 ppm</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">4.3</span><span class="claim">
+      How fast the exposed faces of the stack vent CO₂ to the surrounding air.
+      <span class="val">time constant ≈ 0.5 days</span>
+      <span class="ask">This sets the background CO₂ level inside the stack — currently around
+      1,800 ppm for sound grain. Plausible for a bag stack in an open godown?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+    <div class="src">Source:<span class="fill"></span></div>
+  </div>
+
+  <h3>5 · Probe geometry — yours to justify</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">5.1</span><span class="claim">
+      Lance positions across a 4 m stack face.
+      <span class="val">0.8 m · 2.0 m · 3.2 m</span>
+      <span class="ask">I picked these to space three lances evenly. Why this spacing, and is
+      three the right number?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">5.2</span><span class="claim">
+      Sensor depths on each lance.
+      <span class="val">0.5 m · 1.2 m · 2.0 m below the top</span>
+      <span class="ask">Note 1.2 m is the deepest point from any face and reads highest CO₂
+      naturally — the detector accounts for that. Are these the right depths?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <h3>6 · Coverage analysis — not yet started</h3>
+  <p style="font-size:9.5pt;margin:0 0 2mm">This is your genuine engineering finding and nobody
+    else can produce it. Method: open the demo, inject a hotspot at many different positions,
+    record how many days each takes to be flagged. Produce one sentence of the form:</p>
+  <p style="font-size:10pt;margin:0 0 2mm;padding-left:5mm"><i>&ldquo;Three lances at this spacing
+    detect N % of hotspots within X days.&rdquo;</i></p>
+  <div class="ans" style="margin-left:0"><span><span class="box"></span>Data collected</span>
+    <span><span class="box"></span>Chart made</span>
+    <span>Result:</span><span class="fill"></span></div>
+
+  <div class="sign">
+    <div>Signed<div class="fill"></div></div>
+    <div>Date<div class="fill"></div></div>
+    <div>Items I could <b>not</b> verify<div class="fill"></div></div>
+  </div>
+</div>
+
+<!-- ============================== MOHIT + VISHAL ============================== -->
+<div class="person">
+  <div class="phead">
+    <h2>Mohit Kumar &amp; Vishal Vivek — Physics engine and detector</h2>
+    <p class="role">You two can read the code directly, so these are the claims you will be asked
+      to defend rather than numbers to look up. Repo:
+      github.com/Chiranjib-x/anna-drishti</p>
+  </div>
+
+  <h3>Mohit — the physics model</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">M1</span><span class="claim">
+      The solver is an explicit finite-difference scheme with zero-flux boundaries. It is only
+      stable while <span class="val">D·dt/dx² ≤ 0.25</span> — currently 0.18.
+      <span class="ask">Understand why this limit exists and what happens if it is exceeded.
+      If anyone ever sees NaN on screen, this is the first thing to check.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>I can defend this</span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">M2</span><span class="claim">
+      A single respiration term drives <b>both</b> CO₂ production and heat release — they are
+      not independent effects, they are the same biology seen two ways.
+      <span class="ask">This is the core coupling. Be ready to explain it.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>I can defend this</span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">M3</span><span class="claim">
+      Heat released per unit of CO₂ produced.<span class="val">10,670 J per g CO₂</span>
+      Respiration is capped at 4,000 mg/kg/day to stop runaway self-heating.
+      <span class="ask">Is the cap ever reached in a normal run? Check.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Checked</span>
+      <span><span class="box"></span>Issue found</span><span class="fill"></span></div>
+  </div>
+
+  <h3>Vishal — sensing and the detector</h3>
+
+  <div class="item">
+    <div class="q"><span class="n">V1</span><span class="claim">
+      Sensor noise applied to every reading, so the detector runs on imperfect data:
+      <span class="val">CO₂ ±25 ppm +1.5 % · RH ±1.0 % · temp ±0.15 °C</span>
+      <span class="ask">Do these match real NDIR and digital RH sensor datasheets? Check against
+      the parts in the ₹20,000 budget.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">V2</span><span class="claim">
+      CO₂ is compared <b>across lances at the same depth</b>, not against all nine ports.
+      <span class="ask">Depth stratification is real and about 1,000 ppm — comparing all nine
+      ports buried the signal completely. This is the change most likely to be questioned.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>I can defend this</span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">V3</span><span class="claim">
+      Alert fires at <span class="val">3.0 σ, sustained over 3 consecutive readings</span>
+      <span class="ask">Measured separation: clean grain peaks at 1.5 σ, a real hotspot reaches
+      4.2 σ. Verify by running the demo on clean grain for 60 days and confirming it stays
+      silent.</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Verified silent on clean grain</span>
+      <span><span class="box"></span>False alarm seen</span><span class="fill"></span></div>
+  </div>
+
+  <div class="item">
+    <div class="q"><span class="n">V4</span><span class="claim">
+      Risk score weighting.
+      <span class="val">35 % water activity · 40 % urgency · 25 % CO₂ anomaly</span>
+      <span class="ask">Alert level is 45 out of 100. Sensible weighting?</span>
+    </span></div>
+    <div class="ans"><span><span class="box"></span>Correct</span>
+      <span><span class="box"></span>Change to</span><span class="fill"></span></div>
+  </div>
+
+  <div class="sign">
+    <div>Mohit — signed<div class="fill"></div></div>
+    <div>Vishal — signed<div class="fill"></div></div>
+    <div>Date<div class="fill"></div></div>
+  </div>
+</div>
+
+</div>
