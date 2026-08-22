@@ -24,17 +24,31 @@ Then press **Deep interior pocket** and let it run.
 | `index.html` | The demo. Physics, sensing, decision engine, rendering, self-check. |
 | `build-board.html` | Phase status board — what's done, what's left, who owns what. |
 
-## How it is laid out
+## Where your section is
 
-`index.html` is one file, sectioned in this order:
+`index.html` is one file. Every section opens with a banner comment naming the track
+that owns it. **Search for the banner text** rather than trusting the line numbers —
+they drift as we edit, the banners don't.
 
-- `CONSTANTS` — every value carries its source in a comment. **Change numbers only here.**
-- Pure science functions — water activity, mould kinetics, respiration
-- Physics — diffusion solver, respiration coupling, CO₂ venting
-- Sensing and decision — noisy sampling, anomaly detection, `decide()`
-- Conventional inspection arm — the comparison baseline
-- Rendering — canvas heatmap, hand-rolled charts, timeline
-- `selfCheck()` — the assertions
+| Search for this | Lines | Owner | What's in it |
+|---|---|---|---|
+| `CONSTANTS - every value sourced` | 138–231 | Krittika | Every number in the model, each with its source in a comment. **Change numbers only here.** |
+| `scale calibration (Track F)` | 143–154 | Devavrath | Cell size, tick length, the three diffusivities |
+| `pure science functions` | 232–253 | Krittika | `awFromM` (isotherm), `muGrowth` / `daysToMould` (growth model), `respiration` |
+| `PHYSICS  (Track B)` | 254–316 | Mohit | `diffuse` (the solver + stability rule), `step` (respiration coupling), `inject` |
+| `SENSING + DECISION  (Track C)` | 317–407 | Vishal | `readSensors` (noise + quantization), `anomaly`, `decide` |
+| `CONVENTIONAL INSPECTION ARM  (Track E)` | 408–427 | Netra | `inspect` — the comparison baseline and its assumptions |
+| `RENDERING  (Track A)` | 483–693 | Chiranjib | Heatmap, hand-rolled charts, timeline |
+| `SELF-CHECK` | 738–808 | Chiranjib | Every assertion, including the P3 exit test |
+
+Reading it on GitHub is easiest — the file view lets you jump straight to a line range,
+and the banner comments are searchable with the `/` key.
+
+Three ways in, pick whichever suits you:
+
+- **On GitHub** — open `index.html`, press `/`, paste the banner text from the table
+- **In an editor** — Ctrl+F the banner text
+- **From the terminal** — `grep -n "PHYSICS  (Track B)" index.html`
 
 ## Track ownership
 
