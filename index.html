@@ -29,6 +29,10 @@
   button.on{background:var(--acc);color:#10201f;border-color:var(--acc);font-weight:600}
   label{font-size:.82rem;color:var(--dim);display:flex;align-items:center;gap:.4rem}
   input[type=range]{width:110px}
+  input[type=number]{width:74px;background:#2a2521;color:var(--ink);border:1px solid var(--line);
+        border-radius:4px;padding:.3rem .4rem;font:600 .95rem ui-monospace,Consolas,monospace}
+  input[type=number]:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+  tr.grow td{color:var(--bad);font-weight:600}
   table{width:100%;border-collapse:collapse;font-size:.82rem}
   th,td{text-align:right;padding:.22rem .3rem;border-bottom:1px solid #262119}
   th{color:var(--dim);font-weight:500;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
@@ -129,6 +133,18 @@
     <div class="card" style="margin-top:1rem">
       <h2>Stack state (ground truth)</h2>
       <table id="truth"><tbody></tbody></table>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h2>Bench reading &mdash; type a real measurement</h2>
+      <div class="bar">
+        <label>RH <input id="bRh" type="number" value="75" min="1" max="99" step="0.1"> %</label>
+        <label>Temp <input id="bT" type="number" value="30" min="0" max="60" step="0.1"> &deg;C</label>
+      </div>
+      <table id="bench"><tbody></tbody></table>
+      <div class="note">Measured interstitial RH at equilibrium <em>is</em> the grain&rsquo;s water
+        activity. This runs the same functions as the live engine, on a number you typed &mdash;
+        nothing here is wired to the simulation.</div>
     </div>
   </div>
 </main>
@@ -405,6 +421,15 @@ function decide(P){
   return { zones: zones, top: top, fire: fire, action: action, evidence: evidence };
 }
 
+/* A single reading, straight off a bench instrument, through the same interpretation
+   path the live engine uses. Deliberately has no connection to the simulation: this is
+   how we show a real jar measurement without wiring hardware into the demo. */
+function benchReading(rh, t){
+  const aw = Math.min(0.994, Math.max(0.01, rh / 100));
+  return { aw: aw, mc: mFromAw(aw, t), dtm: daysToMould(aw, t),
+           grows: aw > K.AW_MIN, toxin: toxinPermissive(aw, t) };
+}
+
 /* ============================================================================
    CONVENTIONAL INSPECTION ARM  (Track E) - defensible, not a strawman.
    Periodic visual + peripheral spear sampling every 14 days. A spear reaches
@@ -546,7 +571,14 @@ function chart(id, pick, colours, label, opts){
   const cv = $(id), c = cv.getContext("2d"), W = cv.width, H = cv.height;
   const PADL = 62, PADB = 20, PADT = 16, PADR = 8;
   c.fillStyle = "#161311"; c.fillRect(0, 0, W, H);
-  const h = run.hist; if (h.length < 2) return;
+  c.fillStyle = "#c9c1b6"; c.textAlign = "left"; c.font = "600 12px Consolas,monospace";
+  c.fillText(label, PADL + 4, 11);
+  const h = run.hist;
+  if (h.length < 2){            // nothing recorded yet - say so, an empty box reads as broken
+    c.fillStyle = "#5c534a"; c.textAlign = "center"; c.font = "12px Consolas,monospace";
+    c.fillText("press Play, or pick a scenario", W / 2, H / 2);
+    return;
+  }
   const series = colours.map((_, s) => h.map(p => pick(p)[s]));
   const flat = [].concat.apply([], series);
   let lo = opts.lo !== undefined ? opts.lo : Math.min.apply(null, flat);
@@ -735,6 +767,21 @@ $("#reset").onclick = () => { run.playing = false; $("#play").textContent = "▶
 $("#speed").oninput = e => { speed = +e.target.value; $("#speedv").textContent = speed; };
 $("#dose").oninput  = e => { $("#dosev").textContent = (+e.target.value).toFixed(1); };
 
+function drawBench(){
+  const b = benchReading(+$("#bRh").value || 0, +$("#bT").value || 0);
+  $("#bench tbody").innerHTML = [
+    ["water activity", b.aw.toFixed(3) +
+      (b.grows ? "  - above the 0.82 growth floor" : "  - below the 0.82 growth floor"), b.grows],
+    ["implied moisture", b.mc.toFixed(1) + " % wet basis", false],
+    ["mould onset", isFinite(b.dtm) ? "in " + b.dtm.toFixed(1) + " days"
+                                    : "not possible at this water activity", isFinite(b.dtm)],
+    ["aflatoxin window", b.toxin ? "OPEN - aw and temperature both permissive" : "closed", b.toxin]
+  ].map(r => "<tr class='" + (r[2] ? "grow" : "") + "'><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("");
+}
+$("#bRh").oninput = drawBench;
+$("#bT").oninput  = drawBench;
+drawBench();
+
 /* ============================================================================
    SELF-CHECK - the one runnable check. If the science or the solver breaks,
    this fails loudly instead of quietly producing a plausible-looking demo.
@@ -788,7 +835,14 @@ function selfCheck(){
   ok("CO2 leads temperature", dCO2 !== null && (dT === null || dCO2 < dT));
   const lead = "CO2 day " + dCO2 + ", temperature " + (dT === null ? "never (>60 d)" : "day " + dT);
 
-  // 6. no NaN anywhere after a long run
+  // 6. bench path agrees with the engine and respects the same thresholds
+  ok("bench: dry jar is safe",  benchReading(65, 30).grows === false);
+  ok("bench: wet jar grows",    benchReading(90, 30).grows === true);
+  ok("bench: toxin needs 0.85", benchReading(84, 28).toxin === false &&
+                                benchReading(90, 28).toxin === true);
+  ok("bench: moisture inverts", Math.abs(benchReading(awFromM(16, 30) * 100, 30).mc - 16) < 0.05);
+
+  // 7. no NaN anywhere after a long run
   ok("no NaN", [T2.m, T2.T, T2.c].every(f => Array.prototype.every.call(f, Number.isFinite)));
 
   const el = $("#selfcheck");
