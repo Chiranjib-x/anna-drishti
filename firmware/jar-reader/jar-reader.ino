@@ -27,10 +27,13 @@
 //      or if the Adafruit libraries are not installed. -----------------------
 #define USE_OLED
 
+// Set to 32 if yours is the short 0.91" module. The 0.96" modules are 64.
+#define OLED_H 64
+
 #ifdef USE_OLED
   #include <Adafruit_GFX.h>
   #include <Adafruit_SSD1306.h>
-  Adafruit_SSD1306 oled(128, 64, &Wire, -1);
+  Adafruit_SSD1306 oled(128, OLED_H, &Wire, -1);
   bool oledOK = false;
 #endif
 
@@ -145,13 +148,24 @@ void loop(){
   if (oledOK){
     oled.clearDisplay();
     oled.setTextSize(1); oled.setCursor(0, 0);
-    oled.println(stable ? "STABLE - record it" : "settling...");
-    oled.setTextSize(2); oled.setCursor(0, 14);
-    oled.printf("%.1f%%\n", rh);
-    oled.setCursor(0, 34);
-    oled.printf("%.1fC\n", t);
-    oled.setTextSize(1); oled.setCursor(0, 54);
-    oled.printf("aw %.3f %s", aw, aw >= 0.82f ? "OVER 0.82" : "safe");
+    oled.println(stable ? "STABLE-record it" : "settling...");
+
+    // ponytail: print() not printf() - printf on a Print object is an ESP32
+    // extension, and a compile error at midnight is not worth the tidier line.
+    oled.setTextSize(2); oled.setCursor(0, 12);
+    oled.print(rh, 1); oled.print("%");
+
+    if (OLED_H >= 64) {                 // room for temperature on its own line
+      oled.setCursor(0, 32);
+      oled.print(t, 1); oled.print("C");
+      oled.setTextSize(1); oled.setCursor(0, 52);
+    } else {                            // 128x32: squeeze it alongside
+      oled.setTextSize(1); oled.setCursor(66, 12);
+      oled.print(t, 1); oled.print("C");
+      oled.setCursor(0, 24);
+    }
+    oled.print("aw "); oled.print(aw, 3);
+    oled.print(aw >= 0.82f ? " OVER" : " safe");
     oled.display();
   }
 #endif
