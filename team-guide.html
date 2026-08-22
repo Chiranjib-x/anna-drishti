@@ -1,0 +1,446 @@
+<title>Anna-Drishti Team Guide</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 13mm; }
+  *{box-sizing:border-box}
+  html,body{background:#fff; color:#000}
+  body{margin:0; font:10.5pt/1.45 "Georgia","Times New Roman",serif}
+  .sheet{max-width:180mm; margin:0 auto; padding:6mm 0}
+  h1{font:700 19pt/1.15 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 2mm; letter-spacing:-.01em}
+  .sub{font:10pt/1.4 "Segoe UI",Helvetica,Arial,sans-serif; color:#333; margin:0 0 1mm}
+  hr.rule{border:0; border-top:1.5pt solid #000; margin:4mm 0 5mm}
+  h2{font:700 13pt/1.2 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 1mm}
+  .role{font:9.5pt/1.35 "Segoe UI",Helvetica,Arial,sans-serif; color:#444; margin:0 0 4mm}
+  .part{page-break-before:always; break-before:page}
+  .phead{border-bottom:1pt solid #000; padding-bottom:2mm; margin-bottom:5mm}
+  h3{font:700 9.5pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; text-transform:uppercase;
+     letter-spacing:.09em; margin:5.5mm 0 2.5mm; padding-bottom:1mm; border-bottom:.5pt solid #999}
+  h4{font:700 10pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; margin:3.5mm 0 1.5mm}
+  p{margin:0 0 2.5mm}
+  ul,ol{margin:0 0 3mm 5mm; padding:0}
+  li{margin-bottom:1.2mm}
+  .step{display:flex; gap:3mm; margin:0 0 3.5mm; page-break-inside:avoid; break-inside:avoid}
+  .step .num{font:700 11pt "Segoe UI",Helvetica,Arial,sans-serif; min-width:7mm; flex:none;
+             border-top:1.5pt solid #000; padding-top:1mm}
+  .step .body{flex:1; border-top:.5pt solid #ccc; padding-top:1.5mm}
+  .step h4{margin-top:0}
+  table{border-collapse:collapse; width:100%; margin:2mm 0 3.5mm; font-size:9.5pt}
+  th,td{border:.5pt solid #999; padding:1.5mm 2mm; text-align:left; vertical-align:top}
+  th{background:#eee; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+     text-transform:uppercase; letter-spacing:.06em}
+  td.n{font-family:"Consolas","Courier New",monospace; white-space:nowrap; text-align:right}
+  td.c{text-align:center}
+  tr.pick td{background:#e8e8e8; font-weight:700}
+  td.blank{height:7mm; background:#fcfcfc}
+  .no{color:#666}
+  .yes{font-weight:700}
+  .warn{border:1.25pt solid #000; padding:3mm 4mm; margin:3.5mm 0; page-break-inside:avoid}
+  .warn b.lbl{display:block; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+              text-transform:uppercase; letter-spacing:.09em; margin-bottom:1.5mm}
+  .note{background:#f4f4f4; border-left:2.5pt solid #000; padding:3mm 4mm; margin:3.5mm 0;
+        page-break-inside:avoid}
+  .note b.lbl{display:block; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+              text-transform:uppercase; letter-spacing:.09em; margin-bottom:1.5mm}
+  code{font-family:"Consolas","Courier New",monospace; font-size:9.5pt; background:#f0f0f0;
+       padding:.2mm 1mm; border:.5pt solid #ccc}
+  .box{display:inline-block; width:3.4mm; height:3.4mm; border:.9pt solid #000;
+       margin-right:1.4mm; vertical-align:-.4mm}
+  .checks{margin:3mm 0 0; font:9pt "Segoe UI",Helvetica,Arial,sans-serif}
+  .checks div{margin-bottom:2mm}
+  .fill{display:inline-block; border-bottom:.5pt dotted #666; min-width:38mm}
+  .sched td:first-child{font-family:"Consolas","Courier New",monospace; white-space:nowrap}
+</style>
+
+<div class="sheet">
+
+<h1>Anna-Drishti — Team Guide</h1>
+<p class="sub">Everyone except the lab. What you own, when it is due, and what you will be asked.</p>
+<p class="sub">Chiranjib · Mohit · Vishal · Devavrath — SIH 2026 · VIT · issued 22 August</p>
+<hr class="rule">
+
+<h3>Where we actually are</h3>
+<p>The software is built and working end to end. Phases P1 to P5 of the plan are done — physics,
+CO₂, virtual sensors, decision engine, comparison mode. <b>P4, the milestone the whole weekend
+hinges on, is behind us.</b> We are ahead of schedule.</p>
+<p>What remains is almost entirely unglamorous finishing: polish, rehearsal, the backup video,
+and each of us being able to defend the part we own. Those are the things that actually decide
+Monday, and they are the things teams usually skip.</p>
+
+<div class="note">
+  <b class="lbl">The rule that matters most</b>
+  <p style="margin:0">When a judge asks where a number came from, <b>the person who owns it
+  answers — not the person who typed it.</b> A lot of numbers were typed this weekend by one
+  person. They are not his. Read the part that belongs to you, correct anything wrong, and be
+  ready to defend it. If you cannot defend it, we cut it rather than bluff.</p>
+</div>
+
+<h3>Schedule</h3>
+<table class="sched">
+  <thead><tr><th>When</th><th>What</th><th>Who</th></tr></thead>
+  <tbody>
+    <tr><td>Sat — today</td><td>Jars sealed. Sensor sourcing decided.</td><td>Krittika, Devavrath</td></tr>
+    <tr><td>Sun 12:00</td><td><b>Verification sheets returned.</b> All constants signed off.</td><td>Everyone</td></tr>
+    <tr class="pick"><td>Sun 14:00</td><td><b>FEATURE FREEZE.</b> No new functionality, no exceptions.</td><td>Everyone</td></tr>
+    <tr><td>Sun afternoon</td><td>Polish, three clean runs, deck complete, roles assigned</td><td>Chiranjib + all</td></tr>
+    <tr><td>Sun evening</td><td>Two timed rehearsals. Backup video. Offline test. Q&amp;A drill.</td><td>Everyone</td></tr>
+    <tr><td>Mon morning</td><td>Arrive early, silent run, present</td><td>Everyone</td></tr>
+  </tbody>
+</table>
+
+<div class="warn">
+  <b class="lbl">14:00 Sunday is not negotiable</b>
+  <p style="margin:0">Anything not working at 14:00 gets cut and is never mentioned on stage. The
+  urge to add one more thing on Sunday evening is the single most common way a good demo dies on
+  Monday morning. If someone proposes wiring live sensor data into the software on Sunday, the
+  answer is no — that is exactly what the freeze exists to refuse.</p>
+</div>
+
+<h3>First thing, all of you</h3>
+<p>Clone the repo, open <code>index.html</code> in a browser. <b>The pill in the header must go
+green.</b> Then press <b>Deep interior pocket</b> and watch it run. Do this before reading
+anything else — everyone needs to have seen it move before Monday.</p>
+<p><code>github.com/Chiranjib-x/anna-drishti</code></p>
+
+<!-- ============ CHIRANJIB ============ -->
+<div class="part">
+  <div class="phead">
+    <h2>Chiranjib — Integration, and the things nobody else can do</h2>
+    <p class="role">Track A · You are merge authority and on the critical path. Do not take on
+      hardware work.</p>
+  </div>
+
+  <h3>Sunday afternoon — P6</h3>
+  <div class="step"><div class="num">1</div><div class="body"><h4>Call the freeze at 14:00</h4>
+    <p style="margin:0">Out loud, to everyone. Write down anything that does not work so the
+    narrator knows what not to touch on stage.</p></div></div>
+  <div class="step"><div class="num">2</div><div class="body"><h4>Projector-distance check</h4>
+    <p style="margin:0">Fonts, colours and the charts have to be readable from the back of a room,
+    not from your desk. Test at actual projector resolution.</p></div></div>
+  <div class="step"><div class="num">3</div><div class="body"><h4>Three consecutive clean runs</h4>
+    <p style="margin:0">Without refreshing the page. Watch for anything that leaks, slows, or gets
+    stuck. This is the P6 exit test.</p></div></div>
+  <div class="step"><div class="num">4</div><div class="body"><h4>Assign roles</h4>
+    <p style="margin:0"><b>One narrator, one driver on the laptop.</b> The other four answer only in
+    their own domain. Six people talking over each other reads as chaos.</p>
+    <p style="margin:2mm 0 0">Narrator: <span class="fill"></span> &nbsp;
+       Driver: <span class="fill"></span></p></div></div>
+
+  <h3>Sunday evening — P7, the insurance</h3>
+  <div class="step"><div class="num">5</div><div class="body"><h4>Record the backup video</h4>
+    <p style="margin:0"><b>This is never cut, under any circumstances.</b> A full screen capture of
+    the complete demo working. If anything fails on Monday you play the video and keep talking.</p></div></div>
+  <div class="step"><div class="num">6</div><div class="body"><h4>Offline test on the real laptop</h4>
+    <p style="margin:0">Wifi off, the browser you will actually use, projector resolution. The file
+    has zero external references so it should pass — but run it on the actual machine anyway.
+    That is the whole point of the test.</p></div></div>
+  <div class="step"><div class="num">7</div><div class="body"><h4>Two full timed rehearsals</h4>
+    <p style="margin:0">Start to finish, including the walk to the laptop and the opening line. If
+    you are over time, cut content now rather than live.</p></div></div>
+  <div class="step"><div class="num">8</div><div class="body"><h4>Pack</h4>
+    <p style="margin:0">Laptop, charger, <b>HDMI and VGA adapters</b>, the HTML on a pendrive and
+    emailed to all six, the backup video, the printed science one-pager, the proposal PDF.</p></div></div>
+
+  <h3>Monday</h3>
+  <ul>
+    <li>Arrive early. Test the projector <b>before</b> judges start circulating</li>
+    <li>One silent full run to confirm nothing broke overnight</li>
+    <li>Open with the hook, not the architecture</li>
+    <li><b>Let the judge inject the hotspot themselves.</b> Hands on the mouse beats any slide</li>
+    <li>Land the comparison timeline, then stop talking and let them look at it</li>
+    <li>State the simulation boundary plainly, then the roadmap and the ₹20,000 budget</li>
+  </ul>
+
+  <div class="checks">
+    <div><span class="box"></span>Freeze called &nbsp; <span class="box"></span>3 clean runs
+      &nbsp; <span class="box"></span>Roles assigned &nbsp; <span class="box"></span><b>Video recorded</b>
+      &nbsp; <span class="box"></span>Offline test passed &nbsp; <span class="box"></span>Packed</div>
+  </div>
+</div>
+
+<!-- ============ MOHIT + VISHAL ============ -->
+<div class="part">
+  <div class="phead">
+    <h2>Mohit &amp; Vishal — Defend the engine</h2>
+    <p class="role">Tracks B and C · The code in your domains is a first draft. Own it and correct it.</p>
+  </div>
+
+  <div class="note">
+    <b class="lbl">Read this honestly</b>
+    <p style="margin:0">The physics and detector code was written fast, by one person, to get the
+    loop working. It is not finished work and it is not anyone's private property. Your job now is
+    to read your section, find what is wrong, and be the person who can explain it. If you arrive
+    Monday without having read it, we have three people who can answer technical questions and two
+    who cannot — worse than if you had written it yourselves.</p>
+  </div>
+
+  <h3>Where your code is</h3>
+  <p>One file, <code>index.html</code>. Every section opens with a banner comment. Search for the
+  banner text rather than trusting line numbers — they drift as we edit.</p>
+  <table>
+    <thead><tr><th>Search for</th><th>Lines</th><th>Owner</th><th>Contains</th></tr></thead>
+    <tbody>
+      <tr><td><code>PHYSICS  (Track B)</code></td><td class="n">254–316</td><td>Mohit</td>
+        <td>The solver, stability rule, respiration coupling, injection</td></tr>
+      <tr><td><code>SENSING + DECISION  (Track C)</code></td><td class="n">317–407</td><td>Vishal</td>
+        <td>Noise model, anomaly detection, <code>decide()</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Mohit — three claims to be able to defend</h3>
+  <div class="step"><div class="num">M1</div><div class="body"><h4>The stability condition</h4>
+    <p style="margin:0">The solver is explicit finite-difference with zero-flux boundaries. It is
+    only stable while <code>D·dt/dx² ≤ 0.25</code> — currently 0.18. Understand why the limit
+    exists and what breaks past it. <b>If anyone ever sees NaN on screen, this is the first thing
+    to check.</b></p></div></div>
+  <div class="step"><div class="num">M2</div><div class="body"><h4>The coupling</h4>
+    <p style="margin:0">A single respiration term drives <b>both</b> CO₂ production and heat
+    release. They are not independent effects — they are the same biology observed two ways. This
+    is the core of the model.</p></div></div>
+  <div class="step"><div class="num">M3</div><div class="body"><h4>Check the cap</h4>
+    <p style="margin:0">Respiration is capped at 4,000 mg/kg/day to stop runaway self-heating.
+    Verify it is never reached during a normal run. If it is, the cap is doing physics rather than
+    protecting us from it, and that is a problem.</p>
+    <p style="margin:2mm 0 0"><span class="box"></span>Checked &nbsp;
+      <span class="box"></span>Issue found: <span class="fill"></span></p></div></div>
+
+  <h3>Vishal — four claims, two of them recently changed</h3>
+  <div class="step"><div class="num">V1</div><div class="body"><h4>The noise model</h4>
+    <p style="margin:0">Every reading gets Gaussian noise and quantization: CO₂ ±25 ppm + 1.5 %,
+    RH ±1.0 %, temperature ±0.15 °C. <b>Check these against real datasheets</b> for the parts in
+    our budget. &ldquo;Our detector already runs on noisy readings, here is the noise model&rdquo;
+    is a far stronger answer than silence.</p></div></div>
+  <div class="step"><div class="num">V2</div><div class="body"><h4>Depth-matched comparison — changed</h4>
+    <p style="margin:0">CO₂ is compared <b>across lances at the same depth</b>, not against all nine
+    ports. Depth stratification is real and about 1,000 ppm; comparing all nine buried the signal
+    completely. <b>This is the change most likely to be questioned.</b></p></div></div>
+  <div class="step"><div class="num">V3</div><div class="body"><h4>Alert threshold — changed</h4>
+    <p style="margin:0">Fires at <b>3.0 σ sustained over 3 consecutive readings</b>, down from 4.0.
+    Measured separation: clean grain peaks at 1.5 σ, a real hotspot reaches 4.2 σ.
+    <b>Verify this yourself</b> — run the demo on clean grain for 60 days and confirm it stays
+    silent.</p>
+    <p style="margin:2mm 0 0"><span class="box"></span>Verified silent &nbsp;
+      <span class="box"></span>False alarm seen: <span class="fill"></span></p></div></div>
+  <div class="step"><div class="num">V4</div><div class="body"><h4>Risk weighting</h4>
+    <p style="margin:0">35 % water activity, 40 % urgency, 25 % CO₂ anomaly, alerting at 45 out of
+    100. Sensible, or should it be weighted differently?</p></div></div>
+
+  <h3>Sunday — bug triage only</h3>
+  <p>After the freeze you two are on triage and nothing else. Every crash, every NaN, every stuck
+  state. Write down anything you cannot fix so the narrator knows to avoid it.</p>
+
+  <h3>Your Q&amp;A questions</h3>
+  <table>
+    <thead><tr><th>Asked of</th><th>Question</th></tr></thead>
+    <tbody>
+      <tr><td>Mohit</td><td>&ldquo;Why should I believe your diffusion model?&rdquo;</td></tr>
+      <tr><td>Mohit</td><td>&ldquo;What happens if your solver goes unstable?&rdquo;</td></tr>
+      <tr><td>Vishal</td><td>&ldquo;Why add noise to a simulation at all?&rdquo;</td></tr>
+      <tr><td>Vishal</td><td>&ldquo;Why a differential baseline instead of an absolute threshold?&rdquo;</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b class="lbl">Optional, and only if everything else is done</b>
+    <p style="margin:0"><b>Mohit</b> — the insect module (logistic growth seeded at a focus, acoustic
+    amplitude proportional to population) is a bonus that was never built. Physics is stable so it
+    is genuinely available. But the plan is explicit: <b>the loop is never risked for a bonus.</b>
+    Do not start it before the triage is clear.</p>
+  </div>
+</div>
+
+<!-- ============ DEVAVRATH ============ -->
+<div class="part">
+  <div class="phead">
+    <h2>Devavrath — Deployment, sensors and the coverage finding</h2>
+    <p class="role">Track F · You own the physical numbers and the only genuine engineering result
+      we can produce this weekend.</p>
+  </div>
+
+  <div class="warn">
+    <b class="lbl">Nothing ordered online arrives before Monday</b>
+    <p style="margin:0">Delivery to Vellore is two to four days. Everything in the buy list below is
+    <b>nationals hardware</b> — buy it once, buy it right, but do not expect it for the internal
+    round.<br><br>
+    <b>Today, check the VIT labs instead:</b> Biotech, Instrumentation, the maker space, ECE
+    final-year project cupboards. Ask for any CO₂ sensor at all, an SHT31 or BME280, and an ESP32
+    or any Arduino. <b>Borrowed parts are the only ones that can serve Monday.</b></p>
+  </div>
+
+  <h3>1 · Sign off the physical constants — by Sunday 12:00</h3>
+  <p>Verification Sheet pages 6–8, twelve items: stack dimensions, cell size, the three
+  diffusivities, bulk density, porosity, specific heat, ambient conditions, probe geometry.</p>
+  <div class="note">
+    <b class="lbl">The question you will be asked</b>
+    <p style="margin:0">&ldquo;Is your moisture figure a molecular diffusivity?&rdquo; — <b>No.</b>
+    It is an <i>effective</i> coefficient lumping convective moisture migration together with
+    diffusion, because in a real bag stack convection dominates. Molecular diffusion alone would be
+    far slower. Say this in your own words.</p>
+  </div>
+
+  <h3>2 · Carbon dioxide sensor — the decision that matters</h3>
+  <table>
+    <thead><tr><th>Sensor</th><th>Range</th><th>Bus</th><th>ESP32</th><th>≈ ₹</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td>Sensirion SCD30</td><td class="n">0–40,000 ppm</td><td>I²C</td>
+        <td class="c">3.3 V native</td><td class="n">5,000–6,500</td><td>Buy this</td></tr>
+      <tr><td>Sensirion SCD41</td><td class="n">0–40,000<br>(spec'd to 5,000)</td><td>I²C</td>
+        <td class="c">3.3 V native</td><td class="n">3,500–5,000</td><td>Good, less headroom</td></tr>
+      <tr><td>Winsen MH-Z19B</td><td class="n">0–5,000 ppm</td><td>UART</td>
+        <td class="c">3.3 V logic<br><b>5 V power</b></td><td class="n">2,500–3,500</td>
+        <td class="no">Saturates in grain</td></tr>
+    </tbody>
+  </table>
+  <p><b>Get the SCD30.</b> A sealed jar reads tens of thousands of ppm and a genuinely spoiling
+  stack interior does too. A 5,000 ppm ceiling pegs and tells you nothing. It also returns humidity
+  and temperature on the same chip, cutting part count.</p>
+
+  <div class="warn">
+    <b class="lbl">Disable Automatic Baseline Correction — this will cost you a day</b>
+    <p style="margin:0">Every NDIR sensor assumes it sees fresh 400 ppm air every 24 hours and
+    silently re-zeros to the lowest value it has seen. Inside grain it <b>never</b> sees 400 ppm, so
+    ABC quietly recalibrates the elevated reading back down to &ldquo;normal&rdquo; and erases the
+    exact signal we are measuring. Turn ABC off in firmware. <b>This is the single most common way
+    CO₂ grain-monitoring projects fail.</b></p>
+  </div>
+
+  <h3>3 · Humidity and temperature — this is our water activity</h3>
+  <table>
+    <thead><tr><th>Sensor</th><th>RH accuracy</th><th>Bus</th><th>≈ ₹</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td>Sensirion SHT31-D</td><td class="n">±2 %</td><td>I²C 3.3 V</td>
+        <td class="n">700–1,200</td><td>Buy three</td></tr>
+      <tr><td>SHT35 / SHT85</td><td class="n">±1.5 %</td><td>I²C 3.3 V</td><td class="n">2,000–3,500</td>
+        <td>Better if budget allows</td></tr>
+      <tr><td>BME280</td><td class="n">±3 %</td><td>I²C 3.3 V</td><td class="n">350–500</td>
+        <td class="no">Too coarse for a<sub>w</sub></td></tr>
+      <tr><td>DHT22 / AM2302</td><td class="n">±2–5 %</td><td>1-wire</td><td class="n">250</td>
+        <td class="no">Do not use</td></tr>
+    </tbody>
+  </table>
+  <p>Not DHT22 — it drifts, it is slow, and it fails in exactly the condensing high-humidity
+  conditions our own proposal names as a known failure mode. The SHT31 carries an <b>onboard
+  heater</b> to burn off condensation, which is the mitigation we already promised in writing.</p>
+  <p>Accuracy matters more here than anywhere else: <b>relative humidity <i>is</i> water
+  activity.</b> ±2 % RH becomes ±0.02 a<sub>w</sub>, and we distinguish 0.82 from 0.85.</p>
+
+  <div class="warn">
+    <b class="lbl">The part everyone forgets — I²C address collision</b>
+    <p style="margin:0">The SHT31 has only <b>two</b> possible addresses (0x44 and 0x45, set by the
+    ADDR pin). We want three, at three depths. <b>Three on one bus collide and it will not
+    work.</b><br><br>
+    Fix: a <b>TCA9548A I²C multiplexer, about ₹250.</b> Eight channels, solves it completely, scales
+    straight to nine sensors for the full three-lance array. Buy it now or rediscover this at two
+    in the morning.</p>
+  </div>
+
+  <h3>4 · Controller and support parts</h3>
+  <table>
+    <thead><tr><th>Item</th><th>Qty</th><th>≈ ₹</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>ESP32-DevKitC (WROOM-32)</td><td class="c">2</td><td class="n">450–700 ea</td><td>Buy two. They die.</td></tr>
+      <tr><td>TCA9548A multiplexer</td><td class="c">1</td><td class="n">250</td><td>Non-optional</td></tr>
+      <tr><td>5 V 2 A supply</td><td class="c">1</td><td class="n">300</td><td>SCD30 and WiFi peak together</td></tr>
+      <tr><td>2.2 kΩ resistors</td><td class="c">10</td><td class="n">20</td><td>I²C pull-ups for long runs</td></tr>
+      <tr><td>Shielded 4-core cable</td><td class="c">5 m</td><td class="n">400</td><td>Lance runs</td></tr>
+      <tr><td>Dupont and JST connectors</td><td class="c">—</td><td class="n">300</td><td></td></tr>
+    </tbody>
+  </table>
+  <p><b>Rough total ₹9,000–11,000</b>, comfortably inside our ₹20,000 ceiling. Verify prices on
+  Robu.in and Amazon.in before ordering — they drift.</p>
+
+  <h3>5 · Compatibility — read before wiring</h3>
+  <div class="note">
+    <b class="lbl">Everything above is 3.3 V I²C, so no level shifters are needed</b>
+    <p style="margin:0">This is deliberate. <b>ESP32 GPIO is not 5 V tolerant</b>, and mixing 5 V
+    parts onto it is how boards get killed. An all-3.3 V I²C set removes that entire class of
+    problem.<br><br>
+    One exception, the MH-Z19B if you end up with one: <b>power it from 5 V, but its UART lines are
+    3.3 V</b>, so TX and RX connect to the ESP32 directly. Do not run it on 3.3 V power — the
+    infrared lamp will not drive properly and readings drift low.<br><br>
+    Second gotcha: the <b>SCD30 stretches the I²C clock up to 150 ms.</b> ESP32 handles it, but you
+    may need to raise <code>Wire.setTimeOut()</code> or reads return garbage.</p>
+  </div>
+  <div class="warn">
+    <b class="lbl">I²C over 2 m is out of specification</b>
+    <p style="margin:0">Probe lances put sensors metres from the controller; I²C is designed for
+    on-board distances. In order: drop the bus to 100 kHz, use 2.2 kΩ pull-ups instead of 4.7 kΩ,
+    use shielded twisted cable. If it is still unreliable at full length, the real fix is a small
+    microcontroller at each depth talking RS-485 — but do not design for that until the problem is
+    measured.</p>
+  </div>
+
+  <h3>6 · Bring-up order — do not wire everything at once</h3>
+  <div class="step"><div class="num">1</div><div class="body">ESP32 alone. Blink an LED.</div></div>
+  <div class="step"><div class="num">2</div><div class="body"><b>One</b> SHT31 wired directly. Bus scan, confirm 0x44.</div></div>
+  <div class="step"><div class="num">3</div><div class="body">SCD30 alone. Confirm ~400–600 ppm in room air, <b>then disable ABC</b>.</div></div>
+  <div class="step"><div class="num">4</div><div class="body">Add the TCA9548A. Move the working SHT31 behind it.</div></div>
+  <div class="step"><div class="num">5</div><div class="body">Add sensors two and three on separate channels.</div></div>
+  <div class="step"><div class="num">6</div><div class="body">Extend to full cable length <b>last</b> — this is where signal integrity breaks.</div></div>
+
+  <h3>7 · Calibrate against salt standards</h3>
+  <p>Saturated salt solutions hold a known water activity in the air above them. Standard method,
+  salts already in the lab, costs essentially nothing.</p>
+  <table style="width:78%">
+    <thead><tr><th>Salt (saturated, 25 °C)</th><th>a<sub>w</sub></th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>Magnesium chloride</td><td class="n">0.328</td><td>Dry end</td></tr>
+      <tr><td>Sodium chloride</td><td class="n">0.753</td><td>Below our threshold</td></tr>
+      <tr><td>Potassium chloride</td><td class="n">0.843</td><td><b>Straddles the 0.82 floor</b></td></tr>
+      <tr><td>Potassium sulphate</td><td class="n">0.973</td><td>Above</td></tr>
+    </tbody>
+  </table>
+  <p>This converts <i>&ldquo;our sensor says 0.87&rdquo;</i> into <i>&ldquo;our sensor is calibrated
+  against standards and says 0.87.&rdquo;</i> Ask Krittika — these are her reagents.</p>
+
+  <h3>8 · The coverage analysis — your genuine finding</h3>
+  <p>Nobody else can produce this and it needs no hardware at all. Open the demo, inject a hotspot
+  at many different positions, record how many days each takes to be flagged. Produce one
+  sentence:</p>
+  <p style="padding-left:5mm"><i>&ldquo;Three lances at this spacing detect N % of hotspots within
+  X days.&rdquo;</i></p>
+  <p>Then turn it into one clean chart for the deck. That answers the deployment question better
+  than any amount of CAD.</p>
+  <table>
+    <thead><tr><th>Hotspot position</th><th>Day flagged</th><th>Hotspot position</th><th>Day flagged</th></tr></thead>
+    <tbody>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </tbody>
+  </table>
+
+  <h3>9 · Deployment slide</h3>
+  <p>Probe geometry, the coverage result, what the hardware would actually be, and the ₹20,000
+  budget from the submitted proposal.</p>
+
+  <h3>10 · What not to build</h3>
+  <table>
+    <thead><tr><th>Skip</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Rotary manifold, pump, tubing</td><td class="no">Multi-day mechanical build with servo
+        and tubing failure modes. Adds nothing to the argument yet.</td></tr>
+      <tr><td>Acoustic insect detection</td><td class="no">Needs insects we do not have, a trained
+        classifier, and a quiet room.</td></tr>
+      <tr><td>Probe lance fabrication</td><td class="no">Machining time for no rhetorical gain — a
+        sensor in a jar makes the same point.</td></tr>
+      <tr><td>Wireless dashboard</td><td class="no">Nothing needs it, and COM-port roulette on an
+        unfamiliar laptop is a bad way to lose.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <b class="lbl">Hardware must not touch index.html</b>
+    <p style="margin:0">The software demo runs identically whether any sensor exists or not. The
+    <b>Bench reading</b> panel takes typed numbers precisely so a dead sensor, a missing driver or a
+    bad COM port cannot take the software down with it. Read the jar, type the number, done.</p>
+  </div>
+
+  <div class="checks">
+    <div><span class="box"></span>Labs checked &nbsp; <span class="box"></span>Pages 6–8 signed off
+      &nbsp; <span class="box"></span>Coverage data collected &nbsp; <span class="box"></span>Chart made
+      &nbsp; <span class="box"></span>Deployment slide done</div>
+    <div>Signed: <span class="fill"></span> &nbsp;&nbsp; Date: <span class="fill"></span></div>
+  </div>
+</div>
+
+</div>

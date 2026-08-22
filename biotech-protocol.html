@@ -1,0 +1,541 @@
+<title>Anna-Drishti Biotech Protocol</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 13mm; }
+  *{box-sizing:border-box}
+  html,body{background:#fff; color:#000}
+  body{margin:0; font:10.5pt/1.45 "Georgia","Times New Roman",serif}
+  .sheet{max-width:180mm; margin:0 auto; padding:6mm 0}
+  h1{font:700 19pt/1.15 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 2mm; letter-spacing:-.01em}
+  .sub{font:10pt/1.4 "Segoe UI",Helvetica,Arial,sans-serif; color:#333; margin:0 0 1mm}
+  hr.rule{border:0; border-top:1.5pt solid #000; margin:4mm 0 5mm}
+  h2{font:700 13pt/1.2 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 1mm}
+  .role{font:9.5pt/1.35 "Segoe UI",Helvetica,Arial,sans-serif; color:#444; margin:0 0 4mm}
+  .part{page-break-before:always; break-before:page}
+  .phead{border-bottom:1pt solid #000; padding-bottom:2mm; margin-bottom:5mm}
+  h3{font:700 9.5pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; text-transform:uppercase;
+     letter-spacing:.09em; margin:5.5mm 0 2.5mm; padding-bottom:1mm; border-bottom:.5pt solid #999}
+  h4{font:700 10pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; margin:3.5mm 0 1.5mm}
+  p{margin:0 0 2.5mm}
+  ul,ol{margin:0 0 3mm 5mm; padding:0}
+  li{margin-bottom:1.2mm}
+  .step{display:flex; gap:3mm; margin:0 0 3.5mm; page-break-inside:avoid; break-inside:avoid}
+  .step .num{font:700 11pt "Segoe UI",Helvetica,Arial,sans-serif; min-width:7mm; flex:none;
+             border-top:1.5pt solid #000; padding-top:1mm}
+  .step .body{flex:1; border-top:.5pt solid #ccc; padding-top:1.5mm}
+  .step h4{margin-top:0}
+  table{border-collapse:collapse; width:100%; margin:2mm 0 3.5mm; font-size:9.5pt}
+  th,td{border:.5pt solid #999; padding:1.5mm 2mm; text-align:left; vertical-align:top}
+  th{background:#eee; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+     text-transform:uppercase; letter-spacing:.06em}
+  td.n{font-family:"Consolas","Courier New",monospace; white-space:nowrap; text-align:right}
+  td.c{text-align:center}
+  tr.pick td{background:#e8e8e8; font-weight:700}
+  td.blank{height:8mm; background:#fcfcfc}
+  .no{color:#666}
+  .warn{border:1.25pt solid #000; padding:3mm 4mm; margin:3.5mm 0; page-break-inside:avoid}
+  .warn b.lbl{display:block; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+              text-transform:uppercase; letter-spacing:.09em; margin-bottom:1.5mm}
+  .note{background:#f4f4f4; border-left:2.5pt solid #000; padding:3mm 4mm; margin:3.5mm 0;
+        page-break-inside:avoid}
+  .note b.lbl{display:block; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+              text-transform:uppercase; letter-spacing:.09em; margin-bottom:1.5mm}
+  code{font-family:"Consolas","Courier New",monospace; font-size:9.5pt; background:#f0f0f0;
+       padding:.2mm 1mm; border:.5pt solid #ccc}
+  .formula{font-family:"Consolas","Courier New",monospace; font-size:9.5pt; background:#f6f6f6;
+           border:.5pt solid #bbb; padding:2.5mm 3mm; margin:2mm 0 3mm; white-space:pre-line}
+  .box{display:inline-block; width:3.4mm; height:3.4mm; border:.9pt solid #000;
+       margin-right:1.4mm; vertical-align:-.4mm}
+  .checks{margin:3mm 0 0; font:9pt "Segoe UI",Helvetica,Arial,sans-serif}
+  .checks div{margin-bottom:2mm}
+  .fill{display:inline-block; border-bottom:.5pt dotted #666; min-width:38mm}
+</style>
+
+<div class="sheet">
+
+<h1>Anna-Drishti — Biotechnology Protocol</h1>
+<p class="sub">Jar preparation, incubation, readout, and the science deliverables.</p>
+<p class="sub">Krittika Parida &amp; Netra R · Smart India Hackathon 2026 · VIT · issued 22 August</p>
+<hr class="rule">
+
+<div class="warn">
+  <b class="lbl">The one deadline that cannot slip</b>
+  <p style="margin:0">The jars must be sealed <b>today, Saturday</b>. Grain respiration is a
+  multi-day signal. Sealed by Saturday evening gives roughly 44 hours of incubation, which is
+  just enough to produce a real difference between the two jars. Sealed on Sunday gives nothing
+  measurable by Monday morning. Everything else in this document can slip; this cannot.</p>
+</div>
+
+<h3>What we are trying to prove, and why it is worth the trouble</h3>
+<p>Our entire submission currently rests on a simulation. The single most damaging question a
+judge can ask is <i>&ldquo;so none of this is real?&rdquo;</i></p>
+<p>Two jars answer that. Same grain, same temperature, differing only in moisture. The wet one
+respires, produces carbon dioxide and raises the humidity in the headspace; the dry one does not.
+Feed both readings into our decision engine and it returns
+<b>&ldquo;safe&rdquo;</b> for one and <b>&ldquo;mould onset in N days, aflatoxin window
+open&rdquo;</b> for the other.</p>
+<p>That converts our weakest point into a measurement we took ourselves. It is a small experiment
+and it is worth more to us than any amount of additional software.</p>
+
+<div class="note">
+  <b class="lbl">Division of work</b>
+  <p style="margin:0"><b>Krittika</b> — everything in Parts 1 to 5 (the jars), plus Part 6
+  (constants sign-off and science slides).<br>
+  <b>Netra</b> — Part 7, which is entirely separate from the jars and is the most likely thing a
+  judge attacks. Do not let the jar work crowd it out.</p>
+</div>
+
+<!-- ===================== PART 1 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 1 — Materials and grain selection</h2>
+    <p class="role">Krittika · about 30 minutes including the shop</p>
+  </div>
+
+  <h3>1.1 · Which grain — maize, and it is not a free choice</h3>
+  <p>Use <b>whole dried maize kernels</b>. Not wheat, not rice. Two reasons, the first binding:</p>
+  <p><b>The model is already corn.</b> The simulation converts measured humidity into water
+  activity using the modified Chung–Pfost equation with ASAE D245 <i>shelled corn</i> coefficients.
+  That equation produces every number we claim. Run the jar on wheat and we are interpreting wheat
+  through corn's sorption curve — and <i>&ldquo;your isotherm is for corn but your jar is
+  wheat&rdquo;</i> is an easy question to lose to.</p>
+  <p><b>Maize is the canonical aflatoxin substrate.</b> <i>Aspergillus flavus</i> on maize is the
+  classic pairing in the literature, and maize aflatoxin is a documented Indian problem. Our
+  mycotoxin argument stands on firmer ground with the commodity it was built from.</p>
+
+  <div class="note">
+    <b class="lbl">If we would rather the project be wheat</b>
+    <p style="margin:0">Then we change the isotherm coefficients, not the grain. Wheat has its own
+    published Chung–Pfost values; it is a constants edit taking minutes. But it must happen
+    <b>before Sunday 14:00</b> and Krittika must sign off the new coefficients. Wheat is more
+    FCI-relevant, maize more aflatoxin-relevant. Our proposal leans mycotoxin, so maize is the
+    recommendation. <b>Decide before buying.</b></p>
+  </div>
+
+  <h3>1.2 · Shopping list</h3>
+  <table>
+    <thead><tr><th>Item</th><th>Qty</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td>Whole dried maize kernels (&ldquo;makka&rdquo;)</td><td class="c">2 kg</td>
+        <td>Provision store, kirana or feed shop. Sound, unbroken, no musty smell. ≈ ₹100</td></tr>
+      <tr><td>Glass jars with airtight lids</td><td class="c">3</td>
+        <td>Identical. ~1 L each so 500 g of grain leaves real headspace</td></tr>
+      <tr><td>Distilled or clean water</td><td class="c">100 mL</td><td>Measured with a pipette or syringe</td></tr>
+      <tr><td>Rubber grommet or silicone sealant</td><td class="c">1</td>
+        <td><b>For the sampling port — see 4.2, this matters</b></td></tr>
+    </tbody>
+  </table>
+  <p><b>Do not buy:</b> <span class="no">maize flour or atta (no interstitial air, no headspace,
+  meaningless) · sweet corn or fresh cobs (wrong moisture entirely) · anything already visibly
+  mouldy.</span></p>
+  <p>Buy 2 kg rather than 1: 500 g × 3 jars, plus grain for the moisture test, plus a margin for
+  a repeat.</p>
+
+  <h4>From the lab</h4>
+  <ul>
+    <li>Analytical balance, 0.01 g resolution or better</li>
+    <li>Drying oven</li>
+    <li>Desiccator with active silica gel</li>
+    <li>Moisture tins or crucibles, ×3</li>
+    <li>Mortar and pestle or a small mill</li>
+    <li>Incubator set to 30–35 °C, if one is free</li>
+    <li>Nitrile gloves and a dust mask</li>
+  </ul>
+</div>
+
+<!-- ===================== PART 2 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 2 — Determine the starting moisture</h2>
+    <p class="role">Krittika · 2–3 hours, mostly oven time. Start this first, then do Part 3 while it runs.</p>
+  </div>
+
+  <div class="warn">
+    <b class="lbl">Do not assume 12 %</b>
+    <p style="margin:0">Bazaar maize runs anywhere from 9 % to 14 %. The water we must add changes
+    by a factor of two across that range, and getting it wrong means the test jar lands at the
+    wrong water activity. Measure first.</p>
+  </div>
+
+  <h3>2.1 · Method — and its honest deviation</h3>
+  <p>The reference method for maize is <b>ASAE S352.2: whole kernel, 103 °C for 72 hours</b>. We do
+  not have 72 hours. We will use the accelerated ground-sample method and <b>state the deviation
+  whenever we quote the number.</b> An acknowledged approximation is defensible; an unacknowledged
+  one is not.</p>
+
+  <div class="step"><div class="num">1</div><div class="body">
+    <h4>Dry the tins</h4>
+    <p style="margin:0">Dry three moisture tins at 130 °C for 1 hour, cool in the desiccator,
+    weigh each empty. Record as <code>T</code>.</p>
+  </div></div>
+
+  <div class="step"><div class="num">2</div><div class="body">
+    <h4>Grind and weigh</h4>
+    <p style="margin:0">Coarsely grind about 60 g of maize. Weigh roughly <b>15 g</b> into each
+    tin. Record tin + wet sample as <code>W1</code>. Work quickly — ground grain exchanges
+    moisture with room air within minutes.</p>
+  </div></div>
+
+  <div class="step"><div class="num">3</div><div class="body">
+    <h4>Dry</h4>
+    <p style="margin:0"><b>130 °C for 2 hours</b>, lids off.</p>
+  </div></div>
+
+  <div class="step"><div class="num">4</div><div class="body">
+    <h4>Cool in the desiccator — do not skip this</h4>
+    <p style="margin:0">Lids on, cool to room temperature in the desiccator, 30–45 minutes. Hot
+    grain weighed in open air absorbs moisture as it cools and reads falsely wet.</p>
+  </div></div>
+
+  <div class="step"><div class="num">5</div><div class="body">
+    <h4>Reweigh and calculate</h4>
+    <p style="margin:0">Record tin + dry sample as <code>W2</code>.</p>
+  </div></div>
+
+  <div class="formula">moisture % wet basis = (W1 − W2) / (W1 − T) × 100</div>
+  <p>Average the three replicates. If any one differs from the others by more than 0.5 percentage
+  points, discard it and note why.</p>
+
+  <h3>2.2 · Record here</h3>
+  <table>
+    <thead><tr><th>Replicate</th><th>T — empty tin (g)</th><th>W1 — tin + wet (g)</th>
+      <th>W2 — tin + dry (g)</th><th>Moisture % wb</th></tr></thead>
+    <tbody>
+      <tr><td class="c">1</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c">2</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c">3</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c"><b>Mean</b></td><td></td><td></td><td></td><td class="blank"></td></tr>
+    </tbody>
+  </table>
+  <p>Method used: <span class="fill"></span> &nbsp; Deviation from ASAE S352.2 noted:
+    <span class="box"></span> yes</p>
+
+  <div class="note">
+    <b class="lbl">Keep a retained sample</b>
+    <p style="margin:0">Seal 200 g of the untouched original grain and label it. If we reach
+    nationals we can run the full 72-hour reference method on it and report a properly standardised
+    figure.</p>
+  </div>
+</div>
+
+<!-- ===================== PART 3 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 3 — Calculate and add water</h2>
+    <p class="role">Krittika · 30 minutes</p>
+  </div>
+
+  <h3>3.1 · The calculation</h3>
+  <p>Target for the test jar is <b>18 % wet basis</b>. That gives water activity around 0.92 —
+  comfortably above the 0.82 growth floor, respiring hard, and still a realistic wet pocket rather
+  than sodden grain.</p>
+  <div class="formula">dry matter   = 500 × (1 − start% / 100)
+target mass  = dry matter / (1 − target% / 100)
+water to add = target mass − 500</div>
+
+  <h4>Worked example, starting at 12 %</h4>
+  <div class="formula">dry matter   = 500 × 0.88            = 440.0 g
+target mass  = 440.0 / 0.82          = 536.6 g
+water to add = 536.6 − 500           =  36.6 g  ≈ 37 mL</div>
+
+  <h3>3.2 · Look-up table</h3>
+  <table>
+    <thead><tr><th>Measured starting moisture</th><th>Add per 500 g for 18 %</th>
+      <th>Add per 500 g for 20 %</th></tr></thead>
+    <tbody>
+      <tr><td class="n">9 %</td><td class="n">55 mL</td><td class="n">69 mL</td></tr>
+      <tr><td class="n">10 %</td><td class="n">49 mL</td><td class="n">63 mL</td></tr>
+      <tr><td class="n">11 %</td><td class="n">43 mL</td><td class="n">56 mL</td></tr>
+      <tr><td class="n">12 %</td><td class="n">37 mL</td><td class="n">50 mL</td></tr>
+      <tr><td class="n">13 %</td><td class="n">30 mL</td><td class="n">44 mL</td></tr>
+      <tr><td class="n">14 %</td><td class="n">24 mL</td><td class="n">38 mL</td></tr>
+    </tbody>
+  </table>
+  <p>Water to add, Jar B: <span class="fill"></span> mL &nbsp;&nbsp;
+     Water to add, Jar C: <span class="fill"></span> mL</p>
+</div>
+
+<!-- ===================== PART 4 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 4 — Assemble and seal the jars</h2>
+    <p class="role">Krittika · 45 minutes, then leave them alone</p>
+  </div>
+
+  <h3>4.1 · The three jars</h3>
+  <table>
+    <thead><tr><th>Jar</th><th>Contents</th><th>Target a<sub>w</sub></th><th>Expected outcome</th></tr></thead>
+    <tbody>
+      <tr><td class="c"><b>A</b><br>control</td><td>500 g maize exactly as bought. Nothing added.</td>
+        <td class="n">≈ 0.65</td><td>Below the growth floor. Engine says safe.</td></tr>
+      <tr class="pick"><td class="c"><b>B</b><br>test</td><td>500 g maize + water to 18 % wb</td>
+        <td class="n">≈ 0.92</td><td>Respiring. Engine predicts mould onset.</td></tr>
+      <tr><td class="c"><b>C</b><br>insurance</td><td>500 g maize + water to 20 % wb</td>
+        <td class="n">≈ 0.96</td><td>Strongest signal in our short window.</td></tr>
+    </tbody>
+  </table>
+  <p>Jar C exists because our incubation window is compressed. If Jar B's signal is marginal on
+  Monday, Jar C will not be. It costs one jar and ten minutes.</p>
+
+  <h3>4.2 · Prepare a sampling port — do this now, not Monday</h3>
+  <div class="warn">
+    <b class="lbl">Opening a jar destroys the CO₂ measurement instantly</b>
+    <p style="margin:0">Carbon dioxide accumulated over two days vents in seconds and takes days to
+    rebuild. If we plan to open the jars on Monday to insert a sensor, there is no point running
+    the experiment.<br><br>
+    <b>Fix, today:</b> drill a hole in each lid just large enough for the sensor probe or a length
+    of tubing. Fit a rubber grommet, or seal with silicone. Plug it with a bung or a wad of
+    Blu-Tack. On Monday, remove the plug, insert the probe, read, replug.<br><br>
+    <b>Humidity is more forgiving.</b> The grain itself is a large moisture reservoir, so headspace
+    humidity re-equilibrates within roughly 15–30 minutes after a brief opening. If the port fails
+    or no CO₂ sensor materialises, water activity is still a valid measurement.</p>
+  </div>
+
+  <h3>4.3 · Procedure</h3>
+  <div class="step"><div class="num">1</div><div class="body"><h4>Label first</h4>
+    <p style="margin:0">Jar, target moisture, date and time sealed. Label before filling — three
+    identical jars of maize become unidentifiable fast.</p></div></div>
+  <div class="step"><div class="num">2</div><div class="body"><h4>Weigh 500 g into each jar</h4>
+    <p style="margin:0">Record actual masses; they will not be exactly 500 g and the calculation
+    should use the real figure.</p></div></div>
+  <div class="step"><div class="num">3</div><div class="body"><h4>Add water to B and C</h4>
+    <p style="margin:0">Pipette or syringe, added in stages while stirring, not poured in at once.
+    Aim to wet all kernels rather than soaking a few.</p></div></div>
+  <div class="step"><div class="num">4</div><div class="body"><h4>Mix thoroughly, then seal</h4>
+    <p style="margin:0">Two minutes of turning and stirring. Seal, and plug the port.</p></div></div>
+  <div class="step"><div class="num">5</div><div class="body"><h4>Remix at 1 hour and at 3 hours</h4>
+    <p style="margin:0">Invert and shake each jar. This distributes water into the kernels instead
+    of leaving it on the surface.</p></div></div>
+  <div class="step"><div class="num">6</div><div class="body"><h4>Incubate at 30–35 °C</h4>
+    <p style="margin:0">All three jars at the <b>same</b> temperature, undisturbed until Monday.</p></div></div>
+
+  <div class="warn">
+    <b class="lbl">One variable only</b>
+    <p style="margin:0">If Jar B sits warmer than Jar A, the comparison is worthless and a judge
+    will say so. Same grain, same mass, same container type, same shelf, same temperature. Moisture
+    is the only thing that differs between them.</p>
+  </div>
+
+  <div class="note">
+    <b class="lbl">Be honest about the compressed method</b>
+    <p style="margin:0">Proper practice is to temper wetted grain cool for 24 hours with periodic
+    mixing so water equilibrates into the kernel <i>before</i> incubation begins. We do not have
+    that time. Monday's reading will be near equilibrium but not textbook. <b>Say so if asked.</b>
+    It is a far better answer than pretending otherwise, and it costs us nothing — the comparison
+    between jars is still valid because both were treated identically.</p>
+  </div>
+
+  <h4>Do not inoculate</h4>
+  <p>Ambient spores already present on the kernels are entirely sufficient. Deliberately culturing
+  <i>A. flavus</i> requires containment and the mentor's sign-off, and natural colonisation is real
+  data without any of that burden.</p>
+
+  <h3>4.4 · Record</h3>
+  <table>
+    <thead><tr><th>Jar</th><th>Grain mass (g)</th><th>Water added (mL)</th>
+      <th>Calculated % wb</th><th>Time sealed</th></tr></thead>
+    <tbody>
+      <tr><td class="c">A</td><td class="blank"></td><td class="c">0</td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c">B</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c">C</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </tbody>
+  </table>
+  <p>Incubation temperature: <span class="fill"></span> °C &nbsp;&nbsp;
+     Location: <span class="fill"></span></p>
+</div>
+
+<!-- ===================== PART 5 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 5 — Observation and Monday readout</h2>
+    <p class="role">Krittika · a few minutes Sunday, 30 minutes Monday morning</p>
+  </div>
+
+  <h3>5.1 · Observation log</h3>
+  <p>Check each jar Sunday morning and Sunday evening. Do <b>not</b> open them. Record what is
+  visible through the glass — condensation, discolouration, visible mycelium, clumping.</p>
+  <table>
+    <thead><tr><th>Time</th><th>Jar A</th><th>Jar B</th><th>Jar C</th></tr></thead>
+    <tbody>
+      <tr><td>Sun morning</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td>Sun evening</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td>Mon morning</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </tbody>
+  </table>
+  <p>Condensation on the inside of Jar B is a good early sign — it means the headspace has reached
+  high humidity, which is exactly what our humidity sensor will measure.</p>
+
+  <h3>5.2 · Monday readout procedure</h3>
+  <div class="step"><div class="num">1</div><div class="body"><h4>Read the control first</h4>
+    <p style="margin:0">Always Jar A before Jar B. If the sensor drifts or misbehaves, we find out
+    on the jar whose answer we already know.</p></div></div>
+  <div class="step"><div class="num">2</div><div class="body"><h4>Insert the probe through the port</h4>
+    <p style="margin:0">Remove the plug, insert, reseal around the probe. Minimise the time the
+    port is open.</p></div></div>
+  <div class="step"><div class="num">3</div><div class="body"><h4>Wait for a stable reading</h4>
+    <p style="margin:0">Humidity typically settles in 5–15 minutes; CO₂ in 1–2 minutes once the
+    sensor has flushed. Record only when the value stops climbing.</p></div></div>
+  <div class="step"><div class="num">4</div><div class="body"><h4>Record humidity AND temperature together</h4>
+    <p style="margin:0">Water activity is temperature-dependent, and the software needs both. A
+    humidity figure without its temperature is not usable.</p></div></div>
+  <div class="step"><div class="num">5</div><div class="body"><h4>Type both into the demo</h4>
+    <p style="margin:0">Open <code>index.html</code>, find the <b>Bench reading</b> panel at the
+    bottom right, enter RH and temperature. It returns water activity, implied moisture, days to
+    mould onset, and whether the aflatoxin window is open.</p></div></div>
+
+  <h3>5.3 · Results</h3>
+  <table>
+    <thead><tr><th>Jar</th><th>RH %</th><th>Temp °C</th><th>CO₂ ppm</th>
+      <th>a<sub>w</sub> (from demo)</th><th>Days to mould (from demo)</th></tr></thead>
+    <tbody>
+      <tr><td class="c">A</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c">B</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td class="c">C</td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b class="lbl">What to say on stage</b>
+    <p style="margin:0"><i>&ldquo;This jar is maize we wetted on Saturday morning. The sensor reads
+    91 % humidity at 31 °C. That is not the simulation — it is our grain, and here is what our
+    engine says about it.&rdquo;</i> Then type it in and let the panel answer. Read the control jar
+    afterwards and let it come back below the growth floor.</p>
+  </div>
+
+  <h3>5.4 · Safety and disposal — not boilerplate</h3>
+  <p>We are deliberately growing <i>Aspergillus flavus</i> on its preferred substrate, warm, for two
+  days. That is an aflatoxin-producing organism and the spores are a respiratory allergen.</p>
+  <ul>
+    <li>Gloves and a dust mask whenever a jar is open</li>
+    <li>Open jars in the lab, never in a demo room, and do not lean over and inhale</li>
+    <li>Krittika handles them — this is exactly the mentor-supervised work our proposal commits to</li>
+    <li>Keep them <b>sealed</b> on Monday. Sealed jars on the table are a good prop; open ones are
+      a hazard and a bad look</li>
+    <li>Autoclave before disposal, or seal and dispose per lab protocol. Do not bin an open jar</li>
+    <li>Nobody tastes anything</li>
+  </ul>
+
+  <div class="checks">
+    <div><span class="box"></span>Maize bought &nbsp; <span class="box"></span>Moisture measured
+      &nbsp; <span class="box"></span>Ports drilled &nbsp; <span class="box"></span>Jars sealed
+      &nbsp; <span class="box"></span>Incubating &nbsp; <span class="box"></span>Read Monday</div>
+    <div>Signed: <span class="fill"></span> &nbsp;&nbsp; Date: <span class="fill"></span></div>
+  </div>
+</div>
+
+<!-- ===================== PART 6 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 6 — Krittika's other deliverables</h2>
+    <p class="role">These are separate from the jars and equally important</p>
+  </div>
+
+  <h3>6.1 · Sign off the constants — by Sunday 12:00</h3>
+  <p>You have a separate document, <b>Anna-Drishti Verification Sheet</b>, pages 1–3. Fourteen
+  items. Every biological number in the simulation, in plain language, with the model's actual
+  outputs beside it. Tick, correct, and cite a source.</p>
+  <p>Three of those items are changes made during calibration that specifically need your
+  judgement:</p>
+  <ul>
+    <li><b>Bulk grain moisture 13.5 % → 12.0 %.</b> Forced, not preference — at 13.5 % the sound
+      grain respires hard enough to mask the spoilage pocket entirely.</li>
+    <li><b>Aflatoxin temperature ceiling 30 °C → 35 °C.</b> 25–30 is the reported optimum, not the
+      permissive limit; at 30 the toxin window never opened at all.</li>
+    <li><b>The growth-rate table</b> — a<sub>w</sub> 0.87 at 30 °C giving mould onset in 17.4 days,
+      and the seven other rows. This is the single most important thing on your pages.</li>
+  </ul>
+
+  <h3>6.2 · Science slides</h3>
+  <p>Three things, and no more:</p>
+  <ol>
+    <li><b>Why water activity, not moisture content.</b> Fungi respond to available water, not
+      total water. This is why our system converts humidity to a<sub>w</sub> rather than reporting
+      a moisture percentage.</li>
+    <li><b>Why CO₂ leads temperature.</b> Metabolic gas moves through interstitial air; heat has to
+      conduct through grain, which is an insulator. Our model measures the gap at roughly 0.9 days
+      versus 15 days over the same 40 cm.</li>
+    <li><b>Where every constant came from.</b> One slide, sourced. This is what makes the rest
+      credible.</li>
+  </ol>
+
+  <h3>6.3 · The question you will be asked</h3>
+  <p><b>&ldquo;How do you know this reflects real spoilage?&rdquo;</b></p>
+  <p>Your answer has three parts now, and the third is new: the growth model uses published
+  cardinal values for <i>A. flavus</i>; the isotherm is a published equation with published
+  coefficients for this commodity; and <b>we ran it against our own grain and it agreed.</b>
+  Hold up the jar.</p>
+  <p>Write your answer out: <span class="fill" style="min-width:100mm"></span></p>
+  <p><span class="fill" style="min-width:160mm"></span></p>
+</div>
+
+<!-- ===================== PART 7 ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 7 — Netra: the inspection baseline</h2>
+    <p class="role">Entirely separate from the jars. This is the most likely thing a judge attacks.</p>
+  </div>
+
+  <div class="warn">
+    <b class="lbl">Why this outranks the jar work</b>
+    <p style="margin:0">Our headline claim is <i>&ldquo;conventional inspection found it on day 42,
+    we flagged it on day 4.&rdquo;</i> That claim is only as strong as the model of conventional
+    practice underneath it. If the baseline is pessimistic, the entire comparison collapses under a
+    single question — and a rigged comparison does more damage than no comparison at all. Push back
+    hard on anything below that flatters us.</p>
+  </div>
+
+  <h3>7.1 · Sign off the baseline model — by Sunday 12:00</h3>
+  <p>Verification Sheet pages 4–5, eight items. The model is coded; these are its assumptions:</p>
+  <table>
+    <thead><tr><th>Assumption</th><th>Currently</th><th>Your call</th></tr></thead>
+    <tbody>
+      <tr><td>Inspection interval</td><td class="n">every 14 days</td><td>Is fortnightly real for an Indian godown?</td></tr>
+      <tr><td>Spear reach into a stack</td><td class="n">0.4 m</td><td><b>This single number decides the comparison</b></td></tr>
+      <tr><td>Chance of finding a pocket in reach</td><td class="n">60 %</td><td>Too harsh, or too generous?</td></tr>
+      <tr><td>Surface mould always caught</td><td class="n">yes</td><td>Is certainty fair?</td></tr>
+      <tr><td>Musty-stack detection route</td><td class="n">added</td><td>Fair, or a fudge? See below</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b class="lbl">The change that needs your judgement most</b>
+    <p style="margin:0">Our demo pocket sits 1.6 m inside the stack. A spear reaches 0.4 m, so it is
+    <b>physically unreachable</b> and the baseline originally read &ldquo;never detected in 60
+    days.&rdquo; That is arguably true to FAO guidance — but it reads as rigged.<br><br>
+    A second route was added: once a colony is well established the stack smells musty and bags feel
+    warm, so it is noticed at the next routine inspection even without a spear reaching it. That
+    produces day 42. <b>Decide whether that route is real and whether the timing is fair.</b></p>
+  </div>
+
+  <h3>7.2 · Write the justification — this does not exist yet</h3>
+  <p>The model is coded. The written defence of it is unwritten and only you can produce it. In
+  prose, with citations, it must answer:</p>
+  <ul>
+    <li>How often inspection happens, and on whose authority</li>
+    <li>Which part of a stack a spear can physically reach, and which it cannot</li>
+    <li>Why absence of live adults in a sample does not indicate absence of infestation —
+      eggs and larvae develop concealed within kernels</li>
+    <li>Why insects concentrate in dust pockets and zones of heating rather than distributing evenly</li>
+  </ul>
+  <p>Ground all four in the FAO guidance already cited in our proposal (references 3 and 4).</p>
+
+  <h3>7.3 · The question you will be asked</h3>
+  <p><b>&ldquo;Isn't your baseline unfairly pessimistic?&rdquo;</b></p>
+  <p>The answer must cite a real inspection interval and a real detection threshold, not an
+  opinion. The strongest version is not a defence of the interval at all — it is that
+  <b>a spear reaches 0.4 m and the pocket is 1.6 m in.</b> Inspection is not being modelled as
+  incompetent; it is being modelled as physically unable to reach the location, which is precisely
+  why an interior probe exists.</p>
+  <p>Write your answer out: <span class="fill" style="min-width:100mm"></span></p>
+  <p><span class="fill" style="min-width:160mm"></span></p>
+  <p><span class="fill" style="min-width:160mm"></span></p>
+
+  <div class="checks">
+    <div><span class="box"></span>Pages 4–5 signed off &nbsp;
+      <span class="box"></span>Justification drafted &nbsp;
+      <span class="box"></span>Sent to Chiranjib &nbsp;
+      <span class="box"></span>Answer rehearsed out loud</div>
+    <div>Signed: <span class="fill"></span> &nbsp;&nbsp; Date: <span class="fill"></span></div>
+  </div>
+</div>
+
+</div>
