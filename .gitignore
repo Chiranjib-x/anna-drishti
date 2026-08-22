@@ -1,0 +1,14 @@
+# editors
+.vscode/
+.idea/
+*.swp
+
+# os
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# recordings and exports kept out of git - large binaries
+*.mp4
+*.mov
+*.zip

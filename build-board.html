@@ -1,0 +1,592 @@
+<title>Anna-Drishti Build Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root{
+    --ground:#EAE7E0; --panel:#F7F5F1; --sunk:#E2DED5;
+    --line:#D5D0C6; --line-soft:#E3DFD6;
+    --ink:#221F1B; --ink-2:#57503F; --dim:#867C71;
+    --acc:#2F7F9E; --acc-soft:#DCEAF0;
+    --ok:#3E7A50;  --ok-soft:#DDEADE;
+    --warn:#9C6A0D; --warn-soft:#F2E6CC;
+    --todo:#867C71; --todo-soft:#E4E0D7;
+    --cut:#AC3F35;  --cut-soft:#F2DCD9;
+    --shadow:0 1px 2px rgba(34,31,27,.07), 0 6px 18px -10px rgba(34,31,27,.16);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#141210; --panel:#1C1917; --sunk:#100E0C;
+      --line:#35302A; --line-soft:#282420;
+      --ink:#F0ECE6; --ink-2:#BEB5A9; --dim:#8E8378;
+      --acc:#7FB8D4; --acc-soft:#1A2C36;
+      --ok:#5FA875;  --ok-soft:#16271A;
+      --warn:#D99A2B; --warn-soft:#2B2010;
+      --todo:#8E8378; --todo-soft:#241F1A;
+      --cut:#D1483A;  --cut-soft:#2D1512;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 18px -10px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#141210; --panel:#1C1917; --sunk:#100E0C;
+    --line:#35302A; --line-soft:#282420;
+    --ink:#F0ECE6; --ink-2:#BEB5A9; --dim:#8E8378;
+    --acc:#7FB8D4; --acc-soft:#1A2C36;
+    --ok:#5FA875;  --ok-soft:#16271A;
+    --warn:#D99A2B; --warn-soft:#2B2010;
+    --todo:#8E8378; --todo-soft:#241F1A;
+    --cut:#D1483A;  --cut-soft:#2D1512;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 18px -10px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font:16px/1.55 "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:2.2rem 1.25rem 5rem}
+
+  h1,h2,h3,.ph-id,.eyebrow{font-family:"Archivo", ui-sans-serif, system-ui, sans-serif}
+  h1{font-size:clamp(1.9rem,4.4vw,2.7rem); font-weight:700; letter-spacing:-.022em;
+     margin:0; text-wrap:balance; line-height:1.08}
+  h2{font-size:1.02rem; font-weight:600; letter-spacing:.015em; margin:0}
+  .eyebrow{font-size:.7rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+           color:var(--dim); margin:0 0 .5rem}
+  .mono{font-family:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+        font-variant-numeric:tabular-nums}
+
+  /* ---- masthead ---- */
+  .mast{display:flex; flex-direction:column; gap:.5rem;
+        border-bottom:2px solid var(--ink); padding-bottom:1.1rem; margin-bottom:1.6rem}
+  .mast .lede{color:var(--ink-2); max-width:64ch; font-size:1.02rem; margin:0}
+  .mast .meta{display:flex; flex-wrap:wrap; gap:.4rem 1.1rem; margin-top:.35rem;
+              font-size:.79rem; color:var(--dim)}
+
+  /* ---- status strip ---- */
+  .strip{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+         gap:.7rem; margin-bottom:1.5rem}
+  .tile{background:var(--panel); border:1px solid var(--line); border-radius:5px;
+        padding:.75rem .85rem; display:flex; flex-direction:column; gap:.18rem}
+  .tile .k{font-size:.68rem; letter-spacing:.11em; text-transform:uppercase; color:var(--dim);
+           font-family:"Archivo",sans-serif; font-weight:600}
+  .tile .v{font-size:1.5rem; font-weight:600; line-height:1.1;
+           font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+  .tile .n{font-size:.76rem; color:var(--ink-2)}
+
+  /* ---- alert ---- */
+  .flag{display:flex; gap:.75rem; align-items:flex-start; background:var(--warn-soft);
+        border:1px solid var(--warn); border-left-width:4px; border-radius:4px;
+        padding:.8rem .95rem; margin-bottom:1.9rem}
+  .flag .t{font-family:"Archivo",sans-serif; font-weight:600; font-size:.86rem;
+           letter-spacing:.03em; color:var(--warn); text-transform:uppercase; white-space:nowrap}
+  .flag p{margin:0; font-size:.92rem; color:var(--ink)}
+
+  /* ---- phases ---- */
+  .sec-head{display:flex; align-items:baseline; gap:.8rem; margin:2.4rem 0 1rem;
+            padding-bottom:.45rem; border-bottom:1px solid var(--line)}
+  .sec-head h2{font-size:1.22rem; letter-spacing:-.01em}
+  .sec-head .c{font-size:.76rem; color:var(--dim); margin-left:auto}
+
+  .phase{background:var(--panel); border:1px solid var(--line); border-radius:6px;
+         margin-bottom:.7rem; overflow:hidden; box-shadow:var(--shadow)}
+  .phase.now{border-color:var(--acc); border-width:2px}
+  .ph-top{display:flex; align-items:center; gap:.8rem; flex-wrap:wrap;
+          padding:.7rem .9rem; background:var(--sunk); border-bottom:1px solid var(--line-soft)}
+  .ph-id{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.95rem;
+         color:var(--acc); letter-spacing:.02em}
+  .ph-name{font-family:"Archivo",sans-serif; font-weight:600; font-size:.98rem;
+           letter-spacing:-.005em; flex:1; min-width:11rem}
+  .ph-when{font-size:.75rem; color:var(--dim); font-family:"IBM Plex Mono",monospace}
+
+  .chip{font-family:"Archivo",sans-serif; font-size:.67rem; font-weight:600;
+        letter-spacing:.09em; text-transform:uppercase; padding:.2rem .5rem;
+        border-radius:3px; white-space:nowrap; border:1px solid transparent}
+  .c-pass{background:var(--ok-soft);   color:var(--ok);   border-color:var(--ok)}
+  .c-open{background:var(--todo-soft); color:var(--todo); border-color:var(--todo)}
+  .c-part{background:var(--warn-soft); color:var(--warn); border-color:var(--warn)}
+  .c-now {background:var(--acc-soft);  color:var(--acc);  border-color:var(--acc)}
+
+  .ph-body{padding:.85rem .9rem 1rem}
+  .exit{font-size:.86rem; color:var(--ink-2); margin:0 0 .85rem; padding-left:.7rem;
+        border-left:2px solid var(--line)}
+  .exit b{font-family:"Archivo",sans-serif; font-weight:600; color:var(--ink);
+          font-size:.72rem; letter-spacing:.1em; text-transform:uppercase}
+
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:1.1rem}
+  @media (max-width:680px){ .cols{grid-template-columns:1fr; gap:.9rem} }
+  .col h3{font-family:"Archivo",sans-serif; font-size:.68rem; font-weight:600;
+          letter-spacing:.12em; text-transform:uppercase; color:var(--dim);
+          margin:0 0 .45rem; padding-bottom:.28rem; border-bottom:1px solid var(--line-soft)}
+  ul.task{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.34rem}
+  ul.task li{font-size:.875rem; line-height:1.45; padding-left:1.35rem; position:relative;
+             color:var(--ink-2)}
+  ul.task li::before{position:absolute; left:0; top:.34em; width:.72rem; height:.72rem;
+                     border-radius:2px; content:""; border:1.5px solid var(--todo)}
+  li.done::before{background:var(--ok); border-color:var(--ok)}
+  li.done::after{content:""; position:absolute; left:.2rem; top:.5em; width:.26rem;
+                 height:.5rem; border:solid var(--panel); border-width:0 2px 2px 0;
+                 transform:rotate(42deg)}
+  li.done{color:var(--ink)}
+  li.open::before{border-color:var(--todo); background:transparent}
+  li.opt::before{border-color:var(--warn); border-style:dashed}
+  li.them::before{border-radius:50%; border-color:var(--acc); background:var(--acc-soft)}
+  li .who{font-family:"Archivo",sans-serif; font-size:.66rem; font-weight:600;
+          letter-spacing:.08em; text-transform:uppercase; color:var(--acc);
+          margin-right:.34rem}
+  li code{font-family:"IBM Plex Mono",monospace; font-size:.83em; background:var(--sunk);
+          padding:.05em .3em; border-radius:2px; color:var(--ink)}
+
+  /* ---- tables ---- */
+  .scroll{overflow-x:auto; border:1px solid var(--line); border-radius:6px; background:var(--panel)}
+  table{border-collapse:collapse; width:100%; min-width:640px; font-size:.86rem}
+  th,td{text-align:left; padding:.6rem .75rem; border-bottom:1px solid var(--line-soft);
+        vertical-align:top}
+  thead th{font-family:"Archivo",sans-serif; font-size:.67rem; font-weight:600;
+           letter-spacing:.11em; text-transform:uppercase; color:var(--dim);
+           background:var(--sunk); border-bottom:1px solid var(--line); white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
+         white-space:nowrap; color:var(--ink)}
+  td.why{color:var(--ink-2)}
+  .owner{font-family:"Archivo",sans-serif; font-size:.68rem; font-weight:600;
+         letter-spacing:.07em; text-transform:uppercase; color:var(--acc); white-space:nowrap}
+
+  .note{font-size:.83rem; color:var(--dim); margin:.6rem 0 0; max-width:70ch}
+  a{color:var(--acc)}
+  a:focus-visible,li:focus-visible{outline:2px solid var(--acc); outline-offset:2px}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">Smart India Hackathon 2026 &middot; Internal Final &middot; VIT</p>
+    <h1>Anna-Drishti Build Board</h1>
+    <p class="lede">Eight gated phases, six tracks. This board tracks the three CS tracks
+      Chiranjib is carrying (A&nbsp;Integration, B&nbsp;Physics, C&nbsp;Sensing&nbsp;&amp;&nbsp;Decision)
+      against what actually exists in <code class="mono">index.html</code> right now, and marks the
+      science items that still belong to someone else.</p>
+    <div class="meta">
+      <span class="mono">Sat 22 Aug, 00:35 IST</span>
+      <span>&middot;</span>
+      <span class="mono">index.html &mdash; 808 lines, 0 dependencies</span>
+      <span>&middot;</span>
+      <span>Stage: Mon 24 Aug, morning</span>
+    </div>
+  </header>
+
+  <section class="strip">
+    <div class="tile">
+      <span class="k">Phases cleared</span>
+      <span class="v">5 <span style="color:var(--dim);font-size:1rem">/ 8</span></span>
+      <span class="n">P1&ndash;P5 on the CS side</span>
+    </div>
+    <div class="tile">
+      <span class="k">Exit tests passing</span>
+      <span class="v" style="color:var(--ok)">5 <span style="color:var(--dim);font-size:1rem">/ 5</span></span>
+      <span class="n">P2&ndash;P4 asserted in code</span>
+    </div>
+    <div class="tile">
+      <span class="k">P4 loop</span>
+      <span class="v" style="color:var(--ok)">GREEN</span>
+      <span class="n">the milestone that decides the weekend</span>
+    </div>
+    <div class="tile">
+      <span class="k">Cut from the ladder</span>
+      <span class="v">0</span>
+      <span class="n">nothing sacrificed yet</span>
+    </div>
+  </section>
+
+  <div class="flag">
+    <span class="t">Do first</span>
+    <p>The file has never been opened in a browser. Logic is verified headlessly, the full
+      script parses, every DOM selector resolves and there are zero external references &mdash;
+      but rendering is unproven. Open <code class="mono">index.html</code>, confirm the header pill
+      turns green, then press <b>Deep interior pocket</b>. Everything below assumes that passes.</p>
+  </div>
+
+  <div class="sec-head">
+    <h2>The eight phases</h2>
+    <span class="c">filled square = done &middot; empty = left &middot; dashed = optional &middot; circle = another track</span>
+  </div>
+
+  <!-- P1 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P1</span>
+      <span class="ph-name">Foundation &amp; contract</span>
+      <span class="ph-when">Fri 21, night</span>
+      <span class="chip c-pass">Exit passed</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;File opens, 40&times;25 grid renders, clock ticks,
+        sensor and decision calls run.</p>
+      <div class="cols">
+        <div class="col">
+          <h3>Shipped</h3>
+          <ul class="task">
+            <li class="done">Single self-contained <code>index.html</code>, canvas + <code>requestAnimationFrame</code> loop</li>
+            <li class="done">Tick counter and simulated clock in the header</li>
+            <li class="done">40&times;25 grid &mdash; 10&nbsp;cm cells, 4.0&nbsp;&times;&nbsp;2.5&nbsp;m stack</li>
+            <li class="done"><code>CONSTANTS</code> object, every value carrying its source in a comment</li>
+            <li class="done"><code>readSensors()</code> and <code>decide()</code> &mdash; built real, never stubbed</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="them"><span class="who">Krittika</span>Sign off every value in <code>CONSTANTS</code></li>
+            <li class="them"><span class="who">Devavrath</span>Sign off the scale calibration &mdash; I picked 10&nbsp;cm cell, 0.25&nbsp;h tick</li>
+            <li class="them"><span class="who">Netra</span>Write the inspection-baseline prose justification. The model is coded; the defence is hers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P2 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P2</span>
+      <span class="ph-name">Physics core &amp; rendering</span>
+      <span class="ph-when">Sat 22, morning</span>
+      <span class="chip c-pass">Exit passed</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;Click injects a blob, it spreads visibly, overlays
+        toggle, no NaN. <b style="color:var(--ok)">Asserted in <code>selfCheck()</code>.</b></p>
+      <div class="cols">
+        <div class="col">
+          <h3>Shipped</h3>
+          <ul class="task">
+            <li class="done">Moisture diffusion, explicit finite difference. Stability factor <code>0.18</code>, asserted &le;&nbsp;0.25</li>
+            <li class="done">Temperature field on the same solver at 1/17th the diffusivity &mdash; heat lags by construction</li>
+            <li class="done">Heatmap with four overlays: moisture, temperature, CO&#8322;, mould index</li>
+            <li class="done">Click-to-inject, play/pause, speed slider, dose slider</li>
+            <li class="done"><code>awFromM()</code> &mdash; modified Chung&ndash;Pfost, ASAE&nbsp;D245 corn coefficients</li>
+            <li class="done"><code>daysToMould()</code> &mdash; cardinal/gamma growth model, three values hand-checked</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="them"><span class="who">Krittika</span>Confirm the asserted <b>17&nbsp;d at a<sub>w</sub>&nbsp;0.87 / 30&nbsp;&deg;C</b> against her literature table</li>
+            <li class="them"><span class="who">Devavrath</span>Be ready for &ldquo;is <code>D_MOIST</code> molecular or convective?&rdquo; &mdash; it is convective, and it is marked as one lumped coefficient</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P3 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P3</span>
+      <span class="ph-name">Respiration, CO&#8322; and virtual sensors</span>
+      <span class="ph-when">Sat 22, afternoon</span>
+      <span class="chip c-pass">Exit passed</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;CO&#8322; departs baseline before temperature; readings
+        visibly noisy. <b style="color:var(--ok)">Measured: CO&#8322; day&nbsp;1, temperature never within 60&nbsp;days.</b></p>
+      <div class="cols">
+        <div class="col">
+          <h3>Shipped</h3>
+          <ul class="task">
+            <li class="done"><code>R(M,T)</code> respiration with Q&#8321;&#8320;, driving CO&#8322; production <em>and</em> heat release from one term</li>
+            <li class="done">CO&#8322; diffused 17&times; faster than heat, with venting at the exposed faces</li>
+            <li class="done">Gaussian noise + quantization to real NDIR / RH / temperature specs</li>
+            <li class="done">Rolling per-port baseline, seeded from first reading</li>
+            <li class="done">Depth-matched differential anomaly across lances</li>
+            <li class="done">Probe lances and ports drawn on the stack; flagged port ringed</li>
+            <li class="done">Three hand-rolled canvas charts. No CDN, no chart library</li>
+            <li class="done">Conventional inspection arm coded and wired to the live stack</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="them"><span class="who">Devavrath</span>Justify the probe placement &mdash; why three lances at 0.8 / 2.0 / 3.2&nbsp;m, why depths 0.5 / 1.2 / 2.0&nbsp;m</li>
+            <li class="them"><span class="who">Devavrath</span>Begin latency data collection for the coverage analysis</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P4 -->
+  <article class="phase now">
+    <div class="ph-top">
+      <span class="ph-id">P4</span>
+      <span class="ph-name">Decision engine, end to end</span>
+      <span class="ph-when">Sat 22, evening</span>
+      <span class="chip c-pass">Exit passed</span>
+      <span class="chip c-now">The milestone</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;Inject &rarr; alert card naming depth, predicted
+        mould-onset date and the evidence. <b style="color:var(--ok)">Verified on all three presets across 60 simulated days.</b></p>
+      <div class="cols">
+        <div class="col">
+          <h3>Shipped</h3>
+          <ul class="task">
+            <li class="done">Full <code>decide()</code>: a<sub>w</sub> per port, days-to-mould, CO&#8322; anomaly, composite risk, ranked zones</li>
+            <li class="done">Action card naming stack, depth, action, deadline <b>and evidence</b></li>
+            <li class="done">Alert latches until acknowledged &mdash; it no longer clears itself when the pocket disperses</li>
+            <li class="done">Three-consecutive-read persistence guard against single-sample false alarms</li>
+            <li class="done">Decision panel, zone risk table, ground-truth table, all integrated in one loop</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="opt">Insect module &mdash; logistic growth + acoustic amplitude. <b>Bonus only.</b> Physics is stable so it is genuinely available, but the plan says the loop is never risked for it</li>
+            <li class="them"><span class="who">Krittika + Netra</span>Watch alerts fire across several runs; tune thresholds if anything reads as a false alarm</li>
+            <li class="them"><span class="who">Devavrath</span>Run the systematic coverage analysis now that the loop works</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P5 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P5</span>
+      <span class="ph-name">Comparison mode</span>
+      <span class="ph-when">Sun 23, morning</span>
+      <span class="chip c-pass">Exit passed</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;Two timelines, clearly different detection days, headline
+        number sayable out loud. <b style="color:var(--ok)">&ldquo;Conventional found it on day&nbsp;42; we flagged it on day&nbsp;4.&rdquo;</b></p>
+      <div class="cols">
+        <div class="col">
+          <h3>Shipped</h3>
+          <ul class="task">
+            <li class="done">Both arms running on the <em>same</em> simulated stack</li>
+            <li class="done">Two parallel timelines marking each arm&rsquo;s detection day, mould onset and the toxin window</li>
+            <li class="done">Three reproducible seeded presets: roof leak, wet corner, deep interior pocket</li>
+            <li class="done">Time acceleration &mdash; measured at 60 simulated days in 4&nbsp;s at default speed</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="them"><span class="who">Krittika</span>Science slides &mdash; why a<sub>w</sub> governs growth, why CO&#8322; leads temperature, where each constant came from</li>
+            <li class="them"><span class="who">Devavrath</span>Turn the coverage analysis into one clean chart</li>
+            <li class="them"><span class="who">Netra</span>Own the comparison run and be ready for &ldquo;isn&rsquo;t that unfairly pessimistic?&rdquo;</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P6 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P6</span>
+      <span class="ph-name">Feature freeze, polish, deck</span>
+      <span class="ph-when">Sun 23, afternoon</span>
+      <span class="chip c-open">Not started</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;Three consecutive clean runs without refresh; deck
+        complete; every person knows their role.</p>
+      <div class="cols">
+        <div class="col">
+          <h3>Yours</h3>
+          <ul class="task">
+            <li class="open"><b>14:00 &mdash; feature freeze.</b> Anything not working is cut and never mentioned on stage</li>
+            <li class="open">Type and colour check at projector distance</li>
+            <li class="open">Run the demo three times consecutively without refreshing; fix anything that leaks or degrades</li>
+            <li class="open">Assign one narrator and one driver. The other four answer only in their own domain</li>
+            <li class="open">Write down anything you could not fix, so the narrator knows what not to touch</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="them"><span class="who">Krittika + Netra</span>Assemble the deck; prepare the two questions you will certainly be asked</li>
+            <li class="them"><span class="who">Devavrath</span>Deployment slide: probe geometry, coverage result, hardware, the &#8377;20,000 budget</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P7 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P7</span>
+      <span class="ph-name">Rehearsal and insurance</span>
+      <span class="ph-when">Sun 23, evening</span>
+      <span class="chip c-part">Part pre-cleared</span>
+    </div>
+    <div class="ph-body">
+      <p class="exit"><b>Exit test</b> &nbsp;Video exists and plays; the file runs with wifi off on
+        the presentation laptop; both rehearsals came in under time.</p>
+      <div class="cols">
+        <div class="col">
+          <h3>Yours</h3>
+          <ul class="task">
+            <li class="done">Zero external references &mdash; no CDN, no remote font, no <code>&lt;link&gt;</code>. Grep-confirmed, so the offline test should pass</li>
+            <li class="open"><b>Record the backup video.</b> Never cut, under any circumstances</li>
+            <li class="open">Still run the real offline test: actual laptop, actual browser, wifi off, projector resolution</li>
+            <li class="open">Drive two full timed rehearsals, including the walk to the laptop and the opening line</li>
+            <li class="open">Pack: charger, HDMI <em>and</em> VGA adapters, pendrive, file emailed to all six</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Left</h3>
+          <ul class="task">
+            <li class="them"><span class="who">All four</span>Q&amp;A drill &mdash; three hostile questions each, in your own domain</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- P8 -->
+  <article class="phase">
+    <div class="ph-top">
+      <span class="ph-id">P8</span>
+      <span class="ph-name">Presentation day</span>
+      <span class="ph-when">Mon 24, morning</span>
+      <span class="chip c-open">Not started</span>
+    </div>
+    <div class="ph-body">
+      <div class="cols">
+        <div class="col">
+          <h3>Run of show</h3>
+          <ul class="task">
+            <li class="open">Arrive early, test projector and resolution before judges circulate</li>
+            <li class="open">One silent full run to confirm nothing broke overnight</li>
+            <li class="open">Open with the hook, not the architecture</li>
+            <li class="open"><b>Let the judge inject the hotspot themselves.</b> Hands on the mouse beats any slide</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Then</h3>
+          <ul class="task">
+            <li class="open">Land the comparison timeline &mdash; then stop talking and let them look</li>
+            <li class="open">State the simulation boundary plainly, then the roadmap and the &#8377;20,000 budget</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ science sign-off ============ -->
+  <div class="sec-head">
+    <h2>Science changes needing sign-off</h2>
+    <span class="c">five constants moved during calibration</span>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>What</th><th>Was</th><th>Now</th><th>Why it had to move</th><th>Owns it</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bulk grain moisture</td>
+          <td class="num">13.5&thinsp;%</td>
+          <td class="num">12.0&thinsp;%</td>
+          <td class="why">At 13.5&thinsp;% the sound grain respires hard enough to drown the pocket. The
+            system is linear in respiration, so scaling <code>R0</code> cannot fix it &mdash; only drier
+            bulk can. 12&thinsp;% is FCI wheat acceptance moisture; a<sub>w</sub>&nbsp;0.66, far below the floor.</td>
+          <td><span class="owner">Krittika</span></td>
+        </tr>
+        <tr>
+          <td>Aflatoxin temperature ceiling</td>
+          <td class="num">30&nbsp;&deg;C</td>
+          <td class="num">35&nbsp;&deg;C</td>
+          <td class="why">25&ndash;30&nbsp;&deg;C is the reported <em>optimum</em>, not the permissive limit.
+            With 30 as the ceiling, a 30&nbsp;&deg;C godown that self-heated fell straight out of the
+            band and the toxin window never opened at all.</td>
+          <td><span class="owner">Krittika</span></td>
+        </tr>
+        <tr>
+          <td>CO&#8322; differential basis</td>
+          <td class="num">all 9 ports</td>
+          <td class="num">same depth</td>
+          <td class="why">Depth stratification is real and stable &mdash; mid-depth ports sit ~1,000&nbsp;ppm
+            above ones near a vented face. An all-ports median buried the signal completely.
+            Comparing lances at equal depth is the honest differential.</td>
+          <td><span class="owner">Vishal</span></td>
+        </tr>
+        <tr>
+          <td>Alert threshold</td>
+          <td class="num">4.0&nbsp;&sigma;</td>
+          <td class="num">3.0&nbsp;&sigma;</td>
+          <td class="why">Measured separation: clean grain peaks at 1.5&nbsp;&sigma; over ten days, a hotspot
+            reaches 4.2&nbsp;&sigma;. 3.0 sits with roughly 2&times; margin either side.</td>
+          <td><span class="owner">Vishal</span></td>
+        </tr>
+        <tr>
+          <td>Conventional detection route</td>
+          <td class="num">spear only</td>
+          <td class="num">+ musty stack</td>
+          <td class="why">A spear reaches 0.4&nbsp;m; the deep pocket sits 1.6&nbsp;m in and is simply
+            unreachable, so the arm read &ldquo;never detected&rdquo; &mdash; true to FAO, but it looks rigged.
+            Added a second route at mould index 2.0, giving day&nbsp;42.</td>
+          <td><span class="owner">Netra</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Every one of these is defensible as it stands, but the person who owns the number
+    should be the one who answers for it on stage &mdash; not the person who typed it.</p>
+
+  <!-- ============ verification ============ -->
+  <div class="sec-head">
+    <h2>What is actually proven</h2>
+    <span class="c">evidence, not confidence</span>
+  </div>
+  <div class="cols">
+    <div class="col">
+      <h3>Verified</h3>
+      <ul class="task">
+        <li class="done">Self-check green &mdash; solver stability, isotherm round-trip, growth-model ordering, stoichiometry, no false alarm on clean grain over 10 days</li>
+        <li class="done">P3 exit test asserted headlessly: CO&#8322; day&nbsp;1, temperature never within 60 days</li>
+        <li class="done">Three presets run 60 simulated days end to end with no NaN</li>
+        <li class="done">Full script parses; every DOM selector resolves to a real element</li>
+        <li class="done">Zero external references &mdash; offline-safe by construction</li>
+        <li class="done">Throughput measured: 7,200 physics steps/second</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Not proven</h3>
+      <ul class="task">
+        <li class="open"><b>Never opened in a browser.</b> Rendering, canvas drawing and event wiring are all unexercised</li>
+        <li class="open">Never run at projector resolution</li>
+        <li class="open">Never run three times consecutively without refresh</li>
+        <li class="open">Biological realism confirmed only against my own asserts, not Krittika&rsquo;s sources</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ fallback ============ -->
+  <div class="sec-head">
+    <h2>Fallback ladder</h2>
+    <span class="c">nothing cut so far</span>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>If behind at</th><th>Cut this</th><th>Standing</th></tr></thead>
+      <tbody>
+        <tr><td class="num">End of P3</td><td>Insect module entirely</td><td class="why">Never built. Costs nothing to skip &mdash; moisture + CO&#8322; + temperature is a complete story</td></tr>
+        <tr><td class="num">End of P4</td><td>Temperature field</td><td class="why">Not needed. Keep it &mdash; &ldquo;heat never arrives&rdquo; is the argument, not a decoration</td></tr>
+        <tr><td class="num">End of P5</td><td>Live dual-arm running</td><td class="why">Not needed. Both arms run live on one stack</td></tr>
+        <tr><td class="num">End of P6</td><td>Scenario preset buttons</td><td class="why">Not needed. If it comes to it, ship <b>Deep interior pocket</b> alone</td></tr>
+        <tr><td class="num">Anytime</td><td>Visual polish</td><td class="why">Available. Never cut the P4 exit test or the P7 backup video</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The two things that are never cut, at any point, for any reason: the P4 end-to-end
+    loop and the P7 backup video. Both are currently in hand &mdash; the loop is built, the video is not
+    yet recorded.</p>
+
+</div>

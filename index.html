@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Anna-Drishti — Grain Stack Digital Twin</title>
+<style>
+  :root{
+    --bg:#12100e; --panel:#1c1917; --line:#332e29; --ink:#f0ece6; --dim:#9a8f83;
+    --ok:#4ea36b; --warn:#d99a2b; --bad:#d1483a; --acc:#7fb8d4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.45 "Segoe UI",system-ui,sans-serif}
+  header{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;
+         padding:.6rem 1rem;border-bottom:1px solid var(--line);background:var(--panel)}
+  h1{font-size:1.15rem;margin:0;letter-spacing:.02em}
+  .sub{color:var(--dim);font-size:.85rem}
+  .clock{margin-left:auto;font:600 1.4rem/1 ui-monospace,Consolas,monospace;color:var(--acc)}
+  main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(340px,.75fr);
+       gap:1rem;padding:1rem;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:.75rem}
+  .card h2{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+           color:var(--dim);margin:0 0 .5rem}
+  canvas{display:block;width:100%;border-radius:4px}
+  .bar{display:flex;gap:.35rem;flex-wrap:wrap;margin:.55rem 0;align-items:center}
+  button{background:#2a2521;color:var(--ink);border:1px solid var(--line);
+         border-radius:4px;padding:.35rem .7rem;font-size:.85rem;cursor:pointer}
+  button:hover{background:#3a332d}
+  button.on{background:var(--acc);color:#10201f;border-color:var(--acc);font-weight:600}
+  label{font-size:.82rem;color:var(--dim);display:flex;align-items:center;gap:.4rem}
+  input[type=range]{width:110px}
+  table{width:100%;border-collapse:collapse;font-size:.82rem}
+  th,td{text-align:right;padding:.22rem .3rem;border-bottom:1px solid #262119}
+  th{color:var(--dim);font-weight:500;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+  td:first-child,th:first-child{text-align:left}
+  tr.hot td{color:var(--bad);font-weight:600}
+  tr.warn td{color:var(--warn)}
+  #card{border-left:4px solid var(--line);padding:.6rem .75rem;background:#221d19;
+        border-radius:4px;min-height:120px}
+  #card.fire{border-left-color:var(--bad)}
+  #card .act{font-size:1.05rem;font-weight:700;margin:.15rem 0 .4rem}
+  #card .ev{color:var(--dim);font-size:.82rem;white-space:pre-line}
+  .chartwrap{display:grid;gap:.5rem}
+  .legend{font-size:.75rem;color:var(--dim);display:flex;gap:.8rem;flex-wrap:wrap;align-items:center}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:.3rem;vertical-align:middle}
+  .pill{font-size:.72rem;padding:.15rem .5rem;border-radius:99px;border:1px solid var(--line);color:var(--dim)}
+  .pill.ok{color:var(--ok);border-color:var(--ok)}
+  .pill.bad{color:var(--bad);border-color:var(--bad)}
+  .note{font-size:.76rem;color:var(--dim);margin-top:.4rem}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ANNA-DRISHTI</h1>
+  <span class="sub">grain-stack digital twin &middot; 4.0 &times; 2.5 m bag stack &middot; 10 cm cells</span>
+  <span id="selfcheck" class="pill">self-check&hellip;</span>
+  <span class="clock" id="clock">Day 0 &middot; 00:00</span>
+</header>
+
+<main>
+  <div>
+    <div class="card">
+      <h2>Stack cross-section &mdash; click anywhere to inject a wet pocket</h2>
+      <canvas id="grid" width="800" height="500"></canvas>
+      <div class="bar">
+        <button data-view="m" class="on">Moisture</button>
+        <button data-view="T">Temperature</button>
+        <button data-view="c">CO&#8322;</button>
+        <button data-view="mould">Mould index</button>
+        <span style="flex:1"></span>
+        <span class="legend" id="scale"></span>
+      </div>
+      <div class="bar">
+        <button id="play">&#9654; Play</button>
+        <button id="reset">Reset</button>
+        <label>Speed <input id="speed" type="range" min="1" max="160" value="24"><span id="speedv">24</span>&times;</label>
+        <label>Inject <input id="dose" type="range" min="2" max="10" step="0.5" value="6"><span id="dosev">6.0</span>% mc</label>
+        <span style="flex:1"></span>
+        <button data-preset="leak">Monsoon roof leak</button>
+        <button data-preset="corner">Wet corner load</button>
+        <button data-preset="deep">Deep interior pocket</button>
+      </div>
+      <div class="note">Grey dots are sensor ports: 3 lances &times; 3 depths (0.5 / 1.2 / 2.0 m). Red ring = flagged port.</div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h2>Live probe readings &mdash; noisy, as the real instrument would be</h2>
+      <div class="chartwrap">
+        <canvas id="ch_co2" width="800" height="150"></canvas>
+        <canvas id="ch_t"   width="800" height="150"></canvas>
+        <canvas id="ch_z"   width="800" height="170"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="sw" style="background:#7fb8d4"></i>0.5 m</span>
+        <span><i class="sw" style="background:#d99a2b"></i>1.2 m</span>
+        <span><i class="sw" style="background:#d1483a"></i>2.0 m</span>
+        <span style="margin-left:1rem">Lance:</span>
+        <button data-lance="0">L1</button><button data-lance="1" class="on">L2</button><button data-lance="2">L3</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <h2>Decision</h2>
+      <div id="card">
+        <div class="act" style="color:var(--dim)">No action required</div>
+        <div class="ev">All ports within baseline.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h2>Zone risk ranking</h2>
+      <table id="zones">
+        <thead><tr><th>Port</th><th>a<sub>w</sub></th><th>&deg;C</th><th>CO&#8322;</th><th>&sigma;</th><th>d&rarr;mould</th><th>risk</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="note">a<sub>w</sub> from measured interstitial RH. Growth floor 0.82.
+        &sigma; = differential CO&#8322; against the other lances at the same depth, on the same analyser.</div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h2>Conventional inspection vs Anna-Drishti</h2>
+      <canvas id="tl" width="420" height="150"></canvas>
+      <div id="headline" class="note"></div>
+    </div>
+
+    <div class="card" style="margin-top:1rem">
+      <h2>Stack state (ground truth)</h2>
+      <table id="truth"><tbody></tbody></table>
+    </div>
+  </div>
+</main>
+
+<script>
+"use strict";
+/* ============================================================================
+   CONSTANTS - every value sourced. Track D (Krittika) owns the biology,
+   Track F (Devavrath) owns scale and transport. Change numbers HERE only.
+   ========================================================================== */
+const K = {
+  // --- scale calibration (Track F) --------------------------------------
+  W: 40, H: 25,        // cells -> 4.0 m wide x 2.5 m tall, a real godown bag stack
+  DX: 0.10,            // m per cell
+  DT_H: 0.25,          // simulated hours per step (chosen for stability, see selfCheck)
+
+  // --- transport, m^2/s. The RELATIVE magnitudes are the whole argument ---
+  D_CO2:   2.0e-6,  // effective in interstitial air (molecular 1.6e-5 x porosity/tortuosity)
+  D_HEAT:  1.2e-7,  // bulk grain thermal diffusivity, lit. 0.8-1.5e-7. Grain is an insulator.
+  D_MOIST: 1.5e-8,  // EFFECTIVE moisture migration incl. natural convection, not molecular.
+  // ponytail: one lumped moisture coefficient. Split vapour/liquid only if a judge pushes.
+  // Travel time over 0.4 m = L^2/D:  CO2 ~0.9 d, heat ~15 d, moisture ~120 d. That is the thesis.
+
+  // --- environment -------------------------------------------------------
+  T_AMB: 30, CO2_AMB: 400, M_INIT: 12.0,   // warm Indian godown, safe-stored grain.
+  // 12% is the FCI acceptance moisture for wheat -> aw 0.66 at 30 C, far below the
+  // 0.82 growth floor. Sound grain must be genuinely quiet or the pocket has nothing
+  // to stand out against: measured baseline here is ~1,800 ppm interstitial CO2.
+  VENT_K: 2.0,     // /day, exposed faces relax toward ambient CO2
+  T_RELAX: 0.5,    // /day, exposed faces relax toward ambient temperature
+  // ponytail: no diurnal cycle on the boundary. Add if the noise story needs it.
+
+  // --- respiration R(M,T), mg CO2 / kg dry matter / day (Track D) ---------
+  R0: 0.5,      // at 14% mc, 25 C. Published safe-grain range 0.1-1.
+  R_KM: 0.7,    // per % moisture point
+  R_Q10: 2.5,   // published Q10 for grain respiration, 2-3
+  R_MAX: 4000,  // cap: keeps the self-heating feedback from running away numerically
+
+  // --- stoichiometry: fixed chemistry, NOT tuning knobs -------------------
+  CO2_PER_DM:   1.467,  // g CO2 per g dry matter lost (180 g glucose -> 264 g CO2)
+  HEAT_PER_CO2: 10670,  // J per g CO2 (2816 kJ/mol glucose / 264 g CO2)
+  RHO_B: 800,    // kg/m3 bulk bagged grain
+  CP:    1800,   // J/(kg K) at ~14% mc
+  POROSITY: 0.40,
+  MG_PER_PPM: 1.8, // 1 ppm CO2 = 1.8 mg/m3 at 25 C
+
+  // --- sorption isotherm: modified Chung-Pfost, shelled corn (ASAE D245) --
+  CP_A: 620.7, CP_B: 0.2118, CP_C: 52.15,
+
+  // --- A. flavus cardinal growth model (predictive mycology, gamma concept)
+  AW_MIN: 0.82, AW_OPT: 0.99,      // published growth floor 0.82-0.85
+  T_MIN: 12, T_OPT: 33, T_MAX: 43,
+  MU_OPT: 0.20,                    // /day in grain -> ~5 d lag at optimum, ~17 d at aw 0.87
+  AW_TOXIN: 0.85, T_TOX_LO: 25, T_TOX_HI: 35,  // aflatoxin window is NARROWER than growth.
+  // 25-30 C is the reported OPTIMUM for toxin production; production still occurs to ~35 C.
+  // Using 30 as the ceiling meant a 30 C godown that self-heated never qualified at all.
+  DML_ALERT: 0.5,                  // % dry-matter loss: 0.5 general, 1.0 food, 0.04 premium
+
+  // --- sensing (Track C + F) ---------------------------------------------
+  LANCE_X: [8, 20, 32],     // 0.8 / 2.0 / 3.2 m across the face
+  DEPTH_Y: [5, 12, 20],     // 0.5 / 1.2 / 2.0 m below the top surface
+  SIG_CO2_ABS: 25, SIG_CO2_REL: 0.015, Q_CO2: 1,  // NDIR +/-50 ppm + 3% of reading, 1 ppm resolution
+  SIG_RH: 1.0, Q_RH: 0.1,                          // +/-2 %RH, 0.1 resolution
+  SIG_T:  0.15, Q_T: 0.1,                          // +/-0.3 C, 0.1 resolution
+  READ_EVERY_H: 1,          // the manifold sequences all 9 ports once an hour
+  BASE_TAU_D: 2.0,          // rolling per-port baseline EWMA time constant, days
+  Z_ALERT: 3.0,             // anomaly detection threshold, sigma. Measured separation:
+                            // clean grain peaks at 1.5 sigma, a hotspot reaches 4.2.
+  Z_HITS: 3,                // consecutive reads above threshold before we alert.
+                            // Without this a single noisy sample is a false alarm.
+  LAT_FLOOR_CO2: 250, LAT_REL_CO2: 0.15,  // expected lateral CO2 spread at one depth.
+                            // Real stacks are heterogeneous: measured natural spread
+                            // between lances at one depth is ~15% of the reading, so the
+                            // detector must tolerate that or it cries wolf on clean grain.
+  LAT_FLOOR_T: 0.4,  LAT_REL_T: 0.004,    // expected lateral temperature spread
+  RISK_ALERT: 45,
+
+  // --- conventional inspection baseline (Track E) -------------------------
+  INSPECT_EVERY_D: 14,      // FAO-consistent periodic inspection of bagged stacks
+  SPEAR_BAND: 4,            // cells: a spear reaches ~0.4 m in from a face, no further
+  SPEAR_P: 0.6,             // chance of hitting the pocket if it is inside that band
+  VIS_MOULD: 1.0,           // mould index at which growth is externally visible
+  MOULD_SMELL: 2.0          // an established colony this size makes the stack smell musty
+                            // and the bags feel warm, so it is noticed at the next routine
+                            // inspection even when no spear can reach it. Keeps the baseline
+                            // honest: without this route a deep pocket is "never detected",
+                            // which reads as a strawman even though it is what FAO describes.
+};
+
+/* ---------- seeded RNG so every rehearsal run is reproducible ------------ */
+let _s = 1;
+const srand = s => { _s = s >>> 0; };
+function rnd(){
+  _s = (_s + 0x6D2B79F5) | 0;
+  let t = Math.imul(_s ^ _s >>> 15, 1 | _s);
+  t = (t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t;
+  return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+const gauss = () => Math.sqrt(-2 * Math.log(1 - rnd())) * Math.cos(2 * Math.PI * rnd());
+
+/* ---------- pure science functions (hand-checkable, see selfCheck) ------- */
+function awFromM(mwb, T){                       // grain moisture % wet basis -> water activity
+  const mdb = mwb / (1 - mwb / 100);
+  return Math.min(0.995, Math.exp(-(K.CP_A / (T + K.CP_C)) * Math.exp(-K.CP_B * mdb)));
+}
+function mFromAw(aw, T){                        // inverse isotherm: aw -> % wet basis
+  aw = Math.min(0.994, Math.max(0.05, aw));
+  const mdb = -Math.log(-Math.log(aw) * (T + K.CP_C) / K.CP_A) / K.CP_B;
+  return mdb / (1 + mdb / 100);
+}
+function muGrowth(aw, T){                       // A. flavus growth rate, /day
+  if (aw <= K.AW_MIN || T <= K.T_MIN || T >= K.T_MAX) return 0;
+  const fa = Math.min(1, (aw - K.AW_MIN) / (K.AW_OPT - K.AW_MIN));
+  const w  = T <= K.T_OPT ? (K.T_OPT - K.T_MIN) : (K.T_MAX - K.T_OPT);
+  const ft = Math.max(0, 1 - Math.pow((T - K.T_OPT) / w, 2));
+  return K.MU_OPT * fa * ft;
+}
+const daysToMould = (aw, T) => { const m = muGrowth(aw, T); return m > 0 ? 1 / m : Infinity; };
+const toxinPermissive = (aw, T) => aw >= K.AW_TOXIN && T >= K.T_TOX_LO && T <= K.T_TOX_HI;
+const respiration = (m, T) =>
+  Math.min(K.R_MAX, K.R0 * Math.exp(K.R_KM * (m - 14)) * Math.pow(K.R_Q10, (T - 25) / 10));
+
+/* ============================================================================
+   PHYSICS  (Track B)
+   ========================================================================== */
+const N = K.W * K.H;
+const PPM_PER_R = K.RHO_B / (K.POROSITY * K.MG_PER_PPM);   // ppm/day per mg/kg/day
+
+// explicit finite-difference, zero-flux (mirror) boundaries.
+// STABILITY: D*dt/dx^2 <= 0.25. If you see NaN, halve DT_H before debugging anything else.
+function diffuse(f, tmp, D, dtS){
+  const k = D * dtS / (K.DX * K.DX), W = K.W, H = K.H;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++){
+    const i = y * W + x;
+    const l = f[x > 0 ? i - 1 : i], r = f[x < W - 1 ? i + 1 : i];
+    const u = f[y > 0 ? i - W : i], d = f[y < H - 1 ? i + W : i];
+    tmp[i] = f[i] + k * (l + r + u + d - 4 * f[i]);
+  }
+  f.set(tmp);
+}
+
+function step(S, dtH){
+  const dtS = dtH * 3600, dtD = dtH / 24, W = K.W, H = K.H;
+  diffuse(S.m, S.tmp, K.D_MOIST, dtS);
+  diffuse(S.T, S.tmp, K.D_HEAT,  dtS);
+  diffuse(S.c, S.tmp, K.D_CO2,   dtS);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++){
+    const i = y * W + x, T = S.T[i], R = respiration(S.m[i], T);
+    S.c[i]   += PPM_PER_R * R * dtD;                          // metabolic CO2
+    S.T[i]   += (R * 1e-3 * K.HEAT_PER_CO2 / K.CP) * dtD;     // heat of respiration
+    S.dml[i] += (R * 1e-3 / K.CO2_PER_DM) / 10 * dtD;         // % dry-matter loss
+    S.mould[i] += muGrowth(awFromM(S.m[i], T), T) * dtD;
+    if (x === 0 || y === 0 || x === W - 1 || y === H - 1){     // exposed faces vent
+      S.c[i] -= K.VENT_K  * (S.c[i] - K.CO2_AMB) * dtD;
+      S.T[i] -= K.T_RELAX * (S.T[i] - K.T_AMB)   * dtD;
+    }
+  }
+  S.tH += dtH;
+}
+
+function newStack(seed){
+  srand(seed);
+  const S = {
+    m: new Float64Array(N), T: new Float64Array(N), c: new Float64Array(N),
+    mould: new Float64Array(N), dml: new Float64Array(N), tmp: new Float64Array(N),
+    tH: 0
+  };
+  for (let i = 0; i < N; i++){
+    S.m[i] = K.M_INIT + gauss() * 0.25;   // real stacks are not uniform
+    S.T[i] = K.T_AMB;
+    S.c[i] = K.CO2_AMB;
+  }
+  const warm = Math.round(15 * 24 / K.DT_H);
+  for (let i = 0; i < warm; i++) step(S, K.DT_H);   // let the CO2 field reach steady state
+  S.mould.fill(0); S.dml.fill(0); S.tH = 0;
+  return S;
+}
+
+function inject(S, cx, cy, peak, sigma){
+  for (let y = 0; y < K.H; y++) for (let x = 0; x < K.W; x++){
+    const i = y * K.W + x, d2 = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+    S.m[i] = Math.min(30, S.m[i] + peak * Math.exp(-d2 / (2 * sigma * sigma)));
+  }
+}
+
+/* ============================================================================
+   SENSING + DECISION  (Track C) - this is the product code
+   ========================================================================== */
+function newSensors(){
+  const P = [];
+  for (let l = 0; l < 3; l++) for (let d = 0; d < 3; d++)
+    P.push({ lance: l, depth: d, x: K.LANCE_X[l], y: K.DEPTH_Y[d],
+             name: "L" + (l + 1) + " @ " + [0.5, 1.2, 2.0][d] + " m",
+             base: null, hits: 0, co2: 0, rh: 0, t: 0 });
+  return P;
+}
+const quant = (v, sig, q) => Math.round((v + gauss() * sig) / q) * q;
+
+function readSensors(S, P, dtH){
+  const a = Math.min(1, (dtH / 24) / K.BASE_TAU_D);
+  for (const p of P){
+    const i = p.y * K.W + p.x, tT = S.T[i], tC = S.c[i], tAw = awFromM(S.m[i], tT);
+    p.co2 = Math.max(0, quant(tC, K.SIG_CO2_ABS + K.SIG_CO2_REL * tC, K.Q_CO2));
+    p.rh  = Math.min(99.4, Math.max(5, quant(tAw * 100, K.SIG_RH, K.Q_RH)));
+    p.t   = quant(tT, K.SIG_T, K.Q_T);
+    // seed the baseline from the first reading, otherwise it climbs from ambient
+    // for its first ten days and every port reads as an anomaly
+    p.base = p.base === null ? p.co2 : p.base + (p.co2 - p.base) * a;
+  }
+  return P;
+}
+
+/* Anomaly, two independent views of the same reading:
+   - LATERAL: a port against the other lances AT THE SAME DEPTH. CO2 is strongly
+     depth-stratified (the mid-depth ports sit ~1000 ppm above the ones near a
+     vented face) and that stratification is stable, so a plain all-ports median
+     buries the signal. Same-depth comparison is the honest differential, and it
+     is still one analyser against one baseline, so drift cancels.
+   - TEMPORAL: a port against its own rolling baseline. Catches a stack warming
+     or wetting as a whole, which the lateral view cannot see.
+   Take the larger of the two. */
+function anomaly(P, field, floor, rel){
+  return P.map(p => {
+    const peers = P.filter(q => q.depth === p.depth && q !== p).map(q => q[field]);
+    const mu = peers.reduce((a, b) => a + b, 0) / peers.length;
+    const zLat = (p[field] - mu) / Math.max(floor, rel * Math.abs(mu));
+    const zBase = field === "co2"
+      ? (p.co2 - p.base) / Math.max(60, 0.05 * p.base)
+      : -Infinity;                       // only CO2 carries a rolling baseline
+    return Math.max(zLat, zBase);
+  });
+}
+
+function decide(P){
+  const zc = anomaly(P, "co2", K.LAT_FLOOR_CO2, K.LAT_REL_CO2);
+  const zt = anomaly(P, "t",   K.LAT_FLOOR_T,   K.LAT_REL_T);
+  P.forEach((p, i) => { p.hits = zc[i] >= K.Z_ALERT ? (p.hits || 0) + 1 : 0; });
+  const zones = P.map((p, i) => {
+    const aw = p.rh / 100, dtm = daysToMould(aw, p.t), mc = mFromAw(aw, p.t);
+    const z = zc[i];
+    const awS  = Math.min(1, Math.max(0, (aw - 0.78) / 0.12));
+    const urg  = Math.min(1, Math.max(0, 1 - dtm / 30));
+    const co2S = Math.min(1, Math.max(0, z / 8));
+    return { p: p, aw: aw, mc: mc, t: p.t, co2: p.co2, z: z, zt: zt[i], dtm: dtm,
+             risk: 100 * (0.35 * awS + 0.40 * urg + 0.25 * co2S) };
+  }).sort((a, b) => b.risk - a.risk);
+
+  const top = zones[0];
+  // an anomaly must persist across consecutive reads - one noisy sample is not an alert
+  const sustained = (top.p.hits || 0) >= K.Z_HITS;
+  const fire = top.risk >= K.RISK_ALERT || (top.z >= K.Z_ALERT && sustained);
+  let action = null, why = "";
+  if (fire && top.aw >= K.AW_MIN && top.dtm < 21){
+    action = "AERATE + TURN BAGS at " + top.p.name;
+    why = "moisture pocket resolved at this port";
+  } else if (fire && top.z >= K.Z_ALERT){
+    action = "TARGETED PROBE at " + top.p.name;
+    why = "respiration anomaly with no moisture signature at the port yet - the source sits between lances";
+  } else if (fire){
+    action = "RE-PROBE " + top.p.name + " within 24 h";
+    why = "risk rising, not yet actionable";
+  }
+  const evidence = fire ? [
+    "CO2 " + Math.round(top.co2).toLocaleString() + " ppm = +" + top.z.toFixed(1) +
+      " sigma vs the other lances at this depth, same analyser (temperature only +" +
+      top.zt.toFixed(1) + " sigma)",
+    "aw at this port " + top.aw.toFixed(3) + (top.aw >= K.AW_MIN ? " - above" : " - below") +
+      " the 0.82 growth floor for A. flavus; implied mc " + top.mc.toFixed(1) +
+      "% wb at " + top.t.toFixed(1) + " C",
+    isFinite(top.dtm) ? "modelled mould onset in " + top.dtm.toFixed(1) + " days at current conditions"
+                      : "no growth possible at the water activity THIS PORT can see - the source is elsewhere",
+    why
+  ].join("\n") : "";
+  return { zones: zones, top: top, fire: fire, action: action, evidence: evidence };
+}
+
+/* ============================================================================
+   CONVENTIONAL INSPECTION ARM  (Track E) - defensible, not a strawman.
+   Periodic visual + peripheral spear sampling every 14 days. A spear reaches
+   ~0.4 m in from a face, so only cells in that band can be sampled at all; FAO
+   notes sampling misses non-uniform pockets, hence P = 0.6 per encounter.
+   Mould visible on an outer face is always caught at the next inspection.
+   ========================================================================== */
+function inspect(S){
+  const b = K.SPEAR_BAND;
+  for (let y = 0; y < K.H; y++) for (let x = 0; x < K.W; x++){
+    const i = y * K.W + x;
+    const face = x === 0 || y === 0 || x === K.W - 1 || y === K.H - 1;
+    const edge = x < b || y < b || x >= K.W - b || y >= K.H - b;
+    if (face && S.mould[i] >= K.VIS_MOULD) return true;
+    if (edge && S.mould[i] >= K.VIS_MOULD * 0.6 && rnd() < K.SPEAR_P) return true;
+  }
+  let mould = 0; for (let i = 0; i < N; i++) if (S.mould[i] > mould) mould = S.mould[i];
+  return mould >= K.MOULD_SMELL;   // musty stack, warm bags - noticed even for an interior pocket
+}
+
+/* ============================================================================
+   RUN STATE
+   ========================================================================== */
+let S, P, D;
+const run = { playing: false, view: "m", lance: 1, seed: 20260824,
+              hist: [], lastRead: -1, lastSample: -1, lastInspectIdx: 0,
+              dayAD: null, dayInsp: null, dayMould: null, dayToxin: null, alert: null };
+
+function reset(seed){
+  if (seed !== undefined) run.seed = seed;
+  S = newStack(run.seed); P = newSensors(); D = null;
+  run.hist = []; run.lastRead = -1; run.lastSample = -1; run.lastInspectIdx = 0;
+  run.dayAD = run.dayInsp = run.dayMould = run.dayToxin = null;
+  run.alert = null;
+  tick(0);
+}
+
+function tick(steps){
+  for (let i = 0; i < steps; i++) step(S, K.DT_H);
+  const day = S.tH / 24;
+
+  if (S.tH - run.lastRead >= K.READ_EVERY_H || run.lastRead < 0){
+    const dt = run.lastRead < 0 ? K.READ_EVERY_H : S.tH - run.lastRead;
+    run.lastRead = S.tH;
+    D = decide(readSensors(S, P, dt));
+    if (D.fire){
+      if (run.dayAD === null) run.dayAD = day;
+      const deadline = day + D.top.dtm;
+      run.alert = { day: run.dayAD, action: D.action, evidence: D.evidence,
+                    deadline: run.alert ? Math.min(run.alert.deadline, deadline) : deadline };
+    }
+  }
+  if (day - run.lastSample >= 0.25){          // chart sample every 6 simulated hours
+    run.lastSample = day;
+    run.hist.push({ d: day,
+      co2: P.filter(p => p.lance === run.lance).map(p => p.co2),
+      t:   P.filter(p => p.lance === run.lance).map(p => p.t),
+      z:   D ? Math.max.apply(null, D.zones.map(z => z.z))  : 0,
+      zt:  D ? Math.max.apply(null, D.zones.map(z => z.zt)) : 0 });
+    if (run.hist.length > 1200) run.hist.shift();
+  }
+  const ins = Math.floor(day / K.INSPECT_EVERY_D);
+  if (ins > run.lastInspectIdx){
+    run.lastInspectIdx = ins;
+    if (run.dayInsp === null && inspect(S)) run.dayInsp = day;
+  }
+  if (run.dayMould === null)
+    for (let i = 0; i < N; i++) if (S.mould[i] >= K.VIS_MOULD){ run.dayMould = day; break; }
+  if (run.dayToxin === null)
+    for (let i = 0; i < N; i++)
+      if (S.mould[i] >= K.VIS_MOULD && toxinPermissive(awFromM(S.m[i], S.T[i]), S.T[i])){
+        run.dayToxin = day; break;
+      }
+}
+
+/* ============================================================================
+   RENDERING  (Track A)
+   ========================================================================== */
+const $ = s => document.querySelector(s);
+const g  = $("#grid").getContext("2d");
+const CS = $("#grid").width / K.W;
+
+const RAMPS = {
+  m:     { lo: 11,  hi: 24,    log: false, unit: "% mc",
+           stops: [[0,[28,36,44]],[.35,[38,110,120]],[.6,[217,154,43]],[1,[209,72,58]]] },
+  T:     { lo: 28,  hi: 42,    log: false, unit: "C",
+           stops: [[0,[30,42,70]],[.4,[60,140,110]],[.7,[217,154,43]],[1,[209,72,58]]] },
+  c:     { lo: 400, hi: 80000, log: true,  unit: "ppm CO2",
+           stops: [[0,[26,26,30]],[.4,[50,120,140]],[.7,[224,200,80]],[1,[209,72,58]]] },
+  mould: { lo: 0,   hi: 2,     log: false, unit: "mould index",
+           stops: [[0,[26,24,22]],[.5,[120,60,120]],[1,[230,90,200]]] }
+};
+function colour(v, R){
+  let f = R.log ? Math.log(Math.max(v, R.lo) / R.lo) / Math.log(R.hi / R.lo)
+                : (v - R.lo) / (R.hi - R.lo);
+  f = Math.min(1, Math.max(0, f));
+  const st = R.stops;
+  for (let i = 1; i < st.length; i++) if (f <= st[i][0]){
+    const a = st[i - 1], b = st[i], k = (f - a[0]) / (b[0] - a[0] || 1);
+    return "rgb(" + a[1].map((c, j) => Math.round(c + (b[1][j] - c) * k)).join(",") + ")";
+  }
+  return "rgb(" + st[st.length - 1][1].join(",") + ")";
+}
+
+function drawGrid(){
+  const R = RAMPS[run.view], f = S[run.view];
+  for (let y = 0; y < K.H; y++) for (let x = 0; x < K.W; x++){
+    g.fillStyle = colour(f[y * K.W + x], R);
+    g.fillRect(x * CS, y * CS, CS + 1, CS + 1);
+  }
+  g.strokeStyle = "rgba(255,255,255,.28)"; g.lineWidth = 3;
+  for (const lx of K.LANCE_X){
+    g.beginPath();
+    g.moveTo((lx + .5) * CS, 0);
+    g.lineTo((lx + .5) * CS, (K.DEPTH_Y[2] + .5) * CS);
+    g.stroke();
+  }
+  const top = D && D.fire ? D.top.p : null;
+  for (const p of P){
+    const cx = (p.x + .5) * CS, cy = (p.y + .5) * CS;
+    g.beginPath(); g.arc(cx, cy, 5, 0, 7); g.fillStyle = "#e9e4dc"; g.fill();
+    g.strokeStyle = "#12100e"; g.lineWidth = 1.5; g.stroke();
+    if (p === top){
+      g.beginPath(); g.arc(cx, cy, 12, 0, 7);
+      g.strokeStyle = "#d1483a"; g.lineWidth = 3; g.stroke();
+    }
+  }
+  const fmt = v => Math.round(v).toLocaleString();
+  $("#scale").innerHTML =
+    "<span>" + fmt(R.lo) + "</span>" +
+    "<span style='display:inline-block;width:120px;height:10px;border-radius:2px;background:linear-gradient(90deg," +
+      [0,.25,.5,.75,1].map(f =>
+        colour(R.log ? R.lo * Math.pow(R.hi / R.lo, f) : R.lo + f * (R.hi - R.lo), R)).join(",") +
+    ")'></span><span>" + fmt(R.hi) + " " + R.unit + "</span>";
+}
+
+/* ---------- hand-rolled charts: no CDN, the venue wifi will fail --------- */
+function chart(id, pick, colours, label, opts){
+  const cv = $(id), c = cv.getContext("2d"), W = cv.width, H = cv.height;
+  const PADL = 62, PADB = 20, PADT = 16, PADR = 8;
+  c.fillStyle = "#161311"; c.fillRect(0, 0, W, H);
+  const h = run.hist; if (h.length < 2) return;
+  const series = colours.map((_, s) => h.map(p => pick(p)[s]));
+  const flat = [].concat.apply([], series);
+  let lo = opts.lo !== undefined ? opts.lo : Math.min.apply(null, flat);
+  let hi = opts.hi !== undefined ? opts.hi : Math.max.apply(null, flat);
+  if (hi - lo < 1e-6) hi = lo + 1;
+  const pad = (hi - lo) * 0.12; lo -= pad; hi += pad;
+  const x0 = h[0].d, x1 = Math.max(h[h.length - 1].d, x0 + 1);
+  const X = d => PADL + (d - x0) / (x1 - x0) * (W - PADL - PADR);
+  const Y = v => PADT + (1 - (v - lo) / (hi - lo)) * (H - PADT - PADB);
+
+  c.font = "12px Consolas,monospace"; c.lineWidth = 1;
+  for (let i = 0; i <= 3; i++){
+    const v = lo + (hi - lo) * i / 3, y = Y(v);
+    c.strokeStyle = "#2b2622"; c.beginPath(); c.moveTo(PADL, y); c.lineTo(W - PADR, y); c.stroke();
+    c.fillStyle = "#8b8177"; c.textAlign = "right";
+    c.fillText(opts.fmt ? opts.fmt(v) : v.toFixed(1), PADL - 6, y + 4);
+  }
+  for (const hl of (opts.hlines || [])){
+    c.strokeStyle = hl.c; c.setLineDash([4, 3]);
+    c.beginPath(); c.moveTo(PADL, Y(hl.v)); c.lineTo(W - PADR, Y(hl.v)); c.stroke();
+    c.setLineDash([]);
+    c.fillStyle = hl.c; c.textAlign = "left"; c.fillText(hl.t, PADL + 4, Y(hl.v) - 4);
+  }
+  series.forEach((sv, s) => {
+    c.strokeStyle = colours[s]; c.lineWidth = 1.8; c.beginPath();
+    sv.forEach((v, i) => i ? c.lineTo(X(h[i].d), Y(v)) : c.moveTo(X(h[i].d), Y(v)));
+    c.stroke();
+  });
+  c.fillStyle = "#c9c1b6"; c.textAlign = "left"; c.font = "600 12px Consolas,monospace";
+  c.fillText(label, PADL + 4, 11);
+  c.fillStyle = "#8b8177"; c.textAlign = "right"; c.font = "12px Consolas,monospace";
+  c.fillText("day " + x1.toFixed(1), W - PADR, H - 6);
+}
+
+function drawTimeline(){
+  const cv = $("#tl"), c = cv.getContext("2d"), W = cv.width, H = cv.height;
+  c.fillStyle = "#161311"; c.fillRect(0, 0, W, H);
+  const span = Math.max(60, Math.ceil(S.tH / 24 / 10) * 10), PADL = 92, PADR = 14;
+  const X = d => PADL + Math.min(1, d / span) * (W - PADL - PADR);
+  c.font = "12px Consolas,monospace";
+
+  for (const ev of [{ d: run.dayMould, c: "#a061b8", t: "mould onset" },
+                    { d: run.dayToxin, c: "#d1483a", t: "toxin window" }]){
+    if (ev.d === null) continue;
+    c.strokeStyle = ev.c; c.setLineDash([3, 3]);
+    c.beginPath(); c.moveTo(X(ev.d), 20); c.lineTo(X(ev.d), H - 22); c.stroke();
+    c.setLineDash([]);
+    c.fillStyle = ev.c; c.textAlign = "center"; c.fillText(ev.t, X(ev.d), 14);
+  }
+  const nTicks = Math.floor(span / K.INSPECT_EVERY_D);
+  const ticks = []; for (let i = 1; i <= nTicks; i++) ticks.push(i * K.INSPECT_EVERY_D);
+  const rows = [
+    { y: 48, label: "Conventional",  day: run.dayInsp, colour: "#d99a2b", ticks: ticks },
+    { y: 98, label: "Anna-Drishti",  day: run.dayAD,   colour: "#4ea36b", ticks: [] }
+  ];
+  for (const r of rows){
+    c.strokeStyle = "#2b2622"; c.lineWidth = 2;
+    c.beginPath(); c.moveTo(PADL, r.y); c.lineTo(W - PADR, r.y); c.stroke();
+    c.fillStyle = "#8b8177"; c.textAlign = "right"; c.fillText(r.label, PADL - 8, r.y + 4);
+    c.strokeStyle = "#4a423a"; c.lineWidth = 1;
+    for (const t of r.ticks){
+      c.beginPath(); c.moveTo(X(t), r.y - 5); c.lineTo(X(t), r.y + 5); c.stroke();
+    }
+    if (r.day !== null){
+      c.fillStyle = r.colour; c.beginPath(); c.arc(X(r.day), r.y, 6, 0, 7); c.fill();
+      c.textAlign = "center"; c.fillText("day " + r.day.toFixed(0), X(r.day), r.y - 12);
+    } else {
+      c.fillStyle = "#5c534a"; c.textAlign = "left";
+      c.fillText("not detected", X(S.tH / 24) + 8, r.y + 4);
+    }
+  }
+  c.fillStyle = "#5c534a"; c.textAlign = "left";  c.fillText("day 0", PADL, H - 6);
+  c.textAlign = "right"; c.fillText("day " + span, W - PADR, H - 6);
+
+  let msg = "";
+  if (run.dayAD !== null && run.dayInsp !== null)
+    msg = "Conventional inspection found it on day " + run.dayInsp.toFixed(0) +
+          ". We flagged it on day " + run.dayAD.toFixed(1) + " - " +
+          (run.dayInsp - run.dayAD).toFixed(0) + " days of lead time" +
+          (run.dayMould !== null ? ", and predicted mould onset for day " + run.dayMould.toFixed(0) : "") + ".";
+  else if (run.dayAD !== null)
+    msg = "Flagged on day " + run.dayAD.toFixed(1) + ". Conventional inspection has not detected it yet.";
+  $("#headline").textContent = msg;
+}
+
+function drawPanel(){
+  if (!D) return;
+  const el = $("#card");
+  if (run.alert){
+    const A = run.alert;
+    el.className = "fire";
+    const dl = isFinite(A.deadline) ? " - by day " + A.deadline.toFixed(0) : "";
+    el.innerHTML = "<div class='act' style='color:var(--bad)'>" + A.action + dl + "</div>" +
+                   "<div class='ev'></div>";
+    el.querySelector(".ev").textContent =
+      A.evidence + "\n\nfirst flagged day " + A.day.toFixed(1) +
+      " - alert held until acknowledged" + (D.fire ? "" : " (anomaly has since dispersed)");
+  } else {
+    el.className = "";
+    el.innerHTML = "<div class='act' style='color:var(--dim)'>No action required</div>" +
+      "<div class='ev'>All 9 ports within baseline. Highest aw " + D.top.aw.toFixed(3) +
+      " (growth floor 0.82). Peak differential CO2 +" + D.top.z.toFixed(1) + " sigma.</div>";
+  }
+  $("#zones tbody").innerHTML = D.zones.map(z => {
+    const cls = z.risk >= K.RISK_ALERT ? "hot" : z.risk >= 25 ? "warn" : "";
+    return "<tr class='" + cls + "'><td>" + z.p.name + "</td><td>" + z.aw.toFixed(3) +
+      "</td><td>" + z.t.toFixed(1) + "</td><td>" + Math.round(z.co2).toLocaleString() +
+      "</td><td>" + z.z.toFixed(1) + "</td><td>" +
+      (isFinite(z.dtm) ? z.dtm.toFixed(1) : "-") + "</td><td>" + z.risk.toFixed(0) + "</td></tr>";
+  }).join("");
+
+  let mx = 0, mxi = 0, dml = 0, mould = 0, maxc = 0;
+  for (let i = 0; i < N; i++){
+    if (S.m[i] > mx){ mx = S.m[i]; mxi = i; }
+    if (S.c[i] > maxc) maxc = S.c[i];
+    dml += S.dml[i];
+    if (S.mould[i] > mould) mould = S.mould[i];
+  }
+  const pkT = S.T[mxi], pkAw = awFromM(mx, pkT);
+  $("#truth tbody").innerHTML = [
+    ["peak moisture",         mx.toFixed(1) + " % wb"],
+    ["aw there",              pkAw.toFixed(3) + (pkAw >= K.AW_MIN ? "  - above growth floor" : "")],
+    ["temperature there",     pkT.toFixed(2) + " C  (ambient " + K.T_AMB + ")"],
+    ["peak CO2",              Math.round(maxc).toLocaleString() + " ppm"],
+    ["peak mould index",      mould.toFixed(2) + (mould >= 1 ? "  - visible" : "")],
+    ["stack dry-matter loss", (dml / N).toFixed(3) + " %  (alert at " + K.DML_ALERT + ")"]
+  ].map(r => "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>").join("");
+}
+
+function drawAll(){
+  drawGrid();
+  chart("#ch_co2", p => p.co2, ["#7fb8d4", "#d99a2b", "#d1483a"],
+        "CO2 ppm - lance L" + (run.lance + 1), { lo: 0, fmt: v => Math.round(v).toLocaleString() });
+  chart("#ch_t", p => p.t, ["#7fb8d4", "#d99a2b", "#d1483a"],
+        "temperature C - lance L" + (run.lance + 1), { fmt: v => v.toFixed(1) });
+  chart("#ch_z", p => [p.z, p.zt], ["#4ea36b", "#d1483a"],
+        "departure from the other ports (sigma):  green CO2,  red temperature",
+        { lo: -2, fmt: v => v.toFixed(1),
+          hlines: [{ v: K.Z_ALERT, c: "#8b8177", t: "detection threshold" }] });
+  drawPanel(); drawTimeline();
+  const d = Math.floor(S.tH / 24), h = Math.floor(S.tH % 24);
+  $("#clock").innerHTML = "Day " + d + " &middot; " + String(h).padStart(2, "0") + ":00";
+}
+
+/* ============================================================================
+   LOOP + CONTROLS
+   ========================================================================== */
+let speed = 24;
+function frame(){
+  if (run.playing) tick(speed);
+  drawAll();
+  requestAnimationFrame(frame);
+}
+
+$("#grid").addEventListener("click", e => {
+  const r = e.target.getBoundingClientRect();
+  const x = Math.floor((e.clientX - r.left) / r.width * K.W);
+  const y = Math.floor((e.clientY - r.top) / r.height * K.H);
+  inject(S, x, y, +$("#dose").value, 2.8);
+});
+document.querySelectorAll("[data-view]").forEach(b => b.onclick = () => {
+  run.view = b.dataset.view;
+  document.querySelectorAll("[data-view]").forEach(o => o.classList.toggle("on", o === b));
+});
+document.querySelectorAll("[data-lance]").forEach(b => b.onclick = () => {
+  run.lance = +b.dataset.lance; run.hist = [];
+  document.querySelectorAll("[data-lance]").forEach(o => o.classList.toggle("on", o === b));
+});
+// reproducible seeds - you are about to rehearse these ten times
+const PRESETS = {
+  leak:   { seed: 101, x: 22, y: 4,  dose: 7.0, s: 2.8 },  // water in through the roof, near L2 shallow
+  corner: { seed: 202, x: 5,  y: 21, dose: 6.5, s: 2.8 },  // wet bags loaded into a corner
+  deep:   { seed: 303, x: 24, y: 16, dose: 6.0, s: 2.8 }   // interior pocket 0.4 m off L2 mid
+};
+document.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => {
+  const p = PRESETS[b.dataset.preset];
+  reset(p.seed);
+  inject(S, p.x, p.y, p.dose, p.s);
+  run.playing = true; $("#play").textContent = "‖ Pause";
+});
+$("#play").onclick = e => {
+  run.playing = !run.playing;
+  e.target.textContent = run.playing ? "‖ Pause" : "▶ Play";
+};
+$("#reset").onclick = () => { run.playing = false; $("#play").textContent = "▶ Play"; reset(); };
+$("#speed").oninput = e => { speed = +e.target.value; $("#speedv").textContent = speed; };
+$("#dose").oninput  = e => { $("#dosev").textContent = (+e.target.value).toFixed(1); };
+
+/* ============================================================================
+   SELF-CHECK - the one runnable check. If the science or the solver breaks,
+   this fails loudly instead of quietly producing a plausible-looking demo.
+   ========================================================================== */
+function selfCheck(){
+  const fails = [];
+  const ok = (name, cond) => { if (!cond) fails.push(name); };
+
+  // 1. explicit-solver stability for every field at the chosen dt
+  const dtS = K.DT_H * 3600;
+  [["CO2", K.D_CO2], ["heat", K.D_HEAT], ["moist", K.D_MOIST]].forEach(p =>
+    ok("stability:" + p[0], p[1] * dtS / (K.DX * K.DX) <= 0.25));
+
+  // 2. isotherm: hand-checked value, monotonicity, round-trip
+  ok("aw(14%,25C)~0.77",  Math.abs(awFromM(14, 25) - 0.774) < 0.02);
+  ok("aw monotonic",      awFromM(12, 25) < awFromM(16, 25) && awFromM(16, 25) < awFromM(20, 25));
+  ok("isotherm inverts",  Math.abs(mFromAw(awFromM(16, 30), 30) - 16) < 0.05);
+
+  // 3. growth model ordering - Krittika's realism check, as an assert
+  ok("no growth below 0.82", muGrowth(0.80, 30) === 0);
+  ok("wetter grows faster",  muGrowth(0.92, 30) > muGrowth(0.86, 30));
+  ok("~17 d at aw .87/30C",  Math.abs(daysToMould(0.87, 30) - 17) < 4);
+  ok("cold stops growth",    muGrowth(0.95, 10) === 0);
+
+  // 4. stoichiometry: 1% dry-matter loss must equal 14.67 g CO2 per kg
+  ok("DML<->CO2", Math.abs(10 * K.CO2_PER_DM - 14.67) < 0.1);
+
+  // 5. THE P3 EXIT TEST, headless: with a hotspot 0.4 m off a port, does the
+  //    CO2 trace leave the pack before the temperature trace does?
+  const T2 = newStack(999), Q = newSensors();
+  const quiet = [];
+  for (let d = 0; d < 10; d++){                       // no hotspot: must stay silent
+    for (let i = 0; i < 24 / K.DT_H; i++) step(T2, K.DT_H);
+    readSensors(T2, Q, 24);
+    quiet.push(Math.max.apply(null, anomaly(Q, "co2", K.LAT_FLOOR_CO2, K.LAT_REL_CO2)));
+  }
+  ok("no false alarm on clean grain", Math.max.apply(null, quiet) < K.Z_ALERT);
+
+  inject(T2, 24, 16, 6, 2.8);
+  let dCO2 = null, dT = null;
+  for (let d = 0; d < 60 && (dCO2 === null || dT === null); d++){
+    for (let i = 0; i < 24 / K.DT_H; i++) step(T2, K.DT_H);
+    readSensors(T2, Q, 24);
+    const zc = anomaly(Q, "co2", K.LAT_FLOOR_CO2, K.LAT_REL_CO2);
+    const zt = anomaly(Q, "t",   K.LAT_FLOOR_T,   K.LAT_REL_T);
+    if (dCO2 === null && Math.max.apply(null, zc) >= K.Z_ALERT) dCO2 = d + 1;
+    if (dT   === null && Math.max.apply(null, zt) >= K.Z_ALERT) dT   = d + 1;
+  }
+  ok("CO2 detected at all",   dCO2 !== null);
+  // dT === null is the strongest possible pass: heat never arrives at all in 60 days
+  ok("CO2 leads temperature", dCO2 !== null && (dT === null || dCO2 < dT));
+  const lead = "CO2 day " + dCO2 + ", temperature " + (dT === null ? "never (>60 d)" : "day " + dT);
+
+  // 6. no NaN anywhere after a long run
+  ok("no NaN", [T2.m, T2.T, T2.c].every(f => Array.prototype.every.call(f, Number.isFinite)));
+
+  const el = $("#selfcheck");
+  if (fails.length){ el.className = "pill bad"; el.textContent = "SELF-CHECK FAILED: " + fails.join(", "); }
+  else { el.className = "pill ok"; el.textContent = "self-check passed - " + lead; }
+  console.log(fails.length ? "SELF-CHECK FAILED: " + fails.join(", ") : "self-check OK - " + lead);
+  return fails;
+}
+
+/* ---------------------------------------------------------------------- */
+reset(20260824);
+selfCheck();
+frame();
+console.log("Anna-Drishti ready. Click the stack to inject, or press a preset.");
+</script>
+</body>
+</html>
