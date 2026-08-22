@@ -102,6 +102,29 @@ and it is worth more to us than any amount of additional software.</p>
   classic pairing in the literature, and maize aflatoxin is a documented Indian problem. Our
   mycotoxin argument stands on firmer ground with the commodity it was built from.</p>
 
+  <div class="warn">
+    <b class="lbl">If what you have is popcorn, read this first</b>
+    <p style="margin:0">Popcorn (<i>Zea mays</i> var. <i>everta</i>) is still maize, so the
+    experiment works &mdash; but two things change, and both must be said out loud rather than
+    quietly ignored:</p>
+    <ul style="margin:2.5mm 0 0 5mm">
+      <li><b>The pericarp is much harder</b>, so added water penetrates the kernel far more slowly
+        than in dent corn. Across our compressed 44 hours some water may still be sitting on the
+        kernel surface rather than inside it.</li>
+      <li><b>Surface water reads falsely high.</b> Free water on the outside drives headspace
+        humidity toward 100 %, which is <i>not</i> the grain&rsquo;s true equilibrium water
+        activity. If Jar B reads much above 99 % RH, suspect surface water rather than a real
+        result.</li>
+      <li>Our isotherm coefficients are for <b>shelled dent corn</b>, not popcorn. Same species,
+        different variety &mdash; the sorption curve is close but not identical.</li>
+    </ul>
+    <p style="margin:2.5mm 0 0"><b>Preferred:</b> 1 kg of feed-grade maize from a poultry feed shop
+    (about &#8377;30&ndash;40/kg) is dent corn, takes up water faster, and matches our isotherm.
+    <b>But do not let sourcing delay the seal</b> &mdash; popcorn sealed this evening beats dent
+    corn sealed on Sunday. Mitigate by mixing thoroughly and repeatedly, and by using warm (not
+    hot) water at about 40 &deg;C, which penetrates a hard pericarp faster.</p>
+  </div>
+
   <div class="note">
     <b class="lbl">If we would rather the project be wheat</b>
     <p style="margin:0">Then we change the isotherm coefficients, not the grain. Wheat has its own
@@ -117,8 +140,11 @@ and it is worth more to us than any amount of additional software.</p>
     <tbody>
       <tr class="pick"><td>Whole dried maize kernels (&ldquo;makka&rdquo;)</td><td class="c">2 kg</td>
         <td>Provision store, kirana or feed shop. Sound, unbroken, no musty smell. ≈ ₹100</td></tr>
-      <tr><td>Glass jars with airtight lids</td><td class="c">3</td>
+      <tr><td>Glass jars with airtight lids</td><td class="c">2</td>
         <td>Identical. ~1 L each so 500 g of grain leaves real headspace</td></tr>
+      <tr><td>Small airtight containers for salt calibration</td><td class="c">2</td>
+        <td>Specimen jars or sample bottles from the lab. Do <b>not</b> use the grain jars &mdash;
+          those are occupied until Monday. See Part 5B</td></tr>
       <tr><td>Distilled or clean water</td><td class="c">100 mL</td><td>Measured with a pipette or syringe</td></tr>
       <tr><td>Rubber grommet or silicone sealant</td><td class="c">1</td>
         <td><b>For the sampling port — see 4.2, this matters</b></td></tr>
@@ -269,12 +295,15 @@ water to add = 536.6 − 500           =  36.6 g  ≈ 37 mL</div>
         <td class="n">≈ 0.65</td><td>Below the growth floor. Engine says safe.</td></tr>
       <tr class="pick"><td class="c"><b>B</b><br>test</td><td>500 g maize + water to 18 % wb</td>
         <td class="n">≈ 0.92</td><td>Respiring. Engine predicts mould onset.</td></tr>
-      <tr><td class="c"><b>C</b><br>insurance</td><td>500 g maize + water to 20 % wb</td>
-        <td class="n">≈ 0.96</td><td>Strongest signal in our short window.</td></tr>
+      <tr><td class="c"><b>C</b><br>optional</td><td>Only if a third jar appears.
+        500 g + water to 20 % wb</td>
+        <td class="n">≈ 0.96</td><td>Insurance. Skip if we only have two jars.</td></tr>
     </tbody>
   </table>
-  <p>Jar C exists because our incubation window is compressed. If Jar B's signal is marginal on
-  Monday, Jar C will not be. It costs one jar and ten minutes.</p>
+  <p><b>With two jars, run A and B.</b> That is the whole experiment — one control, one test.
+  Jar C is insurance against a marginal signal, not a requirement. <b>Do not sacrifice the control
+  to make a second test jar:</b> without Jar A there is nothing to compare against and the result
+  is worthless.</p>
 
   <h3>4.2 · Prepare a sampling port — do this now, not Monday</h3>
   <div class="warn">
@@ -419,6 +448,69 @@ water to add = 536.6 − 500           =  36.6 g  ≈ 37 mL</div>
       &nbsp; <span class="box"></span>Ports drilled &nbsp; <span class="box"></span>Jars sealed
       &nbsp; <span class="box"></span>Incubating &nbsp; <span class="box"></span>Read Monday</div>
     <div>Signed: <span class="fill"></span> &nbsp;&nbsp; Date: <span class="fill"></span></div>
+  </div>
+</div>
+
+<!-- ===================== PART 5B ===================== -->
+<div class="part">
+  <div class="phead">
+    <h2>Part 5B &mdash; Calibrate the sensor against salt standards</h2>
+    <p class="role">Krittika &middot; Sunday, 3&ndash;4 hours mostly waiting &middot; needs NaCl and
+      K&#8322;SO&#8324;, both of which we already have</p>
+  </div>
+
+  <p>A saturated salt solution holds a <b>known</b> water activity in the air above it. This is the
+  standard method for checking a humidity sensor, the salts are in the lab, and it costs
+  essentially nothing. It converts <i>&ldquo;our sensor says 0.87&rdquo;</i> into
+  <i>&ldquo;our sensor is calibrated against standards and says 0.87.&rdquo;</i></p>
+
+  <table>
+    <thead><tr><th>Salt (saturated)</th><th>a<sub>w</sub> at 25 &deg;C</th>
+      <th>a<sub>w</sub> at 30 &deg;C</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>Sodium chloride, NaCl</td><td class="n">0.753</td><td class="n">0.751</td>
+        <td>Below our 0.82 threshold</td></tr>
+      <tr><td>Potassium sulphate, K&#8322;SO&#8324;</td><td class="n">0.973</td><td class="n">0.970</td>
+        <td>Above it</td></tr>
+    </tbody>
+  </table>
+  <p>These two <b>bracket the 0.82 growth floor</b>, which is exactly the region our claims depend
+  on. Both are also unusually flat with temperature, so small thermal drift will not spoil the
+  calibration.</p>
+
+  <h3>Procedure</h3>
+  <div class="step"><div class="num">1</div><div class="body"><h4>Make a slurry, not a solution</h4>
+    <p style="margin:0">Add salt to a little distilled water and keep adding until no more dissolves
+    and there is <b>visible undissolved solid</b> at the bottom. That excess solid is what holds the
+    headspace at a fixed water activity. A clear solution with no residue is not saturated, and the
+    calibration is void.</p></div></div>
+  <div class="step"><div class="num">2</div><div class="body"><h4>Seal the sensor in with it</h4>
+    <p style="margin:0">Small airtight container, slurry at the bottom, sensor in the headspace and
+    <b>not touching the liquid</b>. Salt water on the sensor will damage it.</p></div></div>
+  <div class="step"><div class="num">3</div><div class="body"><h4>Wait for equilibrium</h4>
+    <p style="margin:0">Two to four hours in a small container; overnight is better. The reading has
+    settled when the firmware&rsquo;s stability flag reads STABLE.</p></div></div>
+  <div class="step"><div class="num">4</div><div class="body"><h4>Record and compare</h4>
+    <p style="margin:0">Repeat for the second salt. If both readings sit within about
+    &plusmn;2 % RH of the table, the sensor is good and we say so. If there is a consistent offset,
+    note it and apply it to the jar readings &mdash; <b>a known offset is a calibration; an unknown
+    one is an error.</b></p></div></div>
+
+  <table>
+    <thead><tr><th>Salt</th><th>Expected RH %</th><th>Sensor read RH %</th><th>Temp &deg;C</th>
+      <th>Offset</th></tr></thead>
+    <tbody>
+      <tr><td>NaCl</td><td class="n">75.3</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+      <tr><td>K&#8322;SO&#8324;</td><td class="n">97.3</td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <b class="lbl">Why this is worth a Sunday afternoon</b>
+    <p style="margin:0">Everything we claim about water activity rests on a single humidity number.
+    A judge asking <i>&ldquo;how do you know your sensor is accurate?&rdquo;</i> is asking a fair
+    question, and &ldquo;it is a good sensor&rdquo; is not an answer. Two salts and some patience
+    turn that into evidence.</p>
   </div>
 </div>
 
