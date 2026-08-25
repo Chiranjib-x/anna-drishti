@@ -1,0 +1,117 @@
+<title>Evidence Slide</title>
+<style>
+  @page { size: 1920px 1080px; margin: 0; }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{width:1920px; height:1080px; overflow:hidden}
+  body{background:#14110c; color:#f4efe4;
+       font:16px/1.5 "Segoe UI",Helvetica,Arial,sans-serif; position:relative}
+
+  .head{padding:44px 64px 0; position:relative}
+  .eyebrow{font-size:15px; font-weight:700; letter-spacing:.30em; text-transform:uppercase;
+           color:#c9a227; margin-bottom:14px}
+  h1{font-size:52px; line-height:1.02; font-weight:700; letter-spacing:-.02em; color:#fff}
+  h1 em{font-style:normal; color:#c9a227}
+  .rule{height:3px; background:linear-gradient(90deg,#c9a227 0%, #c9a227 220px, #3d3728 220px);
+        margin:26px 0 0}
+
+  .wrap{padding:30px 64px 0; display:grid; grid-template-columns:1fr 1fr; gap:26px 30px}
+
+  .hero{grid-column:1 / -1; background:#1d1a12; border:2px solid #c9a227; border-radius:8px;
+        padding:24px 30px; display:grid; grid-template-columns:auto 1fr; gap:26px;
+        align-items:start}
+  .hero .badge{background:#c9a227; color:#14110c; font-weight:700; font-size:13px;
+               letter-spacing:.12em; text-transform:uppercase; padding:8px 14px; border-radius:4px;
+               white-space:nowrap; margin-top:4px}
+  .hero .t{font-size:26px; font-weight:700; color:#fff; line-height:1.2; margin-bottom:8px}
+  .hero .cite{font-size:15px; color:#a89a72; margin-bottom:12px}
+  .hero .q{font-size:19px; line-height:1.42; color:#f4efe4; border-left:4px solid #c9a227;
+           padding-left:16px; font-style:italic}
+  .hero .q b{color:#ffd24a; font-style:normal}
+
+  .card{background:#1a1710; border:1px solid #3d3728; border-radius:6px; padding:18px 22px}
+  .card .t{font-size:18px; font-weight:700; color:#fff; line-height:1.22; margin-bottom:6px}
+  .card .cite{font-size:13.5px; color:#8f855f; margin-bottom:9px}
+  .card .f{font-size:14.5px; line-height:1.45; color:#cfc7b4}
+  .card .f b{color:#ffd24a}
+  .card .sup{display:inline-block; margin-top:9px; font-size:11.5px; font-weight:700;
+             letter-spacing:.09em; text-transform:uppercase; color:#14110c; background:#8fa86a;
+             padding:3px 9px; border-radius:3px}
+
+  .foot{position:absolute; left:64px; right:64px; bottom:34px;
+        border-top:1px solid #3d3728; padding-top:16px;
+        display:flex; justify-content:space-between; align-items:baseline}
+  .foot .l{font-size:17px; color:#f4efe4}
+  .foot .l b{color:#c9a227}
+  .foot .r{font-size:14px; color:#8f855f; letter-spacing:.06em}
+</style>
+
+<div class="head">
+  <div class="eyebrow">The Evidence</div>
+  <h1>We are not the first to see this.<br><em>We are the first to reach it.</em></h1>
+  <div class="rule"></div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="badge">Direct precedent</div>
+    <div>
+      <div class="t">Detection of a Developing Hot Spot in Stored Corn with a CO&#8322; Sensor</div>
+      <div class="cite">Ileleji, Maier, Bhat &amp; Woloshuk &middot; <i>Applied Engineering in
+        Agriculture</i> 22(2):275&ndash;289, 2006 &middot; ASABE</div>
+      <div class="q">Induced hot spot in a 12.5&nbsp;t bin. Headspace CO&#8322; rose from 500 to
+        1,500&ndash;2,300&nbsp;ppm across three trials. CO&#8322; sensors
+        <b>&ldquo;detected spoilage earlier than temperature cables&rdquo;</b> &mdash; and
+        &ldquo;temperature cables alone might not be a reliable indicator of stored grain
+        conditions.&rdquo;</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="t">Real-time CO&#8322; monitoring for early detection of grain spoilage and
+      mycotoxin contamination</div>
+    <div class="cite">Kiaitsi, Zanardi, Sulyok, Garc&iacute;a-Cela et al. &middot; <i>J. Sci. Food
+      Agric.</i>, 2025</div>
+    <div class="f">Mini-silos of naturally contaminated wheat at 15&ndash;30 % moisture
+      (<b>a<sub>w</sub> 0.78&ndash;0.98</b>), comparing CO&#8322;, temperature and RH as indicators
+      of mould activity and mycotoxin contamination.</div>
+    <span class="sup">Validates our sensing triad</span>
+  </div>
+
+  <div class="card">
+    <div class="t">Integrated approach on stored grain quality management with CO&#8322; monitoring
+      &mdash; A review</div>
+    <div class="cite">Ramachandran &middot; <i>J. Stored Products Research</i> 96:101950, 2022
+      &middot; 122 refs</div>
+    <div class="f">Review establishing CO&#8322; monitoring as an <b>accepted approach</b> in stored
+      grain management &mdash; not a novel or speculative signal.</div>
+    <span class="sup">Establishes the field</span>
+  </div>
+
+  <div class="card">
+    <div class="t">Modelling the effect of temperature and water activity on growth rate of
+      <i>A. flavus</i> and aflatoxin production</div>
+    <div class="cite">Norlia, Jinap, Nor-Khaizura et al. &middot; <i>Int. J. Food Microbiology</i>
+      335:108836, 2020</div>
+    <div class="f">Published modelling of growth rate against <b>temperature and water
+      activity</b> &mdash; the same cardinal-value approach our days-to-onset forecast uses.</div>
+    <span class="sup">Backs our growth model</span>
+  </div>
+
+  <div class="card">
+    <div class="t">Aflatoxin B&#8321; contamination in maize in Europe increases due to climate
+      change</div>
+    <div class="cite">Battilani, Toscano, Van der Fels-Klerx et al. &middot; <i>Scientific
+      Reports</i> 6:24328, 2016 &middot; 625 citations</div>
+    <div class="f">Aflatoxins have the <b>highest acute and chronic toxicity of all
+      mycotoxins</b>, and the risk in maize is rising with climate.</div>
+    <span class="sup">Why maize, why now</span>
+  </div>
+
+</div>
+
+<div class="foot">
+  <div class="l">CO&#8322; detecting spoilage before temperature is <b>established, published
+    science</b>. Our contribution is reaching it at depth, in bag stacks, at PACS cost.</div>
+  <div class="r">ANNA DRISHTI &middot; SIH 2026</div>
+</div>

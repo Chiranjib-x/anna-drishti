@@ -1,0 +1,668 @@
+<title>Anna Drishti Deck</title>
+<style>
+  @page { size: 20in 11.25in; margin: 0; }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{background:#14110c; font:16px/1.5 "Segoe UI",Helvetica,Arial,sans-serif; color:#f4efe4}
+
+  .s{width:20in; height:11.25in; position:relative; overflow:hidden;
+     background:#14110c; page-break-after:always; break-after:page; padding:56px 76px 118px;
+     display:flex; flex-direction:column}
+  .s > .cols{flex:1; align-items:stretch}
+  .s > .flow{flex:1}
+  .grow{flex:1; display:flex; flex-direction:column}
+  .s:last-child{page-break-after:auto}
+
+  .eyebrow{font-size:15px; font-weight:700; letter-spacing:.30em; text-transform:uppercase;
+           color:#c9a227; margin-bottom:14px}
+  h1{font-size:56px; line-height:1.02; font-weight:700; letter-spacing:-.022em; color:#fff}
+  h1 em{font-style:normal; color:#c9a227}
+  h1.sm{font-size:46px}
+  .rule{height:3px; background:linear-gradient(90deg,#c9a227 0 240px,#3d3728 240px);
+        margin:24px 0 30px}
+  .sub{font-size:20px; color:#a89a72; margin-top:-14px; margin-bottom:26px; line-height:1.4}
+
+  .cols{display:grid; gap:26px}
+  .cols > *{min-width:0}
+  .card > *{min-width:0; flex-shrink:0}
+  .fb > *{flex-shrink:0}
+  table{table-layout:fixed}
+  td,th{overflow-wrap:anywhere}
+  .c3{grid-template-columns:repeat(3,1fr)}
+  .c2{grid-template-columns:repeat(2,1fr)}
+  .c4{grid-template-columns:repeat(4,1fr)}
+  .c21{grid-template-columns:1.15fr .85fr}
+
+  .card{background:#1a1710; border:1px solid #3d3728; border-radius:7px; padding:22px 24px;
+        display:flex; flex-direction:column}
+  .card.gold{border-color:#c9a227; border-width:2px; background:#1d1a12}
+  .card .n{font-size:13px; font-weight:700; letter-spacing:.16em; color:#c9a227;
+           text-transform:uppercase; margin-bottom:9px}
+  .card .t{font-size:24px; font-weight:700; color:#fff; line-height:1.18; margin-bottom:10px}
+  .card .t.sm{font-size:20px}
+  .card p{font-size:16.5px; line-height:1.5; color:#cfc7b4}
+  .card p+p{margin-top:9px}
+  .card b{color:#ffd24a}
+
+  table{border-collapse:collapse; width:100%; font-size:17px}
+  th,td{padding:11px 14px; text-align:left; border-bottom:1px solid #3d3728}
+  th{font-size:12.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+     color:#c9a227}
+  td{color:#e6dfcd}
+  td.n{text-align:right; font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap}
+  tr.hi td{background:#241f14; color:#fff; font-weight:600}
+  tr.dim td{color:#8f855f}
+
+  .big{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin:8px 0 0}
+  .big .v{font-size:74px; font-weight:700; line-height:1; color:#c9a227;
+          font-variant-numeric:tabular-nums}
+  .big .v.w{color:#fff}
+  .big .k{font-size:17px; color:#a89a72; margin-top:10px; line-height:1.35}
+
+  .foot{position:absolute; left:76px; right:76px; bottom:38px; border-top:1px solid #3d3728;
+        padding-top:15px; display:flex; justify-content:space-between; align-items:baseline;
+        font-size:16px; color:#a89a72}
+  .foot b{color:#c9a227}
+  .tag{position:absolute; top:56px; right:76px; font-size:13px; letter-spacing:.2em;
+       text-transform:uppercase; color:#4d4633}
+
+  .quote{font-size:27px; line-height:1.36; color:#fff; border-left:5px solid #c9a227;
+         padding-left:24px; font-style:italic}
+  .quote b{color:#ffd24a; font-style:normal}
+
+  .flow{display:grid; grid-template-columns:repeat(4,1fr); gap:0; align-items:stretch}
+  .fb{background:#1a1710; border:2px solid #c9a227; padding:24px 22px; position:relative;
+      display:flex; flex-direction:column}
+  .fb:not(:last-child){border-right:none}
+  .fb .fn{font-size:12px; letter-spacing:.18em; color:#c9a227; font-weight:700; margin-bottom:8px}
+  .fb .ft{font-size:23px; font-weight:700; color:#fff; margin-bottom:8px}
+  .fb p{font-size:15.5px; color:#cfc7b4; line-height:1.45}
+
+  .pill{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.1em;
+        text-transform:uppercase; padding:4px 11px; border-radius:4px; margin-bottom:10px}
+  .p-yes{background:#8fa86a; color:#14110c}
+  .p-no{background:#8a3b2c; color:#fff}
+  .p-gold{background:#c9a227; color:#14110c}
+
+  .lz{display:flex; align-items:stretch; margin:18px 0 6px; height:64px}
+  .lz .tip{width:0;height:0;border-top:32px solid transparent;border-bottom:32px solid transparent;
+           border-right:44px solid #3d3728}
+  .lz .seg{flex:1; background:#26221a; border:2px solid #8f855f; border-left:none;
+           border-right:none; position:relative}
+  .lz .seg:first-of-type{border-left:2px solid #8f855f}
+  .lz .cap{width:78px; background:#3d3728; border:2px solid #8f855f}
+  .lz .mark{position:absolute; right:-3px; top:-2px; bottom:-2px; width:6px; background:#c9a227}
+  .lz .mark.mid{background:#d97a30}
+  .lzl{display:flex; margin-top:4px}
+  .lzl div{text-align:center; font-size:14px; font-weight:700; color:#c9a227; line-height:1.3}
+  .lzl div span{display:block; font-size:12.5px; color:#8f855f; font-weight:400; margin-top:2px}
+</style>
+
+<!-- ============ 1 TITLE ============ -->
+<div class="s" style="justify-content:center">
+  <div class="eyebrow">Smart India Hackathon 2026 &middot; Agriculture, FoodTech &amp; Rural Development</div>
+  <h1 style="font-size:96px;letter-spacing:-.03em">ANNA DRISHTI</h1>
+  <div style="font-size:40px;color:#c9a227;font-weight:300;margin:18px 0 26px">
+    See deeper. Save grain.</div>
+  <div class="rule" style="margin:0 0 30px"></div>
+  <div style="font-size:24px;color:#e6dfcd;max-width:900px;line-height:1.45">
+    Deep-stack grain monitoring and early-warning system &mdash;
+    <b style="color:#c9a227">detect &middot; predict &middot; protect</b></div>
+  <div class="foot"><div>Vellore Institute of Technology</div>
+    <div>Mentor &middot; <b>Prof. Bhabani Shankar Dey</b></div></div>
+</div>
+
+<!-- ============ 2 PROBLEM ============ -->
+<div class="s">
+  <div class="eyebrow">The problem</div>
+  <h1>Spoilage starts where<br><em>inspection stops.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c3">
+    <div class="card"><div class="n">1 &middot; Localised moisture</div>
+      <div class="t sm">A small wet pocket forms</div>
+      <p>Roof leaks, wet bags, condensation or a damp corner raise moisture in one small region
+        inside a stack &mdash; not across the whole of it.</p></div>
+    <div class="card"><div class="n">2 &middot; Hidden deterioration</div>
+      <div class="t sm">Conditions turn favourable</div>
+      <p>Higher water activity allows fungal growth. Dry matter is lost and, with
+        <b>Aspergillus flavus</b>, aflatoxin risk can develop <b>before any mould is
+        visible</b>.</p></div>
+    <div class="card"><div class="n">3 &middot; Damage spreads silently</div>
+      <div class="t sm">Nobody can see it happen</div>
+      <p>Conventional inspection samples what it can reach. Deterioration begins where it
+        cannot.</p></div>
+  </div>
+  <div class="card gold" style="margin-top:26px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:40px">
+      <div><div class="n">The real challenge</div>
+        <div style="font-size:30px;font-weight:700;color:#fff">Detecting hidden deterioration deep
+          inside grain stacks</div></div>
+      <div style="text-align:right;white-space:nowrap">
+        <div style="font-size:52px;font-weight:700;color:#c9a227">3.89&ndash;5.92%</div>
+        <div style="font-size:15px;color:#a89a72;margin-top:4px">Indian post-harvest cereal loss<br>
+          NABCONS, reported to Parliament 2024</div></div>
+    </div>
+  </div>
+  <div class="tag">02</div>
+</div>
+
+<!-- ============ 3 INSIGHT ============ -->
+<div class="s">
+  <div class="eyebrow">The insight</div>
+  <h1>Spoilage breathes.<br><em>Gas arrives first.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <div class="card" style="margin-bottom:22px">
+        <div class="t sm">One reaction, three products</div>
+        <p>Grain is alive, and so are the fungi on it. Both consume sugar and oxygen and release
+          <b>CO&#8322;, water and heat &mdash; from a single reaction.</b></p>
+        <p>But those three products travel very differently. CO&#8322; escapes through the air gaps
+          between kernels. Heat must conduct through the kernels themselves, and grain is an
+          excellent insulator.</p>
+      </div>
+      <div class="card">
+        <div class="t sm">A compost heap, buried</div>
+        <p>You smell a compost heap across the garden long before you could feel its warmth by
+          touching it. A spoiling pocket is the same event &mdash; smaller, slower, and out of
+          sight.</p>
+      </div>
+    </div>
+    <div class="card gold">
+      <div class="n">Time to travel the same 0.4 m</div>
+      <table style="margin-top:6px">
+        <tr class="hi"><td style="font-size:20px">CO&#8322;</td>
+          <td class="n" style="font-size:26px;color:#c9a227">0.9 days</td></tr>
+        <tr><td style="font-size:20px">Heat</td>
+          <td class="n" style="font-size:26px">15.4 days</td></tr>
+        <tr><td style="font-size:20px">Moisture</td>
+          <td class="n" style="font-size:26px">123.5 days</td></tr>
+      </table>
+      <p style="font-size:16px;color:#cfc7b4;margin-top:18px;line-height:1.5">
+        Computed as <b>t = L&sup2;/D</b> from published transport coefficients. Because both times
+        scale with distance squared, <b>the ratio holds at any separation.</b></p>
+      <div style="margin-top:20px;padding-top:18px;border-top:1px solid #3d3728">
+        <div style="font-size:44px;font-weight:700;color:#c9a227;line-height:1">16.7&times;</div>
+        <div style="font-size:16px;color:#a89a72;margin-top:6px">gas leads heat &mdash; about two
+          weeks of warning</div></div>
+    </div>
+  </div>
+  <div class="tag">03</div>
+</div>
+
+<!-- ============ 4 EVIDENCE (NEW) ============ -->
+<div class="s">
+  <div class="eyebrow">The evidence</div>
+  <h1>We are not the first to see this.<br><em>We are the first to reach it.</em></h1>
+  <div class="rule"></div>
+  <div class="card gold" style="margin-bottom:22px">
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start">
+      <div class="pill p-gold" style="margin:4px 0 0">Direct precedent</div>
+      <div>
+        <div class="t">Detection of a Developing Hot Spot in Stored Corn with a CO&#8322; Sensor</div>
+        <p style="font-size:16px;color:#a89a72;margin-bottom:12px">Ileleji, Maier, Bhat &amp;
+          Woloshuk &middot; <i>Applied Engineering in Agriculture</i> 22(2):275&ndash;289, 2006
+          &middot; ASABE</p>
+        <div class="quote" style="font-size:22px">Induced hot spot in a 12.5&nbsp;t bin. Headspace
+          CO&#8322; rose from 500 to 1,500&ndash;2,300&nbsp;ppm across three trials. CO&#8322;
+          sensors <b>&ldquo;detected spoilage earlier than temperature cables&rdquo;</b> &mdash;
+          and &ldquo;temperature cables alone might not be a reliable indicator.&rdquo;</div>
+      </div>
+    </div>
+  </div>
+  <div class="cols c3">
+    <div class="card"><div class="pill p-yes">Establishes the field</div>
+      <div class="t sm">Integrated approach on stored grain quality management with CO&#8322;
+        monitoring</div>
+      <p style="font-size:15px;color:#a89a72">Ramachandran &middot; <i>J. Stored Prod. Res.</i>
+        96:101950, 2022 &middot; 122 refs</p></div>
+    <div class="card"><div class="pill p-yes">Validates the sensing triad</div>
+      <div class="t sm">Real-time CO&#8322; monitoring for early detection of spoilage and mycotoxin
+        contamination</div>
+      <p style="font-size:15px;color:#a89a72">Kiaitsi, Zanardi, Sulyok, Garc&iacute;a-Cela et al.
+        &middot; <i>J. Sci. Food Agric.</i>, 2025</p></div>
+    <div class="card"><div class="pill p-yes">Backs the growth model</div>
+      <div class="t sm">Modelling temperature and water activity on <i>A. flavus</i> growth and
+        aflatoxin production</div>
+      <p style="font-size:15px;color:#a89a72">Norlia, Jinap et al. &middot; <i>Int. J. Food
+        Microbiol.</i> 335:108836, 2020</p></div>
+  </div>
+  <div class="foot"><div>The signal is <b>established, published science.</b> Our contribution is
+    reaching it at depth, in bag stacks, at PACS cost.</div><div>04</div></div>
+</div>
+
+<!-- ============ 5 SOLUTION ============ -->
+<div class="s">
+  <div class="eyebrow">The solution</div>
+  <h1>From &ldquo;something smells&rdquo;<br><em>to &ldquo;L2 at 2 m. Act in 6 days.&rdquo;</em></h1>
+  <div class="rule"></div>
+  <div class="flow">
+    <div class="fb"><div class="fn">01</div><div class="ft">SENSE</div>
+      <p>Interstitial CO&#8322;, humidity and temperature at nine ports across three depths on
+        three lances.</p></div>
+    <div class="fb"><div class="fn">02</div><div class="ft">INTERPRET</div>
+      <p>Humidity becomes water activity; water activity plus temperature becomes a growth
+        forecast.</p></div>
+    <div class="fb"><div class="fn">03</div><div class="ft">DECIDE</div>
+      <p>Composite risk score, ranked ports, and an action card carrying a deadline.</p></div>
+    <div class="fb"><div class="fn">04</div><div class="ft">VERIFY</div>
+      <p>Post-treatment signature decay confirms the intervention actually worked.</p></div>
+  </div>
+  <div class="cols c2" style="margin-top:28px">
+    <div class="card gold"><div class="t sm">The output is not an alarm</div>
+      <p>It is <b>a port, a reason, and a deadline.</b> A reading of 4,200&nbsp;ppm tells a godown
+        manager nothing they can act on.</p></div>
+    <div class="card"><div class="t sm">The loop closes &mdash; and nobody else&rsquo;s does</div>
+      <p>Current practice verifies nothing. A failed fumigation and a successful one look identical
+        until infestation returns weeks later.</p></div>
+  </div>
+  <div class="tag">05</div>
+</div>
+
+<!-- ============ 6 BIOLOGY ============ -->
+<div class="s">
+  <div class="eyebrow">The biology</div>
+  <h1>Moisture is the total.<br><em>Water activity is the spendable part.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <table>
+        <thead><tr><th>Moisture (wb)</th><th>Temp</th><th class="n">a<sub>w</sub></th>
+          <th>Meaning</th></tr></thead>
+        <tbody>
+          <tr class="dim"><td>12 %</td><td>30 &deg;C</td><td class="n">0.657</td>
+            <td>Safe &mdash; growth not supported</td></tr>
+          <tr class="dim"><td>14 %</td><td>25 &deg;C</td><td class="n">0.774</td><td>Safe</td></tr>
+          <tr class="hi"><td>16 %</td><td>30 &deg;C</td><td class="n">0.875</td>
+            <td>Active growth</td></tr>
+          <tr class="hi"><td>18 %</td><td>25 &deg;C</td><td class="n">0.926</td><td>Rapid</td></tr>
+          <tr class="hi"><td>20 %</td><td>30 &deg;C</td><td class="n">0.963</td><td>Severe</td></tr>
+        </tbody>
+      </table>
+      <div class="card" style="margin-top:22px"><div class="t sm">The core idea</div>
+        <p>Not all water in a kernel is usable &mdash; some is chemically bound to starch and
+          protein, and fungi cannot reach it. <b>Water activity is the free fraction, 0 to 1.</b>
+          At equilibrium it <i>is</i> the humidity of the air between the kernels &mdash; which is
+          why an ordinary humidity sensor measures the governing variable.</p></div>
+    </div>
+    <div>
+      <div class="card gold" style="margin-bottom:20px">
+        <div class="n">0.82 &mdash; the growth floor</div>
+        <p>The <b>conservative end of the published range</b> for <i>A. flavus</i>. Reported minima
+          vary with strain and substrate; we deliberately took the lowest credible value, because a
+          warning system should alert early rather than late.</p>
+      </div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="n">0.85 &mdash; the toxin line</div>
+        <p>Growth begins at 0.82, but <b>aflatoxin production needs conditions wetter still.</b>
+          Two thresholds, not one.</p>
+      </div>
+      <div class="card">
+        <div class="n">Time to visible mould at 30 &deg;C</div>
+        <table style="font-size:16px">
+          <tr><td>a<sub>w</sub> 0.95</td><td class="n">6.7 days</td></tr>
+          <tr><td>a<sub>w</sub> 0.90</td><td class="n">10.8 days</td></tr>
+          <tr><td>a<sub>w</sub> 0.87</td><td class="n">17.4 days</td></tr>
+          <tr><td>a<sub>w</sub> 0.85</td><td class="n">28.9 days</td></tr>
+          <tr><td>a<sub>w</sub> 0.83</td><td class="n">86.8 days</td></tr>
+        </table>
+        <p style="margin-top:12px;font-size:15px">A pocket only has to cross about
+          <b>15 % moisture</b>. Then the clock starts &mdash; and the clock is what we report.</p>
+      </div>
+    </div>
+  </div>
+  <div class="tag">06</div>
+</div>
+
+<!-- ============ 7 BOUNDARY ============ -->
+<div class="s">
+  <div class="eyebrow">The boundary</div>
+  <h1>You can stop the fungus.<br><em>You cannot unmake the toxin.</em></h1>
+  <div class="rule"></div>
+  <div class="quote" style="font-size:30px;margin-bottom:34px">Aflatoxin is a liver carcinogen.
+    Drying does not destroy it. Cooking does not destroy it &mdash; it is heat stable.
+    <b>Once aflatoxin is in a consignment, that grain&rsquo;s fate is decided.</b></div>
+  <div class="cols c3">
+    <div class="card"><div class="n">Diagnosis is too late to act on</div>
+      <p>A system that tells you grain is already contaminated has told you nothing you can do
+        anything about.</p></div>
+    <div class="card"><div class="n">So the problem is predictive</div>
+      <p>The only intervention that changes the outcome happens <b>before</b> the fungus grows. We
+        forecast the conditions rather than confirm the damage.</p></div>
+    <div class="card gold"><div class="n">And we state the limit</div>
+      <p><b>We do not measure toxin.</b> We predict the conditions that create it, and we say so in
+        every output the system produces. Confirming toxin needs a laboratory assay.</p></div>
+  </div>
+  <div class="foot"><div>A system claiming to read toxin off a humidity sensor would be
+    <b>indefensible</b>. Stating the limit is what makes the rest believable.</div><div>07</div></div>
+</div>
+
+<!-- ============ 8 CURRENT PRACTICE ============ -->
+<div class="s">
+  <div class="eyebrow">Current practice</div>
+  <h1>The problem isn&rsquo;t diligence.<br><em>It&rsquo;s reach.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <div class="cols c3" style="gap:20px">
+        <div class="card"><div class="n">1</div><div class="t sm">Only reaches the outside</div>
+          <p>A spear reaches roughly <b>0.4 m</b>. A godown stack is metres deep. The middle is not
+            reachable.</p></div>
+        <div class="card"><div class="n">2</div><div class="t sm">Problems cluster</div>
+          <p>Insects and moisture gather in pockets. A clean sample here says nothing about a pocket
+            two metres away.</p></div>
+        <div class="card"><div class="n">3</div><div class="t sm">Early stages are invisible</div>
+          <p>Eggs and larvae develop <b>inside</b> kernels. A sample with no adults can still be
+            heavily infested.</p></div>
+      </div>
+      <div class="card" style="margin-top:22px"><div class="t sm">Why the chemistry is failing too</div>
+        <p>Indian <i>Tribolium castaneum</i> shows <b>2.11 to 70.94-fold</b> phosphine resistance
+          (<i>Sci. Reports</i> 13:16497, 2023). Blanket dosing selects for exactly this &mdash; and
+          fumigation kills insects; it does not un-rot grain, and it cannot remove aflatoxin.</p></div>
+    </div>
+    <div class="card gold" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="quote" style="font-size:26px;border:none;padding:0">&ldquo;A spear reaches forty
+        centimetres. Our hotspot is at <b>one and a half metres</b> from the nearest reachable face.
+        No amount of diligence gets a spear to that location.&rdquo;</div>
+      <p style="margin-top:24px;font-size:17px;color:#cfc7b4">This is not a criticism of
+        inspection. It is precisely the reason an interior probe needs to exist.</p>
+    </div>
+  </div>
+  <div class="tag">08</div>
+</div>
+
+<!-- ============ 9 COMPARISON ============ -->
+<div class="s">
+  <div class="eyebrow">The comparison</div>
+  <h1>We weakened our own<br><em>headline number on purpose.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <table>
+        <thead><tr><th>Assumption</th><th>Our value</th><th>Why it is generous to the baseline</th></tr></thead>
+        <tbody>
+          <tr><td>Inspection interval</td><td class="n">every 14 days</td>
+            <td>Fortnightly is the generous end &mdash; many facilities are monthly or slower</td></tr>
+          <tr><td>Spear reach</td><td class="n">0.4 m</td>
+            <td>The physical limit of a bag spear</td></tr>
+          <tr><td>Finding a pocket in reach</td><td class="n">60 %</td>
+            <td>Problems cluster; six in ten is reasonable, not harsh</td></tr>
+          <tr><td>Surface mould</td><td class="n">always found</td>
+            <td>We assume inspectors never miss visible mould &mdash; not once</td></tr>
+          <tr class="hi"><td>Musty smell / warm bags</td><td class="n">also found</td>
+            <td>A second detection route we <b>added</b> to help the baseline</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:20px;font-size:17px;color:#cfc7b4;line-height:1.55">
+        Our first model had conventional inspection <b style="color:#ffd24a">never</b> finding this
+        pocket &mdash; arguably what the guidance implies. We thought that looked rigged, so we
+        added smell-and-warmth detection. <b style="color:#ffd24a">That is where day 42 comes
+        from.</b> Without it our gap would look considerably bigger.</p>
+    </div>
+    <div class="card gold" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="n">Same event. Two timelines.</div>
+      <div style="margin:22px 0 8px">
+        <div style="font-size:16px;color:#a89a72;letter-spacing:.1em">CONVENTIONAL</div>
+        <div style="font-size:76px;font-weight:700;color:#8a6a2c;line-height:1.05">day 42</div>
+      </div>
+      <div style="height:1px;background:#3d3728;margin:18px 0"></div>
+      <div>
+        <div style="font-size:16px;color:#a89a72;letter-spacing:.1em">ANNA DRISHTI</div>
+        <div style="font-size:76px;font-weight:700;color:#c9a227;line-height:1.05">day 0.8</div>
+      </div>
+      <p style="margin-top:22px;font-size:15px;color:#8f855f">Simulation result on an identical
+        injected event. Actual mould onset: day 9.7.</p>
+    </div>
+  </div>
+  <div class="tag">09</div>
+</div>
+
+<!-- ============ 10 ARCHITECTURE ============ -->
+<div class="s">
+  <div class="eyebrow">Architecture</div>
+  <h1>Four layers. One answer:<br><em>where, how bad, how long.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c4">
+    <div class="card"><div class="n">Sense</div><div class="t sm">9 ports &middot; 3 lances &times; 3 depths</div>
+      <p>One shared NDIR analyser across all nine sampling points. SHT31 humidity, because relative
+        humidity at equilibrium <b>is</b> water activity.</p></div>
+    <div class="card"><div class="n">Interpret</div><div class="t sm">Isotherm &rarr; growth kinetics</div>
+      <p>Humidity becomes water activity; water activity and temperature feed a cardinal-value
+        growth model giving <b>days-to-onset per zone</b>.</p></div>
+    <div class="card"><div class="n">Network</div><div class="t sm">One node per stack &middot; offline-first</div>
+      <p>Zero external dependencies. Runs entirely with WiFi off, because rural godown connectivity
+        <b>cannot be assumed</b>.</p></div>
+    <div class="card"><div class="n">See</div><div class="t sm">Ranked ports &middot; risk map</div>
+      <p>Every hotspot with a coordinate, a water activity, a deadline and an accumulated
+        dry-matter loss.</p></div>
+  </div>
+  <div class="cols c2" style="margin-top:26px">
+    <div class="card gold"><div class="t sm">The gotcha we designed around</div>
+      <p>Every NDIR sensor <b>auto-rezeros to the lowest value it sees.</b> Inside grain it never
+        meets fresh air &mdash; so ABC must be disabled in firmware, or the sensor quietly erases
+        the very signal we exist to detect.</p></div>
+    <div class="card"><div class="t sm">Capacity is outpacing the ability to monitor it</div>
+      <p>Under the World&rsquo;s Largest Grain Storage Plan, <b>500+ PACS godowns</b> are under
+        construction. None are instrumented today.</p></div>
+  </div>
+  <div class="tag">10</div>
+</div>
+
+<!-- ============ 11 DETECTION ============ -->
+<div class="s">
+  <div class="eyebrow">Detection</div>
+  <h1>We chose the<br><em>explainable detector.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <div class="card" style="margin-bottom:18px;border-left:4px solid #8a3b2c">
+        <div class="t sm" style="color:#c98f7a">&#10007; &nbsp;Not a fixed threshold</div>
+        <p>Godown temperature swings seasonally. Any absolute limit either cries wolf in summer or
+          sleeps through winter.</p></div>
+      <div class="card" style="margin-bottom:18px;border-left:4px solid #8a3b2c">
+        <div class="t sm" style="color:#c98f7a">&#10007; &nbsp;Not all nine ports together</div>
+        <p>Depth stratification is real and about <b>1,000 ppm</b> &mdash; deep grain is furthest
+          from a venting face. Comparing all nine buried the signal completely.</p></div>
+      <div class="card gold">
+        <div class="t sm" style="color:#c9a227">&#10003; &nbsp;Depth-matched differential</div>
+        <p>Each port is compared <b>only against the other lances at its own depth</b>, on the same
+          analyser. This cancels sensor drift and slow ventilation changes at the same time &mdash;
+          and it is the reason a real pocket stands out at all.</p></div>
+    </div>
+    <div>
+      <div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:center">
+        <div class="n">The measured separation</div>
+        <div style="margin:24px 0">
+          <div style="font-size:15px;color:#a89a72">CLEAN GRAIN PEAKS AT</div>
+          <div style="font-size:58px;font-weight:700;color:#8f855f;line-height:1.1">1.5 &sigma;</div>
+        </div>
+        <div style="margin:24px 0">
+          <div style="font-size:15px;color:#a89a72">WE ALERT AT</div>
+          <div style="font-size:58px;font-weight:700;color:#c9a227;line-height:1.1">3.0 &sigma;</div>
+        </div>
+        <div style="margin:24px 0 0">
+          <div style="font-size:15px;color:#a89a72">A REAL HOTSPOT REACHES</div>
+          <div style="font-size:58px;font-weight:700;color:#fff;line-height:1.1">4.2 &sigma;</div>
+        </div>
+        <p style="margin-top:26px;font-size:16px;color:#cfc7b4">Sustained over three consecutive
+          readings &mdash; <b>one noisy sample is never an alarm.</b></p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div>The detector runs on deliberately imperfect data: CO&#8322; &plusmn;25 ppm
+    + 1.5 %, RH &plusmn;1.0 %, temperature &plusmn;0.15 &deg;C &mdash; real datasheet noise on every
+    reading.</div><div>11</div></div>
+</div>
+
+<!-- ============ 12 WHAT WE BUILT ============ -->
+<div class="s">
+  <div class="eyebrow">What we built</div>
+  <h1>State the boundary<br><em>before they find it.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <table>
+        <thead><tr><th>Claim</th><th style="text-align:center">Status</th></tr></thead>
+        <tbody>
+          <tr><td>Two sealed maize jars &mdash; one at storage moisture, one deliberately wetted</td>
+            <td style="text-align:center"><span class="pill p-yes" style="margin:0">Yes</span></td></tr>
+          <tr><td>SHT3x reading headspace on the same ESP32 firmware built for the field probe</td>
+            <td style="text-align:center"><span class="pill p-yes" style="margin:0">Yes</span></td></tr>
+          <tr><td>Reading fed into the <b>same</b> decision-engine code as the simulation</td>
+            <td style="text-align:center"><span class="pill p-yes" style="margin:0">Yes</span></td></tr>
+          <tr><td>Dry jar below the 0.82 growth floor; wet jar above it, with a predicted onset</td>
+            <td style="text-align:center"><span class="pill p-yes" style="margin:0">Yes</span></td></tr>
+          <tr class="dim"><td>&ldquo;We watched grain spoil&rdquo; &mdash; sealed 15 hours, fungus
+            needs days</td>
+            <td style="text-align:center"><span class="pill p-no" style="margin:0">No</span></td></tr>
+          <tr class="dim"><td>&ldquo;We measured CO&#8322;&rdquo; &mdash; sensor not sourced yet</td>
+            <td style="text-align:center"><span class="pill p-no" style="margin:0">No</span></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:20px;font-size:17px;color:#cfc7b4;line-height:1.55">Being precise about
+        that boundary is stronger than blurring it &mdash; and it is the difference between a team
+        that gets <b style="color:#ffd24a">believed</b> and one that gets
+        <b style="color:#ffd24a">caught</b>.</p>
+    </div>
+    <div class="card gold">
+      <div class="n">The working digital twin</div>
+      <div class="t sm" style="margin-bottom:14px">Not a mockup. You can break it yourself.</div>
+      <p style="margin-bottom:10px">&middot; &nbsp;Explicit finite-difference solver &mdash;
+        CO&#8322;, heat and moisture through a 4.0&nbsp;&times;&nbsp;2.5&nbsp;m stack at 10&nbsp;cm
+        cells</p>
+      <p style="margin-bottom:10px">&middot; &nbsp;Modified Chung&ndash;Pfost isotherm (ASAE D245)
+        and a cardinal-value predictive mycology model</p>
+      <p style="margin-bottom:10px">&middot; &nbsp;Virtual sensors carrying datasheet-accurate
+        noise, so the detector is proven on imperfect data</p>
+      <p style="margin-bottom:10px">&middot; &nbsp;A conventional-inspection arm running in parallel
+        on the same injected event</p>
+      <p>&middot; &nbsp;<b>Self-checking</b> &mdash; headless assertions must pass before every
+        session</p>
+    </div>
+  </div>
+  <div class="tag">12</div>
+</div>
+
+<!-- ============ 13 DEPLOYMENT ============ -->
+<div class="s">
+  <div class="eyebrow">Deployment</div>
+  <h1>Three lances.<br><em>Nine eyes.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c21">
+    <div>
+      <div class="card" style="padding-bottom:8px">
+        <div class="n">Probe lance &mdash; sensor stations and placement rationale</div>
+        <div class="lz">
+          <div class="tip"></div>
+          <div class="seg"><div class="mark"></div></div>
+          <div class="seg"><div class="mark mid"></div></div>
+          <div class="seg"><div class="mark"></div></div>
+          <div class="seg"></div>
+          <div class="cap"></div>
+        </div>
+        <div class="lzl">
+          <div style="flex:0 0 44px"></div>
+          <div style="flex:1">DEEP<span>RH / T &mdash; far face</span></div>
+          <div style="flex:1;color:#d97a30">MID<span>RH / T + CO&#8322; &mdash; representative gas</span></div>
+          <div style="flex:1">SHALLOW<span>RH / T &mdash; near face</span></div>
+          <div style="flex:1"><span>&nbsp;</span></div>
+          <div style="flex:0 0 78px"><span>cap</span></div>
+        </div>
+        <p style="font-size:15px;color:#8f855f;margin-top:6px">Schematic &mdash; radial dimension
+          exaggerated for legibility. Mid-depth carries the CO&#8322; port because it avoids edge
+          dilution and gives the most representative interstitial reading.</p>
+      </div>
+      <div class="cols c2" style="margin-top:20px;gap:20px">
+        <div class="card"><div class="t sm">Shared analyser</div>
+          <p>Ports feed a manifold into <b>a single NDIR instrument</b>. The expensive part serves
+            nine sampling points &mdash; and every depth comparison is made by the same instrument
+            against the same baseline, so drift cancels.</p></div>
+        <div class="card"><div class="t sm">Non-destructive</div>
+          <p>Perforated lance driven between bag courses. <b>Removable and reusable</b> across
+            stacks &mdash; which matters because stacks are built and dismantled.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="card gold" style="margin-bottom:20px">
+        <div class="n">Hardware, costed</div>
+        <table style="font-size:16px">
+          <tr><td>SCD30 NDIR CO&#8322;</td><td class="n">&#8377;5,000</td></tr>
+          <tr><td>3&times; SHT3x</td><td class="n">&#8377;750</td></tr>
+          <tr><td>ESP32 &times;2</td><td class="n">&#8377;600</td></tr>
+          <tr><td>TCA9548A multiplexer</td><td class="n">&#8377;250</td></tr>
+          <tr><td>Supply, cable, connectors</td><td class="n">&#8377;1,050</td></tr>
+          <tr class="hi"><td><b>Total</b></td><td class="n"><b>&#8377;7,650</b></td></tr>
+        </table>
+        <p style="margin-top:14px;font-size:15px">Inside the <b>&#8377;19,800</b> proposal
+          budget.</p>
+      </div>
+      <div class="card"><div class="t sm">All 3.3 V I&sup2;C by design</div>
+        <p>ESP32 GPIO is <b>not 5 V tolerant</b>, so every part was chosen at 3.3 V &mdash; no level
+          shifters, nothing destroyed by a wiring slip. A TCA9548A multiplexer resolves the SHT31
+          address collision that would otherwise stop three sensors sharing one bus.</p></div>
+    </div>
+  </div>
+  <div class="tag">13</div>
+</div>
+
+<!-- ============ 14 INTERVENTION ============ -->
+<div class="s">
+  <div class="eyebrow">Intervention</div>
+  <h1>Detect early enough and<br><em>you never need the chemical.</em></h1>
+  <div class="rule"></div>
+  <div class="cols c4">
+    <div class="card"><div class="n">Tier 1 &middot; automatic</div><div class="t sm">Aerate</div>
+      <p>Drive existing godown aeration over the flagged zone. Reversible, non-toxic, cheap. The
+        system watches CO&#8322; and water activity fall and <b>confirms it worked</b>.</p></div>
+    <div class="card"><div class="n">Tier 2 &middot; human hours</div><div class="t sm">Turn / isolate</div>
+      <p>Pull the affected bags, dry and separate them, return the sound grain. <b>Only possible
+        because you know which bags.</b></p></div>
+    <div class="card"><div class="n">Tier 3 &middot; licensed operator</div>
+      <div class="t sm">Targeted fumigation</div>
+      <p>Fumigate <b>that stack, not the shed</b>. Less chemical, less exposure, less selection
+        pressure for resistance.</p></div>
+    <div class="card gold"><div class="n">Then &middot; and nobody else does</div>
+      <div class="t sm">Verify</div>
+      <p>If the CO&#8322; anomaly does not fall, the system <b>escalates rather than assuming
+        success</b>. Current practice never checks at all.</p></div>
+  </div>
+  <div class="card" style="margin-top:28px">
+    <div style="display:flex;gap:48px;align-items:center">
+      <div style="flex:1"><div class="t sm">Late detection leaves only Tier 3</div>
+        <p>Applied to everything, on a chemical that resistance is already eroding.</p></div>
+      <div style="width:1px;height:60px;background:#3d3728"></div>
+      <div style="flex:1"><div class="t sm" style="color:#c9a227">Early detection resolves most
+        events at Tier 1</div>
+        <p>The fumigant becomes the exception rather than the routine.</p></div>
+    </div>
+  </div>
+  <div class="tag">14</div>
+</div>
+
+<!-- ============ 15 CLOSE ============ -->
+<div class="s">
+  <div class="eyebrow">Roadmap</div>
+  <h1>The sensing hardware is commodity.<br><em>The intelligence is the hard part.</em></h1>
+  <div class="rule"></div>
+  <div class="big">
+    <div><div class="v">16.7&times;</div><div class="k">gas leads heat &mdash; the physics we
+      build on, and it is published</div></div>
+    <div><div class="v">&#8377;7,650</div><div class="k">prototype hardware, inside a
+      &#8377;19,800 budget</div></div>
+    <div><div class="v w">500+</div><div class="k">PACS godowns under construction, none
+      instrumented today</div></div>
+  </div>
+  <div class="cols c3" style="margin-top:40px">
+    <div class="card"><div class="n">Next</div><div class="t sm">Source the CO&#8322; analyser</div>
+      <p>Run the two-column lead-time experiment that converts our modelled figure into a measured
+        one.</p></div>
+    <div class="card"><div class="n">Then</div><div class="t sm">Coverage analysis</div>
+      <p>Determine what percentage of hotspots three lances at this spacing detect, and how
+        quickly &mdash; the number that justifies the geometry.</p></div>
+    <div class="card"><div class="n">Then</div><div class="t sm">Single-godown pilot</div>
+      <p>A documented lead-time and chemical-use comparison against that facility&rsquo;s existing
+        practice.</p></div>
+  </div>
+  <div class="foot"><div><b>Anna Drishti</b> &middot; Chiranjib Dash &middot; Mohit Kumar &middot;
+    Vishal Vivek &middot; Krittika Parida &middot; Netra R &middot; Devavrath Ramesh</div>
+    <div>Thank you</div></div>
+</div>
