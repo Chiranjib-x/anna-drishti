@@ -1,0 +1,614 @@
+<title>Anna-Drishti Research Dossier</title>
+<style>
+  @page { size: A4; margin: 15mm 15mm 14mm; }
+  *{box-sizing:border-box}
+  html,body{background:#fff; color:#111}
+  body{margin:0; font:10.5pt/1.48 "Georgia","Times New Roman",serif}
+  .sheet{max-width:180mm; margin:0 auto; padding:6mm 0}
+
+  h1{font:700 21pt/1.15 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 2mm; letter-spacing:-.01em}
+  .sub{font:10.5pt/1.4 "Segoe UI",Helvetica,Arial,sans-serif; color:#333; margin:0 0 1.5mm}
+  hr.rule{border:0; border-top:2pt solid #111; margin:4mm 0 6mm}
+
+  h2{font:700 14.5pt/1.2 "Segoe UI",Helvetica,Arial,sans-serif; margin:0 0 1.5mm}
+  .role{font:10pt/1.35 "Segoe UI",Helvetica,Arial,sans-serif; color:#444; margin:0 0 4mm}
+  .part{page-break-before:always; break-before:page}
+  .phead{border-bottom:1.5pt solid #111; padding-bottom:2.5mm; margin-bottom:5mm;
+         display:flex; align-items:baseline; gap:3mm}
+  .phead .tag{font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif; background:#111; color:#fff;
+              padding:1mm 2.5mm; border-radius:2mm; white-space:nowrap}
+
+  h3{font:700 10pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; text-transform:uppercase;
+     letter-spacing:.08em; margin:6mm 0 2.5mm; padding-bottom:1.2mm; border-bottom:.75pt solid #888}
+  h4{font:700 11pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; margin:4mm 0 1.5mm}
+  p{margin:0 0 2.8mm}
+  ul,ol{margin:0 0 3mm 6mm; padding:0}
+  li{margin-bottom:1.5mm}
+
+  .say{border-left:4pt solid #111; background:#f7f7f5; padding:3mm 4mm; margin:3mm 0;
+       page-break-inside:avoid}
+  .say .lbl{display:block; font:700 8pt "Segoe UI",Helvetica,Arial,sans-serif;
+            text-transform:uppercase; letter-spacing:.1em; color:#555; margin-bottom:1.8mm}
+  .say p{margin:0}
+
+  .warn{border:1.25pt solid #111; padding:3mm 4mm; margin:3.5mm 0; page-break-inside:avoid}
+  .warn .lbl{display:block; font:700 8pt "Segoe UI",Helvetica,Arial,sans-serif;
+             text-transform:uppercase; letter-spacing:.1em; margin-bottom:1.8mm}
+  .warn p{margin:0 0 2mm}
+  .warn p:last-child{margin-bottom:0}
+
+  table{border-collapse:collapse; width:100%; margin:2.5mm 0 4mm; font-size:9.5pt}
+  th,td{border:.5pt solid #999; padding:1.8mm 2.2mm; text-align:left; vertical-align:top}
+  th{background:#eee; font:700 8.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+     text-transform:uppercase; letter-spacing:.06em}
+  td.n{font-family:"Consolas","Courier New",monospace; white-space:nowrap; text-align:center;
+       font-weight:700}
+  .no{color:#666}
+  tr.ours td{background:#eef5ee}
+
+  /* causal chain */
+  .chain{margin:3mm 0 5mm}
+  .link{display:flex; gap:3mm; margin-bottom:0; page-break-inside:avoid}
+  .link .n{flex:none; width:9mm; font:700 11pt "Segoe UI",Helvetica,Arial,sans-serif;
+           text-align:center; padding-top:2.5mm}
+  .link .c{flex:1; border:1pt solid #111; padding:2.5mm 3mm; background:#fafaf8}
+  .link .c .st{font:700 10pt "Segoe UI",Helvetica,Arial,sans-serif; margin-bottom:1.2mm}
+  .link .c .ev{font:8.5pt/1.35 "Segoe UI",Helvetica,Arial,sans-serif; color:#444}
+  .link .c .ev b{color:#111}
+  .down{text-align:center; font-size:13pt; font-weight:700; color:#111; margin:1mm 0 1mm 9mm;
+        line-height:1}
+
+  .conf{display:inline-block; font:700 7.5pt "Segoe UI",Helvetica,Arial,sans-serif;
+        padding:.5mm 1.5mm; border:.75pt solid #111; border-radius:1mm; margin-left:1.5mm;
+        vertical-align:1pt}
+  .conf.v{background:#111; color:#fff}
+  .conf.c{background:#fff; color:#111}
+
+  ol.refs{margin-left:6mm; font-size:9.5pt}
+  ol.refs li{margin-bottom:2.5mm}
+  ol.refs .t{font-style:italic}
+  ol.refs .u{font-family:"Consolas","Courier New",monospace; font-size:8pt; color:#555;
+             word-break:break-all}
+  ol.refs .use{display:block; font:8.5pt/1.3 "Segoe UI",Helvetica,Arial,sans-serif; color:#444;
+               margin-top:.8mm}
+</style>
+
+<div class="sheet">
+
+<h1>Anna-Drishti — Research Dossier</h1>
+<p class="sub">Background, current status, evidence base, novelty and team mapping.</p>
+<p class="sub">Smart India Hackathon 2026 · Internal Review · VIT</p>
+<hr class="rule">
+
+<div class="warn">
+  <span class="lbl">How to use this in the review</span>
+  <p>Your review is scored on <b>novelty, research backing, the problem&rsquo;s current status,
+  background, and team inclusion.</b> This document covers all five, in that order, and each part
+  is written so you can speak from it directly.</p>
+  <p>The most important section is <b>Part 3 &mdash; the causal chain.</b> Research backing is not
+  scored by how many citations you list. It is scored by whether the evidence is
+  <i>load-bearing</i>: whether removing a source would break your argument. Part 3 shows that every
+  link in our reasoning has a source underneath it.</p>
+</div>
+
+<div class="warn">
+  <span class="lbl">Confidence marking &mdash; read before quoting any number</span>
+  <p>Two marks appear throughout:</p>
+  <p><span class="conf v">VETTED</span> &mdash; from the twelve references in our submitted
+  proposal. The team has already checked these. Quote them freely.</p>
+  <p><span class="conf c">CONFIRM</span> &mdash; established storage-science or regulatory facts
+  added here for completeness, but <b>not</b> in the original reference list. They are almost
+  certainly correct, but regulatory limits in particular change. <b>Do not state these as precise
+  figures in the review unless someone has checked them first.</b> Say &ldquo;on the order
+  of&rdquo; instead.</p>
+</div>
+
+<!-- ==================== PART 1 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 1</span><h2>Background &mdash; how this problem arises</h2></div>
+  <p class="role">The narrative to open with. Physical, then biological, then institutional.</p>
+
+  <h3>1.1 · The physical setting is bags, not silos</h3>
+  <p>Indian public grain storage is dominated by <b>bagged stacks in godowns</b>, not bulk silos.
+  Grain sits in jute or HDPE bags stacked on dunnage, often several metres deep. This single fact
+  drives everything else, because a bag stack differs from a silo in three ways that matter:</p>
+  <ul>
+    <li><b>Different diffusion behaviour.</b> Interstitial air paths run between bags as well as
+      between kernels.</li>
+    <li><b>Different access.</b> You cannot auger-sample the centre of a bag stack. Probing damages
+      bags.</li>
+    <li><b>Different instrumentation economics.</b> Silo monitoring assumes a fixed, permanently
+      instrumented vessel. A godown has many stacks that are built, moved and dismantled.</li>
+  </ul>
+  <p>Nearly all commercial grain-monitoring technology was designed for the silo case. That is the
+  gap this project sits in.</p>
+
+  <h3>1.2 · How a spoilage pocket forms</h3>
+  <p>Grain typically enters storage at or near safe moisture. Localised elevation then arises from
+  ordinary, common events:</p>
+  <ul>
+    <li>Monsoon roof leaks or wall seepage</li>
+    <li>A consignment loaded slightly wet into one corner of a stack</li>
+    <li>Condensation driven by day&ndash;night temperature gradients</li>
+    <li>Moisture migration through the stack driven by natural convection</li>
+  </ul>
+  <p>Once a pocket crosses threshold, a <b>positive feedback</b> begins. Higher moisture raises
+  respiration; respiration releases both heat and water; the added heat and water raise respiration
+  further. This is why spoilage in grain is not gradual and linear &mdash; it accelerates, and by
+  the time it is externally visible it has usually been running for weeks.</p>
+
+  <h3>1.3 · Why the interior is effectively invisible</h3>
+  <p>Three failures compound. All three are documented, not assumed.</p>
+  <table>
+    <thead><tr><th>Failure</th><th>What the evidence says</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td><b>Sampling misses what matters</b></td>
+        <td>FAO guidance is explicit that insects are not uniformly distributed &mdash; they
+          concentrate in dust pockets and zones of heating &mdash; so peripheral spear sampling can
+          miss a pocket entirely. The same guidance notes that absence of live adults in a sample
+          does <i>not</i> indicate absence of infestation, because eggs and larvae develop concealed
+          inside kernels.</td>
+        <td>FAO <span class="conf v">VETTED</span></td></tr>
+      <tr><td><b>Detection thresholds arrive too late</b></td>
+        <td>In humid tropical conditions an infestation as light as one insect per 100&nbsp;kg can
+          develop into a damaging population within roughly four months. The window for cheap
+          intervention closes long before anything is visible.</td>
+        <td>FAO <span class="conf v">VETTED</span></td></tr>
+      <tr><td><b>Heat travels slower than the damage</b></td>
+        <td>Grain is a good thermal insulator, so a developing hot-spot conducts its signal to a
+          temperature probe slowly and weakly. Metabolic CO&#8322; moves with air currents through
+          interstitial space far faster than heat conducts.</td>
+        <td>Storage-technology literature <span class="conf v">VETTED</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>1.4 · Why this matters more than tonnage lost</h3>
+  <p>Quantity loss is the obvious cost. It is not the important one.</p>
+  <p>Storage conditions determine <b>mycotoxin risk</b>. Storage fungi such as
+  <i>Aspergillus flavus</i> require a minimum water activity in the region of <b>0.82&ndash;0.85</b>
+  to grow, and aflatoxin production occurs within a <i>narrower</i> band of conditions than growth
+  itself, with optimum production temperatures reported around <b>25&ndash;30&nbsp;&deg;C</b>.
+  <span class="conf v">VETTED</span> These are precisely the conditions that arise inside a warm
+  Indian godown when moisture migrates into a localised pocket.</p>
+
+  <div class="say">
+    <span class="lbl">The sentence that frames the whole project</span>
+    <p><b>Aflatoxin contamination is not reversible by drying or aeration.</b> Once the toxin is
+    produced, the grain&rsquo;s fate is decided. That makes this problem inherently
+    <b>predictive</b>: the only effective intervention happens <i>before</i> the fungus grows. A
+    system that reports damage after the fact is solving the wrong problem.</p>
+  </div>
+
+  <p>Aflatoxin B1 is classified by IARC as a <b>Group 1 human carcinogen</b>
+  <span class="conf c">CONFIRM</span>, and both Indian (FSSAI) and export-market regulations set
+  maximum limits for cereals, with EU limits materially stricter than domestic ones
+  <span class="conf c">CONFIRM</span>. This gives the problem a food-safety and a trade dimension
+  on top of the economic one &mdash; but <b>check the current numeric limits before quoting
+  any.</b></p>
+</div>
+
+<!-- ==================== PART 2 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 2</span><h2>Current status &mdash; why this is still unsolved</h2></div>
+  <p class="role">The judging criterion here is whether the problem is live <i>now</i>. Four
+    independent lines of evidence say it is.</p>
+
+  <h3>2.1 · The loss is documented, recent, and official</h3>
+  <p>India&rsquo;s post-harvest cereal losses were assessed at <b>3.89 % to 5.92 %</b> in the
+  NABCONS study commissioned by the Ministry of Food Processing Industries and
+  <b>reported to Parliament in 2024</b>. <span class="conf v">VETTED</span></p>
+  <p>Why this citation is strong: it is recent, it is government-commissioned, and it was placed
+  before Parliament. Against national foodgrain production measured in hundreds of millions of
+  tonnes, even the lower bound represents millions of tonnes lost annually, a significant share of
+  it during storage.</p>
+
+  <h3>2.2 · The exposure is expanding, not shrinking</h3>
+  <p>Under the <b>World&rsquo;s Largest Grain Storage Plan in the Cooperative Sector</b>, godown
+  capacity is being built at the level of Primary Agricultural Credit Societies, with
+  <b>over 500 PACS identified for construction</b> and a national cooperative computerisation
+  programme of <b>&#8377;2,925 crore</b> already underway. <span class="conf v">VETTED</span></p>
+  <div class="say">
+    <span class="lbl">The point to make out loud</span>
+    <p>Storage capacity is being distributed to thousands of small, locally managed facilities that
+    will have <b>neither instrumentation nor trained storage scientists on site</b>. The monitoring
+    gap is not static &mdash; it is about to multiply. We are not proposing a solution to a
+    shrinking problem.</p>
+  </div>
+
+  <h3>2.3 · The current intervention is actively degrading</h3>
+  <p>Fumigation in Indian warehouses is largely <b>calendar-driven rather than condition-driven</b>:
+  stacks are treated on a schedule regardless of whether that stack needed it, while a stack that
+  did need attention may wait. <span class="conf v">VETTED</span></p>
+  <p>The consequence is not merely waste. Repeated blanket phosphine exposure selects for
+  resistance, and resistance in Indian field populations is now documented and highly variable by
+  geography. A published assessment of Indian <i>Tribolium castaneum</i> populations reported
+  resistance ratios ranging from about <b>2-fold to nearly 71-fold</b> relative to a susceptible
+  reference strain, with lethal-concentration values spanning more than an order of magnitude
+  between locations. <span class="conf v">VETTED</span></p>
+  <p>Uniform dosing against a non-uniform resistance landscape produces sub-lethal exposures &mdash;
+  which is precisely the condition that accelerates resistance further. There is also
+  <b>no routine verification that a fumigation succeeded</b>: a leaking gas-proof sheet and a
+  resistant population produce the same outcome, and it is generally discovered weeks later.</p>
+
+  <h3>2.4 · The gap is specific, and nobody has filled it</h3>
+  <table>
+    <thead><tr><th>Existing approach</th><th>Why it falls short</th></tr></thead>
+    <tbody>
+      <tr><td>Visual inspection and spear sampling</td>
+        <td class="no">Peripheral and sparse; misses concealed life stages and interior pockets;
+          damages bags</td></tr>
+      <tr><td>Temperature cables and probes</td>
+        <td class="no">Heat conducts slowly through grain, so the signal arrives late and
+          attenuated; typically deployed in silos, not bag stacks</td></tr>
+      <tr><td>Calendar-based prophylactic fumigation</td>
+        <td class="no">Treats stacks that do not need it, misses stacks that do; drives resistance
+          selection; no efficacy verification</td></tr>
+      <tr><td>Laboratory mycotoxin assay</td>
+        <td class="no">Accurate but destructive, slow, expensive and post-hoc &mdash; it confirms
+          loss rather than preventing it</td></tr>
+      <tr><td>Imported commercial monitoring<br>(e.g. TeleSense, OPI)</td>
+        <td class="no">Technically capable but designed and priced for large Western silo and
+          elevator operations; oriented to bulk storage rather than bagged stacks, and economically
+          out of reach for a PACS-level facility</td></tr>
+    </tbody>
+  </table>
+
+  <div class="say">
+    <span class="lbl">State the gap in exactly these terms</span>
+    <p>There is no affordable, non-destructive, interior-resolved, predictive monitoring system
+    designed for the <b>bag-stack storage geometry</b> that dominates Indian public and cooperative
+    warehousing.</p>
+  </div>
+</div>
+
+<!-- ==================== PART 3 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 3</span><h2>The evidence base &mdash; our causal chain</h2></div>
+  <p class="role">This is the core of the research-backing score. Every link in our argument, and
+    the evidence holding it up. If a judge probes any single step, this is where you answer from.</p>
+
+  <div class="chain">
+    <div class="link"><div class="n">1</div><div class="c">
+      <div class="st">Indian public storage is predominantly bagged stacks in godowns</div>
+      <div class="ev"><b>Evidence:</b> FCI and state warehousing practice; the PACS expansion is
+        building more of the same. <b>Establishes:</b> the geometry we must design for.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">2</div><div class="c">
+      <div class="st">A bag stack&rsquo;s interior cannot be adequately inspected from outside</div>
+      <div class="ev"><b>Evidence:</b> FAO guidance on inspection of bagged grain &mdash; non-uniform
+        insect distribution, peripheral spear sampling, concealed life stages.
+        <b>Establishes:</b> the detection problem is structural, not a matter of trying harder.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">3</div><div class="c">
+      <div class="st">Localised moisture pockets form and self-amplify</div>
+      <div class="ev"><b>Evidence:</b> established grain-storage physics &mdash; respiration is a
+        strong function of moisture and temperature, and releases both.
+        <b>Establishes:</b> why a small initial fault becomes a large one.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">4</div><div class="c">
+      <div class="st">Above a water-activity threshold, mycotoxigenic fungi grow</div>
+      <div class="ev"><b>Evidence:</b> <i>A. flavus</i> requires a<sub>w</sub> of roughly
+        <b>0.82&ndash;0.85</b> minimum for growth. <b>Establishes:</b> there is a
+        <i>specific, measurable threshold</i> &mdash; which is what makes prediction possible at all.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">5</div><div class="c">
+      <div class="st">Toxin production occupies a narrower window than growth</div>
+      <div class="ev"><b>Evidence:</b> published temperature/water-activity work on deleterious fungi
+        and mycotoxin production during grain storage; optimum production around
+        <b>25&ndash;30&nbsp;&deg;C</b>. <b>Establishes:</b> we must model two thresholds, not one
+        &mdash; growth, then toxin.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">6</div><div class="c">
+      <div class="st">Aflatoxin contamination is irreversible</div>
+      <div class="ev"><b>Evidence:</b> drying or aeration does not remove toxin already produced.
+        <b>Establishes:</b> the intervention <i>must</i> be predictive. This is the logical hinge of
+        the entire project.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">7</div><div class="c">
+      <div class="st">CO&#8322; is an earlier indicator than temperature</div>
+      <div class="ev"><b>Evidence:</b> CO&#8322; is recognised in the storage-technology literature as
+        an earlier and more responsive indicator of spoilage onset than temperature; supported by
+        published CO&#8322;-sensor development work for grain quality monitoring.
+        <b>Establishes:</b> our sensing choice. Gas moves through interstitial air; heat crawls
+        through insulating grain.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">8</div><div class="c">
+      <div class="st">Interstitial humidity at equilibrium approximates grain water activity</div>
+      <div class="ev"><b>Evidence:</b> established moisture-sorption isotherm relationships for
+        cereals &mdash; modified Chung&ndash;Pfost / modified Henderson forms with commodity-specific
+        coefficients (ASAE D245). <b>Establishes:</b> we can obtain a<sub>w</sub> from a cheap
+        humidity sensor rather than a laboratory instrument.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">9</div><div class="c">
+      <div class="st">Insect activity has a detectable acoustic signature</div>
+      <div class="ev"><b>Evidence:</b> published spectral signatures &mdash; near <b>355&nbsp;Hz</b>
+        for <i>Rhyzopertha dominica</i>, near <b>440&nbsp;Hz</b> for <i>Sitophilus oryzae</i>, and
+        lower-frequency content near <b>176</b> and <b>434&nbsp;Hz</b> for <i>Tribolium castaneum</i>;
+        demonstrated feasible with inexpensive hardware. <b>Establishes:</b> the pest arm of the
+        system is grounded, not speculative.</div></div></div>
+    <div class="down">&darr;</div>
+
+    <div class="link"><div class="n">10</div><div class="c" style="border-width:2pt; background:#eef5ee">
+      <div class="st">Therefore: interior CO&#8322; + water-activity sensing enables intervention
+        before the threshold is crossed</div>
+      <div class="ev">This conclusion is not an assumption. It is what remains once links 1&ndash;9
+        are accepted &mdash; and each of those has a source.</div></div></div>
+  </div>
+
+  <div class="warn">
+    <span class="lbl">How to use this if a judge challenges one step</span>
+    <p>Do not defend the whole chain at once. Ask which step they doubt, then answer that step with
+    its source and stop. A focused answer to one link demonstrates command of the material far
+    better than restating everything.</p>
+  </div>
+</div>
+
+<!-- ==================== PART 4 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 4</span><h2>Novelty &mdash; what is genuinely new</h2></div>
+  <p class="role">Novelty is judged against prior art. Be precise about which parts are new and which
+    are established &mdash; claiming novelty for something standard is the fastest way to lose
+    credibility.</p>
+
+  <h3>4.1 · Honest separation</h3>
+  <table>
+    <thead><tr><th>Component</th><th>Status</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>CO&#8322; as a spoilage indicator</td><td class="n">Established</td>
+        <td>Well documented. We do not claim to have discovered this.</td></tr>
+      <tr><td>Sorption isotherms for a<sub>w</sub></td><td class="n">Established</td>
+        <td>Published equations and coefficients, used as intended.</td></tr>
+      <tr><td>Acoustic insect detection</td><td class="n">Established</td>
+        <td>Published signatures and feasibility.</td></tr>
+      <tr><td>Predictive mycology growth models</td><td class="n">Established</td>
+        <td>Standard cardinal-value approach.</td></tr>
+      <tr class="ours"><td><b>Interior-resolved sensing for bag stacks</b></td><td class="n">NEW</td>
+        <td>Commercial monitoring targets bulk silos. Bag stacks have different diffusion behaviour
+          and access constraints. The probe lance is designed for that geometry.</td></tr>
+      <tr class="ours"><td><b>Single-analyser multiplexed CO&#8322;</b></td><td class="n">NEW</td>
+        <td>One analyser sequenced across ports by pump and rotary manifold. Cuts cost, removes
+          inter-sensor drift so depth-to-depth comparison is made by the same instrument against the
+          same baseline, and makes port count expandable without proportional cost.</td></tr>
+      <tr class="ours"><td><b>Biological prediction, not physical measurement</b></td><td class="n">NEW</td>
+        <td>Output is a modelled <i>time-to-risk</i> derived from growth kinetics, not a temperature
+          or humidity reading. Converts monitoring into prevention.</td></tr>
+      <tr class="ours"><td><b>Closed-loop verification of intervention</b></td><td class="n">NEW</td>
+        <td>Post-treatment CO&#8322; decay and acoustic silence confirm efficacy &mdash; addressing a
+          failure mode current practice does not detect at all.</td></tr>
+      <tr class="ours"><td><b>Acoustic coupling through the lance body</b></td><td class="n">NEW</td>
+        <td>Chosen specifically to reject the ambient noise of a working godown, rather than
+          assuming a quiet laboratory.</td></tr>
+      <tr class="ours"><td><b>In-house labelled validation dataset</b></td><td class="n">NEW</td>
+        <td>Sensor time-series paired with fungal and insect ground truth. Genuinely difficult for
+          another team to replicate without laboratory access.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="say">
+    <span class="lbl">The one-sentence novelty claim</span>
+    <p>The individual signals are established science. <b>What is new is the combination applied to
+    bag-stack geometry, the single-analyser architecture that makes depth-resolved gas mapping
+    affordable, and the shift from reporting a measurement to issuing a dated, evidence-backed
+    prediction.</b></p>
+  </div>
+
+  <h3>4.2 · Technologies deliberately excluded</h3>
+  <p>Worth stating, because it demonstrates a problem-first rather than technology-first approach:</p>
+  <ul>
+    <li><b>Distributed ledger.</b> An append-only hash-chained log is sufficient, auditable and
+      computationally trivial. Adding a blockchain here would be an unjustified use of the
+      technology.</li>
+    <li><b>Per-depth dedicated CO&#8322; sensors.</b> Superseded by the shared-analyser manifold.</li>
+    <li><b>Large language models.</b> No role in this decision path.</li>
+    <li><b>Computer vision on stack exteriors.</b> By definition observes the symptom we are trying
+      to anticipate.</li>
+  </ul>
+  <p style="font-size:9.5pt;color:#555">Judges frequently reward teams who can explain what they
+  chose <i>not</i> to build. It signals engineering judgement rather than enthusiasm.</p>
+</div>
+
+<!-- ==================== PART 5 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 5</span><h2>Team inclusion &mdash; discipline mapped to problem</h2></div>
+  <p class="role">The criterion is not &ldquo;is the team diverse&rdquo; but &ldquo;does each
+    discipline do necessary work&rdquo;. Ours does.</p>
+
+  <div class="say">
+    <span class="lbl">The framing sentence</span>
+    <p>Grain spoilage is a <b>biological</b> process, detected through <b>physical</b> sensing, and
+    interpreted by <b>computational</b> models. This problem was selected in part because it
+    requires precisely the disciplines this team already holds.</p>
+  </div>
+
+  <table>
+    <thead><tr><th>Member</th><th>Discipline</th><th>Owns which part of the research</th></tr></thead>
+    <tbody>
+      <tr><td><b>Chiranjib Dash</b><br>24BCE2411</td><td>CSE</td>
+        <td>System architecture and integration; the decision engine that converts interpreted
+          signals into a ranked, dated action</td></tr>
+      <tr><td><b>Mohit Kumar</b><br>24BCE2378</td><td>CSE</td>
+        <td>Transport physics and numerical modelling; signal processing for the acoustic pest
+          pipeline</td></tr>
+      <tr><td><b>Vishal Vivek</b><br>24BCE2377</td><td>CSE</td>
+        <td>Embedded firmware and sensing pipeline; noise modelling, anomaly detection, tamper-evident
+          logging</td></tr>
+      <tr><td><b>Krittika Parida</b><br>23BBT0193</td><td>Biotechnology</td>
+        <td><b>Mycology lead.</b> Water-activity thresholds, fungal growth kinetics, spoilage-timeline
+          validation. Owns links 4, 5 and 6 of the causal chain</td></tr>
+      <tr><td><b>Netra R</b><br>24BBT0055</td><td>Biotechnology</td>
+        <td><b>Entomology and grain quality.</b> Insect ground-truth trials, moisture and assay
+          protocols, and the inspection-baseline model. Owns link 2 and link 9</td></tr>
+      <tr><td><b>Devavrath Ramesh</b><br>24BME0205</td><td>Mechanical</td>
+        <td>Probe-lance design and fabrication, pneumatic sampling manifold, heat and moisture
+          transport modelling. Owns links 1, 3 and 7</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The argument to make</h3>
+  <p>A team of only computer scientists could build the electronics and the dashboard, but could not
+  generate the biological ground truth that makes the predictions trustworthy. Two Biotechnology
+  members give this project a <b>wet-laboratory validation capability that a conventional software
+  team cannot reproduce</b>, and that is the single strongest defensible advantage in our
+  proposal. <span class="conf v">VETTED</span></p>
+
+  <div class="say">
+    <span class="lbl">Say this if asked why the team is composed this way</span>
+    <p>&ldquo;When a judge asks where a number came from, the person who owns it answers &mdash; not
+    the person who typed it. Every biological threshold in our model is defended by Krittika, every
+    baseline assumption by Netra, and every transport constant by Devavrath. That division is not
+    cosmetic; it is why we can defend the model rather than just run it.&rdquo;</p>
+  </div>
+</div>
+
+<!-- ==================== PART 6 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 6</span><h2>Reference list</h2></div>
+  <p class="role">The twelve sources from the submitted proposal, annotated with what each one is
+    actually doing for us. Cite by number in the deck.</p>
+
+  <ol class="refs">
+    <li>Ministry of Food Processing Industries / NABCONS post-harvest loss assessment, as reported to
+      Lok Sabha, 2024 &mdash; cereal losses 3.89&ndash;5.92 %.
+      <span class="u">downtoearth.org.in/governance/as-told-to-parliament-august-6-2024-4-8-grains-5-15-fruits-vegetables-lost-after-harvest</span>
+      <span class="use">&rarr; Establishes scale and currency of the loss. Part 2.1.</span></li>
+
+    <li>Press Information Bureau &mdash; <span class="t">World&rsquo;s Largest Grain Storage Plan in
+      the Cooperative Sector.</span>
+      <span class="u">pib.gov.in/PressReleasePage.aspx?PRID=2146718</span>
+      <span class="use">&rarr; Establishes that exposure is growing. Part 2.2.</span></li>
+
+    <li>FAO &mdash; <span class="t">Towards Integrated Commodity and Pest Management in Grain
+      Storage,</span> Section 6: Inspection and detection methods for storage insect pests.
+      <span class="u">fao.org/4/x5048e/x5048E0d.htm</span>
+      <span class="use">&rarr; The backbone of our inspection-baseline model. Links 2 and 9.
+        <b>Netra&rsquo;s primary source.</b></span></li>
+
+    <li>FAO &mdash; <span class="t">Code of Practice for Storage and Fumigation of Bagged Grain.</span>
+      <span class="u">fao.org/4/x5048E/x5048E</span>
+      <span class="use">&rarr; Bag-stack storage practice and fumigation norms. Part 2.3.</span></li>
+
+    <li><span class="t">Influence of Temperature and Water Activity on Deleterious Fungi and
+      Mycotoxin Production during Grain Storage.</span> PMC.
+      <span class="u">pmc.ncbi.nlm.nih.gov/articles/PMC5780356/</span>
+      <span class="use">&rarr; Water-activity thresholds and the growth-versus-toxin distinction.
+        Links 4 and 5. <b>Krittika&rsquo;s primary source.</b></span></li>
+
+    <li><span class="t">Current status of phosphine resistance in Indian field populations of
+      Tribolium castaneum.</span> Scientific Reports.
+      <span class="u">nature.com/articles/s41598-023-43681-y</span>
+      <span class="use">&rarr; The 2-fold to 71-fold resistance range. Part 2.3.</span></li>
+
+    <li><span class="t">Determining the sound signatures of insect pests in stored rice grain using
+      an inexpensive acoustic system.</span> Food Security.
+      <span class="u">link.springer.com/article/10.1007/s12571-024-01493-6</span>
+      <span class="use">&rarr; Species spectral signatures and low-cost feasibility. Link 9.</span></li>
+
+    <li>Mankin et al. &mdash; <span class="t">Automated Applications of Acoustics for Stored Product
+      Insect Detection, Monitoring, and Management.</span> Insects.
+      <span class="u">mdpi.com/2075-4450/12/3/259</span>
+      <span class="use">&rarr; Establishes acoustic detection as a mature field, not a novelty
+        claim.</span></li>
+
+    <li><span class="t">Acoustic Detection of Insects in Stored Products in the Presence of Strong
+      Ambient Noise.</span> Sensors.
+      <span class="u">mdpi.com/1424-8220/26/5/1511</span>
+      <span class="use">&rarr; Justifies contact coupling through the lance body rather than
+        open-air microphony.</span></li>
+
+    <li><span class="t">Monitoring carbon dioxide concentration for early detection of spoilage in
+      stored grain</span> &mdash; CO&#8322; as a leading indicator relative to temperature.
+      <span class="use">&rarr; <b>The single most load-bearing citation in the project.</b> Link 7.
+        If one source has to be defended, it is this one.</span></li>
+
+    <li><span class="t">Development of carbon dioxide (CO&#8322;) sensor for grain quality
+      monitoring.</span> Computers and Electronics in Agriculture.
+      <span class="u">sciencedirect.com/science/article/abs/pii/S1537511010000917</span>
+      <span class="use">&rarr; Establishes CO&#8322; sensing in grain as practically achievable.</span></li>
+
+    <li><span class="t">Optimizing phosphine applications for insect control in bagged rice stored in
+      Indian warehouses.</span> Journal of Stored Products Research.
+      <span class="use">&rarr; Indian bag-stack fumigation practice specifically. Part 2.3.</span></li>
+  </ol>
+
+  <div class="warn">
+    <span class="lbl">If you have time before the review</span>
+    <p>Open references 3, 5 and 10 and read the abstract of each. Those three carry links 2, 4&ndash;6
+    and 7 respectively &mdash; between them they hold up most of the causal chain. Being able to say
+    &ldquo;that paper found X&rdquo; rather than &ldquo;we have a citation for that&rdquo; is the
+    difference between a good and an excellent research-backing score.</p>
+  </div>
+</div>
+
+<!-- ==================== PART 7 ==================== -->
+<div class="part">
+  <div class="phead"><span class="tag">PART 7</span><h2>Delivering this in the review</h2></div>
+
+  <h3>7.1 · Order to present in</h3>
+  <table>
+    <thead><tr><th>#</th><th>Cover</th><th>In one line</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>Background</td>
+        <td>Bag stacks are opaque; damage is invisible until irreversible</td></tr>
+      <tr><td class="n">2</td><td>Current status</td>
+        <td>3.89&ndash;5.92 % loss, reported to Parliament in 2024; exposure growing via PACS</td></tr>
+      <tr><td class="n">3</td><td>Why unsolved</td>
+        <td>Every existing approach is peripheral, late, post-hoc, or priced for Western silos</td></tr>
+      <tr><td class="n">4</td><td>Research backing</td>
+        <td>Walk the causal chain &mdash; ten links, each with a source</td></tr>
+      <tr><td class="n">5</td><td>Novelty</td>
+        <td>Signals are established; the bag-stack application and the architecture are not</td></tr>
+      <tr><td class="n">6</td><td>Team</td>
+        <td>Each discipline owns specific links of that chain</td></tr>
+    </tbody>
+  </table>
+
+  <h3>7.2 · Questions you will get, and who answers</h3>
+  <table>
+    <thead><tr><th>Question</th><th>Answer with</th><th>Who</th></tr></thead>
+    <tbody>
+      <tr><td>&ldquo;Isn&rsquo;t CO&#8322; monitoring already done?&rdquo;</td>
+        <td>Yes &mdash; in bulk silos, in the West, at a price point irrelevant to a PACS godown.
+          We do not claim the signal is new. We claim the geometry, the architecture and the
+          affordability are.</td><td>Chiranjib</td></tr>
+      <tr><td>&ldquo;How do you know 0.82 is the right threshold?&rdquo;</td>
+        <td>Published <i>A. flavus</i> cardinal values; it is a range, 0.82&ndash;0.85, and we use
+          the conservative end.</td><td>Krittika</td></tr>
+      <tr><td>&ldquo;Why should CO&#8322; beat temperature?&rdquo;</td>
+        <td>Gas moves with air currents through interstitial space; heat conducts through grain,
+          which is an insulator. Over the same 40&nbsp;cm our model gives roughly one day versus
+          fifteen.</td><td>Mohit or Devavrath</td></tr>
+      <tr><td>&ldquo;Is your comparison baseline fair?&rdquo;</td>
+        <td>It is FAO-grounded. And the key point is not that inspection is incompetent &mdash; it
+          is that a spear reaches 0.4&nbsp;m and the pocket is 1.6&nbsp;m in.</td><td>Netra</td></tr>
+      <tr><td>&ldquo;What is actually built versus proposed?&rdquo;</td>
+        <td>Working simulation with real physics and a real decision engine; ESP32 + SHT3x hardware
+          reading real water activity. CO&#8322; analyser and acoustics are proposed, not yet
+          sourced.</td><td>Chiranjib</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <span class="lbl">The one habit that raises a research score</span>
+    <p>When you cite something, say <b>what it found</b>, not that it exists. &ldquo;A 2023 study of
+    Indian <i>Tribolium</i> populations found resistance ratios from 2-fold to 71-fold&rdquo; scores;
+    &ldquo;we have references on phosphine resistance&rdquo; does not.</p>
+  </div>
+
+  <div class="say">
+    <span class="lbl">Closing line for the research section</span>
+    <p>&ldquo;Every threshold in our model comes from published literature, and every one of them is
+    owned by a specific member of this team who can defend it. We did not pick numbers that made the
+    demo look good &mdash; several of them made it harder, and we kept them because they are what
+    the science says.&rdquo;</p>
+  </div>
+</div>
+
+</div>
